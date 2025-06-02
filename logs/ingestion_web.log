@@ -117,3 +117,11 @@
 2025-06-02 23:01:15,764 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
 2025-06-02 23:01:15,764 [INFO] 🌐 Visitando: https://joventut.onda.es/
 2025-06-02 23:01:55,200 [INFO] ✅ https://joventut.onda.es/ -> 4699 fragmentos
+2025-06-02 23:02:50,860 [INFO] 🌐 Visitando: https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=es_ES
+2025-06-02 23:03:34,850 [INFO] ✅ https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=es_ES -> 4699 fragmentos
+2025-06-02 23:04:04,955 [INFO] 🌐 Visitando: https://joventut.onda.es/#main-content
+2025-06-02 23:04:29,609 [INFO] ✅ https://joventut.onda.es/#main-content -> 4699 fragmentos
+2025-06-02 23:04:55,043 [INFO] 🌐 Visitando: https://joventut.onda.es
+2025-06-02 23:05:39,395 [INFO] ✅ https://joventut.onda.es -> 4699 fragmentos
+2025-06-02 23:06:15,963 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 4
+2025-06-02 23:06:16,248 [ERROR] ❌ Error en embeddings: forma inesperada (5376,)
