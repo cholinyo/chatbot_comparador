@@ -1,0 +1,11 @@
+flask
+faiss-cpu
+sentence-transformers
+beautifulsoup4
+unstructured[pdf,docx,html]
+python-docx
+requests
+llama-cpp-python
+python-dotenv
+pdfminer.six
+trafilatura

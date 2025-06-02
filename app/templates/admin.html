@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Administración{% endblock %}
+{% block content %}
+
+<h2>🛠️ Administración del sistema</h2>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; background-color:
+        {% if category == 'success' %}#e0ffe0
+        {% elif category == 'danger' %}#ffe0e0
+        {% else %}#f0f0f0{% endif %}; color: #333;">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<form method="post">
+  <!-- 🔹 Modelo local -->
+  <h3>🧠 Modelos locales disponibles</h3>
+  <label for="modelo_local">Seleccionar modelo por defecto:</label><br>
+  <select name="modelo_local" id="modelo_local">
+    {% for modelo in modelos %}
+      <option value="{{ modelo }}" {% if modelo == modelo_actual %}selected{% endif %}>
+        {{ modelo }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <br><br>
+
+  <!-- 🔹 Modelo OpenAI -->
+  <h3>☁️ Modelo OpenAI</h3>
+  <label for="modelo_openai">Seleccionar modelo:</label>
+  <select name="modelo_openai" id="modelo_openai">
+    {% for modelo in modelos_openai %}
+      <option value="{{ modelo }}" {% if modelo == modelo_openai %}selected{% endif %}>{{ modelo }}</option>
+    {% endfor %}
+  </select>
+  
+  <br><br>
+  <button type="submit">Guardar configuración</button>
+</form>
+<hr>
+<h3>🧪 Verificación de acceso a OpenAI</h3>
+<form method="post">
+  <input type="hidden" name="probar_openai" value="1">
+  <button type="submit">Probar conexión con OpenAI</button>
+</form>
+
+{% if test_openai_resultado %}
+  <p><strong>{{ test_openai_resultado }}</strong></p>
+{% endif %}
+
+{% endblock %}

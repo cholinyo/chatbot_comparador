@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}📄 Fragmentos de {{ nombre_documento }}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">📄 Fragmentos del documento: <strong>{{ nombre_documento }}</strong></h2>
+
+  {% if fragmentos %}
+  <div class="accordion" id="fragmentAccordion">
+    {% for frag in fragmentos %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ loop.index }}">
+        <button class="accordion-button {% if not loop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="{{ 'true' if loop.first else 'false' }}" aria-controls="collapse{{ loop.index }}">
+          Fragmento {{ loop.index }} de {{ total }}
+        </button>
+      </h2>
+      <div id="collapse{{ loop.index }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#fragmentAccordion">
+        <div class="accordion-body">
+          <pre>{{ frag }}</pre>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="text-muted">No se encontraron fragmentos para este documento.</p>
+  {% endif %}
+
+  <a href="/vectorstore" class="btn btn-secondary mt-4">⬅️ Volver al resumen</a>
+</div>
+{% endblock %}

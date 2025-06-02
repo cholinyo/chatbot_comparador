@@ -1,0 +1,7 @@
+# Archivos de configuración de entorno
+*.env
+.env.*
+*.env
+venv/
+# Carpeta de modelos pesados
+models/

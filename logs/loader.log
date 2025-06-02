@@ -1,0 +1,231 @@
+2025-05-31 18:53:02,285 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-05-31 18:53:02,653 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-05-31 18:53:07,223 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (85 fragmentos)
+2025-05-31 18:53:12,803 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (82 fragmentos)
+2025-05-31 18:53:12,803 [INFO] 📄 Total documentos procesados: 3
+2025-05-31 18:53:12,814 [INFO] Use pytorch device_name: cpu
+2025-05-31 18:53:12,814 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-05-31 19:37:48,907 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-05-31 19:37:49,290 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-05-31 19:37:52,719 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (85 fragmentos)
+2025-05-31 19:37:56,258 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (82 fragmentos)
+2025-05-31 19:37:56,258 [INFO] 📄 Total documentos procesados: 3
+2025-05-31 19:37:56,258 [INFO] Ingestado: copia_Matrícula uji.pdf con 4 fragmentos
+2025-05-31 19:37:56,259 [INFO] Ingestado: DOSIER-AI-Y-CIUDADES-2025.pdf con 85 fragmentos
+2025-05-31 19:37:56,259 [INFO] Ingestado: CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf con 82 fragmentos
+2025-05-31 19:37:56,264 [INFO] Use pytorch device_name: cpu
+2025-05-31 19:37:56,264 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-05-31 19:38:07,058 [INFO] Ingesta finalizada. Total fragmentos: 171
+2025-05-31 19:47:08,967 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-05-31 19:47:09,520 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-05-31 19:47:13,612 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (85 fragmentos)
+2025-05-31 19:47:17,420 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (82 fragmentos)
+2025-05-31 19:47:17,420 [INFO] 📄 Total documentos procesados: 3
+2025-05-31 19:47:17,421 [INFO] Ingestado: copia_Matrícula uji.pdf con 4 fragmentos
+2025-05-31 19:47:17,421 [INFO] Ingestado: DOSIER-AI-Y-CIUDADES-2025.pdf con 85 fragmentos
+2025-05-31 19:47:17,421 [INFO] Ingestado: CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf con 82 fragmentos
+2025-05-31 19:47:17,427 [INFO] Use pytorch device_name: cpu
+2025-05-31 19:47:17,427 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-05-31 19:47:31,789 [INFO] Ingesta finalizada. Total fragmentos: 171
+2025-06-02 16:59:22,587 [INFO] Use pytorch device_name: cpu
+2025-06-02 16:59:22,587 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 16:59:31,937 [WARNING] discarding data: None
+2025-06-02 16:59:31,938 [WARNING] ⚠️ Sin texto útil en: https://transparencia.onda.es
+2025-06-02 16:59:31,939 [WARNING] ❌ No se generaron embeddings
+2025-06-02 17:05:04,306 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:05:04,306 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:05:10,227 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-02 17:05:10,787 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-06-02 17:05:18,152 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (85 fragmentos)
+2025-06-02 17:05:23,982 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (82 fragmentos)
+2025-06-02 17:05:23,983 [INFO] 📄 Total documentos procesados: 3
+2025-06-02 17:15:55,071 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:15:55,071 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:15:59,548 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con profundidad 10
+2025-06-02 17:15:59,549 [INFO] 🌐 Visitando: https://transparencia.onda.es (profundidad 0)
+2025-06-02 17:16:00,100 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 17:16:00,483 [WARNING] discarding data: None
+2025-06-02 17:16:00,484 [WARNING] ⚠️ Sin texto útil en: https://transparencia.onda.es
+2025-06-02 17:16:00,485 [WARNING] ❌ No se generaron embeddings
+2025-06-02 17:27:09,081 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:27:09,082 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:27:12,761 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-02 17:27:13,093 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-06-02 17:27:18,243 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (85 fragmentos)
+2025-06-02 17:27:31,256 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (82 fragmentos)
+2025-06-02 17:27:31,257 [INFO] 📄 Total documentos procesados: 3
+2025-06-02 17:28:01,280 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:28:01,280 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:28:06,963 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con profundidad 10
+2025-06-02 17:28:06,963 [INFO] 🌐 Visitando: https://transparencia.onda.es (profundidad 0)
+2025-06-02 17:28:07,416 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 17:28:07,654 [WARNING] discarding data: None
+2025-06-02 17:28:07,655 [WARNING] ⚠️ Sin texto útil en: https://transparencia.onda.es
+2025-06-02 17:28:07,656 [WARNING] ❌ No se generaron embeddings
+2025-06-02 17:30:22,885 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:30:22,886 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:30:27,504 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con profundidad 10
+2025-06-02 17:30:27,504 [INFO] 🌐 Visitando: https://transparencia.onda.es (profundidad 0)
+2025-06-02 17:30:28,144 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 17:30:28,442 [WARNING] discarding data: None
+2025-06-02 17:30:28,442 [WARNING] ⚠️ Sin texto útil en: https://transparencia.onda.es
+2025-06-02 17:30:28,443 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con profundidad 4
+2025-06-02 17:30:28,444 [INFO] 🌐 Visitando: https://joventut.onda.es/ (profundidad 0)
+2025-06-02 17:30:28,921 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:30:59,410 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:31:00,416 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 17:31:00,416 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 17:31:00,416 [WARNING] ❌ No se generaron embeddings
+2025-06-02 17:41:10,626 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:41:10,627 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:41:14,754 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con profundidad 10
+2025-06-02 17:41:14,754 [INFO] 🌐 Visitando: https://transparencia.onda.es (profundidad 0)
+2025-06-02 17:41:15,191 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 17:41:15,432 [WARNING] discarding data: None
+2025-06-02 17:41:15,432 [WARNING] ⚠️ Sin texto útil en: https://transparencia.onda.es
+2025-06-02 17:41:15,433 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con profundidad 4
+2025-06-02 17:41:15,433 [INFO] 🌐 Visitando: https://joventut.onda.es/ (profundidad 0)
+2025-06-02 17:41:15,840 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:41:46,263 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:41:46,638 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 17:41:46,638 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 17:41:46,638 [WARNING] ❌ No se generaron embeddings
+2025-06-02 17:44:54,322 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:44:54,322 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:44:58,806 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con profundidad 10
+2025-06-02 17:44:58,806 [INFO] 🌐 Visitando: https://transparencia.onda.es (profundidad 0)
+2025-06-02 17:44:59,487 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 17:44:59,804 [WARNING] discarding data: None
+2025-06-02 17:44:59,805 [WARNING] ⚠️ Sin texto útil en: https://transparencia.onda.es
+2025-06-02 17:44:59,806 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con profundidad 4
+2025-06-02 17:44:59,806 [INFO] 🌐 Visitando: https://joventut.onda.es/ (profundidad 0)
+2025-06-02 17:45:00,414 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:45:30,928 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:45:40,932 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 17:45:40,932 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 17:45:40,932 [WARNING] ❌ No se generaron embeddings
+2025-06-02 17:52:49,344 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:52:49,344 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:52:53,165 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con profundidad 10
+2025-06-02 17:52:53,165 [INFO] 🌐 Visitando: https://transparencia.onda.es (profundidad 0)
+2025-06-02 17:52:53,597 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 17:52:53,855 [WARNING] discarding data: None
+2025-06-02 17:52:53,855 [WARNING] ⚠️ Sin texto útil en: https://transparencia.onda.es
+2025-06-02 17:52:53,856 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con profundidad 4
+2025-06-02 17:52:53,856 [INFO] 🌐 Visitando: https://joventut.onda.es/ (profundidad 0)
+2025-06-02 17:52:54,257 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:53:24,642 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:53:25,055 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 17:53:25,055 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 17:53:25,056 [WARNING] ❌ No se generaron embeddings
+2025-06-02 17:59:12,166 [INFO] Use pytorch device_name: cpu
+2025-06-02 17:59:12,166 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 17:59:15,679 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con profundidad 10
+2025-06-02 17:59:15,680 [INFO] 🌐 Visitando: https://transparencia.onda.es (profundidad 0)
+2025-06-02 17:59:16,115 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 17:59:16,307 [WARNING] discarding data: None
+2025-06-02 17:59:16,308 [INFO] ✅ [BS4] Texto extraído de https://transparencia.onda.es (23 caracteres)
+2025-06-02 17:59:16,309 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 1
+2025-06-02 17:59:16,495 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con profundidad 4
+2025-06-02 17:59:16,495 [INFO] 🌐 Visitando: https://joventut.onda.es/ (profundidad 0)
+2025-06-02 17:59:16,898 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:59:47,286 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 17:59:47,668 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 17:59:47,668 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 17:59:47,668 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 1
+2025-06-02 17:59:47,678 [INFO] 🌟 Ingesta web completada. Total fragmentos: 1
+2025-06-02 18:21:53,233 [INFO] Use pytorch device_name: cpu
+2025-06-02 18:21:53,233 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 18:22:02,849 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 18:22:02,849 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 18:22:11,627 [INFO] 📥 HTML capturado (667 bytes)
+2025-06-02 18:22:11,902 [WARNING] discarding data: None
+2025-06-02 18:22:11,904 [INFO] ✅ [BS4] Texto extraído de https://transparencia.onda.es (23 caracteres)
+2025-06-02 18:22:11,904 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 1
+2025-06-02 18:22:12,081 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 18:22:12,081 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 18:22:12,557 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 18:22:43,011 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 18:22:43,508 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 18:22:43,508 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 18:22:43,508 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 0
+2025-06-02 18:22:43,518 [INFO] 🌟 Ingesta web completada. Total fragmentos: 1
+2025-06-02 18:56:57,474 [INFO] Use pytorch device_name: cpu
+2025-06-02 18:56:57,475 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 18:57:01,860 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 18:57:01,860 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 18:57:02,296 [INFO] 📅 HTML capturado (667 bytes)
+2025-06-02 18:57:02,693 [WARNING] discarding data: None
+2025-06-02 18:57:02,695 [INFO] ✅ [BS4] Texto extraído de https://transparencia.onda.es (23 caracteres)
+2025-06-02 18:57:02,695 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 1
+2025-06-02 18:57:02,899 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 18:57:02,899 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 18:57:03,295 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 18:57:33,683 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 18:57:34,112 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 18:57:34,112 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 18:57:34,112 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 0
+2025-06-02 18:57:34,125 [INFO] 🌟 Ingesta web completada. Total fragmentos: 1
+2025-06-02 19:03:39,786 [INFO] Use pytorch device_name: cpu
+2025-06-02 19:03:39,786 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 19:03:43,015 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 19:03:43,015 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 19:03:43,452 [INFO] 🗕️ HTML capturado (667 bytes)
+2025-06-02 19:03:43,657 [WARNING] discarding data: None
+2025-06-02 19:03:43,658 [INFO] ✅ [BS4] Texto extraído de https://transparencia.onda.es (23 caracteres)
+2025-06-02 19:03:43,659 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 1
+2025-06-02 19:03:43,688 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 19:03:43,688 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 19:03:44,125 [WARNING] Retrying (Retry(total=1, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 19:04:14,504 [WARNING] Retrying (Retry(total=0, connect=0, read=None, redirect=2, status=None)) after connection broken by 'SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)'))': /
+2025-06-02 19:04:14,921 [ERROR] download error: https://joventut.onda.es/ HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 19:04:14,921 [WARNING] ❌ No se pudo obtener contenido de https://joventut.onda.es/
+2025-06-02 19:04:14,921 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 0
+2025-06-02 19:04:14,923 [INFO] 🌟 Ingesta web completada. Total fragmentos: 1
+2025-06-02 19:35:08,297 [INFO] Use pytorch device_name: cpu
+2025-06-02 19:35:08,297 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 19:35:12,556 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 19:35:15,864 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 19:35:18,791 [INFO] ✅ Texto extraído de https://transparencia.onda.es (2897 caracteres)
+2025-06-02 19:35:18,804 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/alcaldia
+2025-06-02 19:35:20,869 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/transparencia/alcaldia (2091 caracteres)
+2025-06-02 19:35:20,881 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/cargos-de-confianza-o-de-libre-designacion
+2025-06-02 19:35:22,913 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/transparencia/cargos-de-confianza-o-de-libre-designacion (1725 caracteres)
+2025-06-02 19:35:22,918 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/gestion-presupuestaria
+2025-06-02 19:35:24,976 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/transparencia/gestion-presupuestaria (1397 caracteres)
+2025-06-02 19:35:24,986 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/ordenanzas-municipales
+2025-06-02 19:35:27,025 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/transparencia/ordenanzas-municipales (958 caracteres)
+2025-06-02 19:35:27,032 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/textos-normativos-aplicables-en-materia-de-medio-ambiente
+2025-06-02 19:35:29,068 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/transparencia/textos-normativos-aplicables-en-materia-de-medio-ambiente (1144 caracteres)
+2025-06-02 19:35:29,071 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/acceso-a-la-informacion-de-transparencia-del-ayuntamiento
+2025-06-02 19:35:31,837 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/transparencia/acceso-a-la-informacion-de-transparencia-del-ayuntamiento (1700 caracteres)
+2025-06-02 19:35:31,841 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/institucional/infoparticipa
+2025-06-02 19:35:33,873 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/institucional/infoparticipa (2352 caracteres)
+2025-06-02 19:35:33,878 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/institucional/ita
+2025-06-02 19:35:35,909 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/institucional/ita (1852 caracteres)
+2025-06-02 19:35:35,912 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/acceso-a-la-informacion
+2025-06-02 19:35:37,937 [INFO] ✅ Texto extraído de https://transparencia.onda.es#!/transparencia/acceso-a-la-informacion (2789 caracteres)
+2025-06-02 19:35:40,433 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 10
+2025-06-02 19:35:42,387 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 19:35:43,719 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 19:36:46,674 [INFO] ✅ Texto extraído de https://joventut.onda.es/ (4699 caracteres)
+2025-06-02 19:36:46,691 [INFO] 🌐 Visitando: https://joventut.onda.es/#main-content
+2025-06-02 19:36:48,752 [INFO] ✅ Texto extraído de https://joventut.onda.es/#main-content (4699 caracteres)
+2025-06-02 19:36:48,769 [INFO] 🌐 Visitando: https://joventut.onda.es
+2025-06-02 19:36:52,758 [INFO] ✅ Texto extraído de https://joventut.onda.es (4699 caracteres)
+2025-06-02 19:36:52,776 [INFO] 🌐 Visitando: https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=es_ES
+2025-06-02 19:36:55,313 [INFO] ✅ Texto extraído de https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=es_ES (4699 caracteres)
+2025-06-02 19:36:57,554 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 4
+2025-06-02 19:36:58,839 [INFO] 🌟 Ingesta web completada. Total fragmentos: 74
+ 2025-06-02 21:51:21,418 [INFO] Use pytorch device_name: cpu
+2025-06-02 21:51:21,419 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 21:51:25,347 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-02 21:51:25,745 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-06-02 21:51:30,771 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (85 fragmentos)
+2025-06-02 21:51:34,608 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (82 fragmentos)
+2025-06-02 21:51:34,608 [INFO] 📄 Total documentos procesados: 3
+2025-06-02 21:51:34,608 [INFO] 📁 Iniciando ingesta de 3 documentos
+2025-06-02 21:51:34,612 [WARNING] ⚠️ Documento sin fragmentos: copia_Matrícula uji.pdf
+2025-06-02 21:51:34,612 [WARNING] ⚠️ Documento sin fragmentos: DOSIER-AI-Y-CIUDADES-2025.pdf
+2025-06-02 21:51:34,612 [WARNING] ⚠️ Documento sin fragmentos: CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf
+2025-06-02 21:51:34,613 [WARNING] ❌ No se generaron embeddings

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Chat Comparador{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>💬 Comparador de Chatbots</h2>
+  <form method="post" class="mb-4">
+    <div class="input-group">
+      <input type="text" name="pregunta" class="form-control" placeholder="Escribe tu pregunta..." required>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+  </form>
+
+  {% if resultado %}
+    <div class="card mb-3 p-3 bg-light border-0 shadow-sm">
+      <h5 class="text-muted">📚 Contexto utilizado:</h5>
+      <pre style="white-space: pre-wrap;">{{ resultado.contexto }}</pre>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 shadow-sm">
+          <h5 class="text-primary">🤖 Modelo Local</h5>
+          <p>{{ resultado.respuesta_local }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3 mb-3 shadow-sm">
+          <h5 class="text-success">🌐 Modelo OpenAI</h5>
+          <p>{{ resultado.respuesta_openai }}</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

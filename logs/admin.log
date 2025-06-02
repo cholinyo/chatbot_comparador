@@ -1,0 +1,367 @@
+2025-05-31 12:48:20,135 [WARNING]  * Debugger is active!
+2025-05-31 12:48:20,145 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 12:49:47,018 [INFO] 127.0.0.1 - - [31/May/2025 12:49:47] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2025-05-31 12:49:47,043 [INFO] 127.0.0.1 - - [31/May/2025 12:49:47] "GET /admin HTTP/1.1" 200 -
+2025-05-31 12:49:48,073 [INFO] 127.0.0.1 - - [31/May/2025 12:49:48] "POST /admin HTTP/1.1" 200 -
+2025-05-31 12:51:09,588 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\admin.py', reloading
+2025-05-31 12:51:12,237 [WARNING]  * Debugger is active!
+2025-05-31 12:51:12,247 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 12:51:27,816 [INFO] Modelo local actualizado a: llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
+2025-05-31 12:51:27,816 [INFO] Modelo OpenAI actualizado a: gpt-4-turbo
+2025-05-31 12:51:27,819 [INFO] 127.0.0.1 - - [31/May/2025 12:51:27] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2025-05-31 12:51:27,862 [INFO] 127.0.0.1 - - [31/May/2025 12:51:27] "GET /admin HTTP/1.1" 200 -
+2025-05-31 12:51:38,879 [INFO] Modelo local actualizado a: llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
+2025-05-31 12:51:38,879 [INFO] Modelo OpenAI actualizado a: gpt-4
+2025-05-31 12:51:38,881 [INFO] 127.0.0.1 - - [31/May/2025 12:51:38] "[32mPOST /admin HTTP/1.1[0m" 302 -
+2025-05-31 12:51:38,897 [INFO] 127.0.0.1 - - [31/May/2025 12:51:38] "GET /admin HTTP/1.1" 200 -
+2025-05-31 12:51:51,688 [INFO] 127.0.0.1 - - [31/May/2025 12:51:51] "GET /chat HTTP/1.1" 200 -
+2025-05-31 13:04:08,368 [INFO] 127.0.0.1 - - [31/May/2025 13:04:08] "[33mGET /config HTTP/1.1[0m" 404 -
+2025-05-31 13:07:24,665 [INFO] 127.0.0.1 - - [31/May/2025 13:07:24] "[33mGET /config HTTP/1.1[0m" 404 -
+2025-05-31 13:07:26,604 [INFO] 127.0.0.1 - - [31/May/2025 13:07:26] "GET /admin HTTP/1.1" 200 -
+2025-05-31 13:07:27,475 [INFO] 127.0.0.1 - - [31/May/2025 13:07:27] "GET /chat HTTP/1.1" 200 -
+2025-05-31 13:07:49,268 [INFO] 127.0.0.1 - - [31/May/2025 13:07:49] "[33mGET /config HTTP/1.1[0m" 404 -
+2025-05-31 13:09:11,488 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\__init__.py', reloading
+2025-05-31 13:11:31,437 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-31 13:11:31,438 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-31 13:11:31,440 [INFO]  * Restarting with stat
+2025-05-31 13:11:33,448 [WARNING]  * Debugger is active!
+2025-05-31 13:11:33,459 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 13:11:38,092 [INFO] 127.0.0.1 - - [31/May/2025 13:11:38] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:11:41,445 [INFO] 127.0.0.1 - - [31/May/2025 13:11:41] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:11:54,643 [INFO] 127.0.0.1 - - [31/May/2025 13:11:54] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:11:54,653 [INFO] 127.0.0.1 - - [31/May/2025 13:11:54] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:11:56,213 [INFO] 127.0.0.1 - - [31/May/2025 13:11:56] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:11:56,225 [INFO] 127.0.0.1 - - [31/May/2025 13:11:56] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:11:56,611 [INFO] 127.0.0.1 - - [31/May/2025 13:11:56] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:11:56,623 [INFO] 127.0.0.1 - - [31/May/2025 13:11:56] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:11:56,878 [INFO] 127.0.0.1 - - [31/May/2025 13:11:56] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:11:56,887 [INFO] 127.0.0.1 - - [31/May/2025 13:11:56] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:11:57,334 [INFO] 127.0.0.1 - - [31/May/2025 13:11:57] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:11:57,346 [INFO] 127.0.0.1 - - [31/May/2025 13:11:57] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:15:33,750 [INFO] 127.0.0.1 - - [31/May/2025 13:15:33] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 13:15:33,903 [INFO] 127.0.0.1 - - [31/May/2025 13:15:33] "GET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-05-31 13:15:33,904 [INFO] 127.0.0.1 - - [31/May/2025 13:15:33] "GET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-05-31 13:15:33,932 [INFO] 127.0.0.1 - - [31/May/2025 13:15:33] "GET /config?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-05-31 13:15:33,940 [INFO] 127.0.0.1 - - [31/May/2025 13:15:33] "GET /config?__debugger__=yes&cmd=resource&f=console.png&s=cGWqQSNuBhRbDg1YRYuW HTTP/1.1" 200 -
+2025-05-31 13:16:05,651 [INFO] 127.0.0.1 - - [31/May/2025 13:16:05] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:16:13,534 [INFO] 127.0.0.1 - - [31/May/2025 13:16:13] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:16:13,544 [INFO] 127.0.0.1 - - [31/May/2025 13:16:13] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:16:19,484 [INFO] 127.0.0.1 - - [31/May/2025 13:16:19] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:16:19,498 [INFO] 127.0.0.1 - - [31/May/2025 13:16:19] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:16:28,552 [INFO] 127.0.0.1 - - [31/May/2025 13:16:28] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:16:28,568 [INFO] 127.0.0.1 - - [31/May/2025 13:16:28] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:16:33,099 [INFO] 127.0.0.1 - - [31/May/2025 13:16:33] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:16:33,114 [INFO] 127.0.0.1 - - [31/May/2025 13:16:33] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:20:05,079 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\config.py', reloading
+2025-05-31 13:20:05,240 [INFO]  * Restarting with stat
+2025-05-31 13:20:07,667 [WARNING]  * Debugger is active!
+2025-05-31 13:20:07,678 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 13:20:11,626 [INFO] 127.0.0.1 - - [31/May/2025 13:20:11] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 13:20:11,779 [INFO] 127.0.0.1 - - [31/May/2025 13:20:11] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 13:20:11,780 [INFO] 127.0.0.1 - - [31/May/2025 13:20:11] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 13:20:11,801 [INFO] 127.0.0.1 - - [31/May/2025 13:20:11] "GET /config?__debugger__=yes&cmd=resource&f=console.png&s=tToRHdtEOAgFIZw8Bxfj HTTP/1.1" 200 -
+2025-05-31 13:20:23,023 [INFO] 127.0.0.1 - - [31/May/2025 13:20:23] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 13:20:23,047 [INFO] 127.0.0.1 - - [31/May/2025 13:20:23] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 13:20:23,049 [INFO] 127.0.0.1 - - [31/May/2025 13:20:23] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 13:20:23,080 [INFO] 127.0.0.1 - - [31/May/2025 13:20:23] "[36mGET /config?__debugger__=yes&cmd=resource&f=console.png&s=tToRHdtEOAgFIZw8Bxfj HTTP/1.1[0m" 304 -
+2025-05-31 13:20:23,223 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\config.py', reloading
+2025-05-31 13:20:23,383 [INFO]  * Restarting with stat
+2025-05-31 13:20:25,604 [WARNING]  * Debugger is active!
+2025-05-31 13:20:25,615 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 13:20:42,178 [INFO] 127.0.0.1 - - [31/May/2025 13:20:42] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 13:20:42,318 [INFO] 127.0.0.1 - - [31/May/2025 13:20:42] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 13:20:42,321 [INFO] 127.0.0.1 - - [31/May/2025 13:20:42] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 13:20:42,346 [INFO] 127.0.0.1 - - [31/May/2025 13:20:42] "GET /config?__debugger__=yes&cmd=resource&f=console.png&s=EEMKVDHFICoPly6BRH6P HTTP/1.1" 200 -
+2025-05-31 13:21:46,847 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\config.py', reloading
+2025-05-31 13:21:47,217 [INFO]  * Restarting with stat
+2025-05-31 13:21:49,324 [WARNING]  * Debugger is active!
+2025-05-31 13:21:49,335 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 13:21:49,509 [INFO] 127.0.0.1 - - [31/May/2025 13:21:49] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:21:49,650 [INFO] 127.0.0.1 - - [31/May/2025 13:21:49] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:21:52,302 [INFO] 127.0.0.1 - - [31/May/2025 13:21:52] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:21:53,371 [INFO] 127.0.0.1 - - [31/May/2025 13:21:53] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:22:55,557 [INFO] 127.0.0.1 - - [31/May/2025 13:22:55] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:24:43,319 [INFO] 127.0.0.1 - - [31/May/2025 13:24:43] "GET /config HTTP/1.1" 200 -
+2025-05-31 13:24:45,511 [INFO] 127.0.0.1 - - [31/May/2025 13:24:45] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-05-31 13:24:45,524 [INFO] 127.0.0.1 - - [31/May/2025 13:24:45] "GET /config HTTP/1.1" 200 -
+2025-05-31 17:43:15,747 [INFO] 127.0.0.1 - - [31/May/2025 17:43:15] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 17:43:15,981 [INFO] 127.0.0.1 - - [31/May/2025 17:43:15] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 17:43:15,983 [INFO] 127.0.0.1 - - [31/May/2025 17:43:15] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 17:43:16,036 [INFO] 127.0.0.1 - - [31/May/2025 17:43:16] "GET /config?__debugger__=yes&cmd=resource&f=console.png&s=ZGmyZPJ7v3mAZuDKjalp HTTP/1.1" 200 -
+2025-05-31 17:44:45,283 [INFO] 127.0.0.1 - - [31/May/2025 17:44:45] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 17:44:45,374 [INFO] 127.0.0.1 - - [31/May/2025 17:44:45] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 17:44:45,376 [INFO] 127.0.0.1 - - [31/May/2025 17:44:45] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 17:44:45,400 [INFO] 127.0.0.1 - - [31/May/2025 17:44:45] "[36mGET /config?__debugger__=yes&cmd=resource&f=console.png&s=ZGmyZPJ7v3mAZuDKjalp HTTP/1.1[0m" 304 -
+2025-05-31 17:45:06,388 [INFO] 127.0.0.1 - - [31/May/2025 17:45:06] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 17:45:06,423 [INFO] 127.0.0.1 - - [31/May/2025 17:45:06] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 17:45:06,424 [INFO] 127.0.0.1 - - [31/May/2025 17:45:06] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 17:45:06,455 [INFO] 127.0.0.1 - - [31/May/2025 17:45:06] "[36mGET /config?__debugger__=yes&cmd=resource&f=console.png&s=ZGmyZPJ7v3mAZuDKjalp HTTP/1.1[0m" 304 -
+2025-05-31 17:45:08,473 [INFO] 127.0.0.1 - - [31/May/2025 17:45:08] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 17:45:08,506 [INFO] 127.0.0.1 - - [31/May/2025 17:45:08] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 17:45:08,509 [INFO] 127.0.0.1 - - [31/May/2025 17:45:08] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 17:45:08,537 [INFO] 127.0.0.1 - - [31/May/2025 17:45:08] "[36mGET /config?__debugger__=yes&cmd=resource&f=console.png&s=ZGmyZPJ7v3mAZuDKjalp HTTP/1.1[0m" 304 -
+2025-05-31 17:45:59,995 [INFO] 127.0.0.1 - - [31/May/2025 17:45:59] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 17:46:00,034 [INFO] 127.0.0.1 - - [31/May/2025 17:46:00] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 17:46:00,040 [INFO] 127.0.0.1 - - [31/May/2025 17:46:00] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 17:46:00,064 [INFO] 127.0.0.1 - - [31/May/2025 17:46:00] "[36mGET /config?__debugger__=yes&cmd=resource&f=console.png&s=ZGmyZPJ7v3mAZuDKjalp HTTP/1.1[0m" 304 -
+2025-05-31 17:46:07,401 [INFO] 127.0.0.1 - - [31/May/2025 17:46:07] "GET /config HTTP/1.1" 200 -
+2025-05-31 17:47:32,616 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\config.py', reloading
+2025-05-31 17:47:33,075 [INFO]  * Restarting with stat
+2025-05-31 17:50:42,864 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-31 17:50:42,865 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-31 17:50:42,870 [INFO]  * Restarting with stat
+2025-05-31 17:50:44,781 [WARNING]  * Debugger is active!
+2025-05-31 17:50:44,797 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 17:51:06,810 [INFO] 127.0.0.1 - - [31/May/2025 17:51:06] "GET /config HTTP/1.1" 200 -
+2025-05-31 17:51:59,877 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\config.py', reloading
+2025-05-31 17:52:00,079 [INFO]  * Restarting with stat
+2025-05-31 17:52:02,991 [WARNING]  * Debugger is active!
+2025-05-31 17:52:03,004 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 17:53:19,182 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\config.py', reloading
+2025-05-31 17:53:19,332 [INFO]  * Restarting with stat
+2025-05-31 18:55:13,231 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-31 18:55:13,232 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-31 18:55:13,239 [INFO]  * Restarting with stat
+2025-05-31 18:55:41,289 [WARNING]  * Debugger is active!
+2025-05-31 18:55:41,301 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 18:55:42,385 [INFO] 127.0.0.1 - - [31/May/2025 18:55:42] "GET /admin HTTP/1.1" 200 -
+2025-05-31 18:55:42,437 [INFO] 127.0.0.1 - - [31/May/2025 18:55:42] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 18:55:42,691 [INFO] 127.0.0.1 - - [31/May/2025 18:55:42] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 18:55:42,692 [INFO] 127.0.0.1 - - [31/May/2025 18:55:42] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 18:55:42,769 [INFO] 127.0.0.1 - - [31/May/2025 18:55:42] "GET /config?__debugger__=yes&cmd=resource&f=console.png&s=yBx2S6cOQ0GyG6NmJVv8 HTTP/1.1" 200 -
+2025-05-31 18:57:14,194 [INFO] 127.0.0.1 - - [31/May/2025 18:57:14] "[35m[1mGET /config HTTP/1.1[0m" 500 -
+2025-05-31 18:57:14,253 [INFO] 127.0.0.1 - - [31/May/2025 18:57:14] "[36mGET /config?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-05-31 18:57:14,254 [INFO] 127.0.0.1 - - [31/May/2025 18:57:14] "[36mGET /config?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-05-31 18:57:14,307 [INFO] 127.0.0.1 - - [31/May/2025 18:57:14] "[36mGET /config?__debugger__=yes&cmd=resource&f=console.png&s=yBx2S6cOQ0GyG6NmJVv8 HTTP/1.1[0m" 304 -
+2025-05-31 19:08:00,088 [INFO] 127.0.0.1 - - [31/May/2025 19:08:00] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:08:17,185 [INFO] 127.0.0.1 - - [31/May/2025 19:08:17] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:08:18,182 [INFO] 127.0.0.1 - - [31/May/2025 19:08:18] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:08:35,361 [INFO] 127.0.0.1 - - [31/May/2025 19:08:35] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:08:36,452 [INFO] 127.0.0.1 - - [31/May/2025 19:08:36] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:08:38,287 [INFO] 127.0.0.1 - - [31/May/2025 19:08:38] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:10:37,967 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-31 19:10:37,967 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-31 19:10:37,973 [INFO]  * Restarting with stat
+2025-05-31 19:11:03,468 [WARNING]  * Debugger is active!
+2025-05-31 19:11:03,482 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 19:11:04,569 [INFO] 127.0.0.1 - - [31/May/2025 19:11:04] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:11:04,571 [INFO] 127.0.0.1 - - [31/May/2025 19:11:04] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:11:04,574 [INFO] 127.0.0.1 - - [31/May/2025 19:11:04] "GET / HTTP/1.1" 200 -
+2025-05-31 19:11:47,621 [INFO] 127.0.0.1 - - [31/May/2025 19:11:47] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:11:48,876 [INFO] 127.0.0.1 - - [31/May/2025 19:11:48] "GET / HTTP/1.1" 200 -
+2025-05-31 19:11:49,811 [INFO] 127.0.0.1 - - [31/May/2025 19:11:49] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:11:50,861 [INFO] 127.0.0.1 - - [31/May/2025 19:11:50] "GET /admin HTTP/1.1" 200 -
+2025-05-31 19:11:52,902 [INFO] 127.0.0.1 - - [31/May/2025 19:11:52] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:11:54,062 [INFO] 127.0.0.1 - - [31/May/2025 19:11:54] "GET /grafo HTTP/1.1" 200 -
+2025-05-31 19:11:54,615 [INFO] 127.0.0.1 - - [31/May/2025 19:11:54] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:13:47,311 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\__init__.py', reloading
+2025-05-31 19:13:49,239 [INFO]  * Restarting with stat
+2025-05-31 19:14:12,335 [WARNING]  * Debugger is active!
+2025-05-31 19:14:12,358 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 19:16:35,109 [INFO] 127.0.0.1 - - [31/May/2025 19:16:35] "GET / HTTP/1.1" 200 -
+2025-05-31 19:16:37,832 [INFO] 127.0.0.1 - - [31/May/2025 19:16:37] "GET / HTTP/1.1" 200 -
+2025-05-31 19:16:39,122 [INFO] 127.0.0.1 - - [31/May/2025 19:16:39] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:16:40,253 [INFO] 127.0.0.1 - - [31/May/2025 19:16:40] "GET /admin HTTP/1.1" 200 -
+2025-05-31 19:16:41,250 [INFO] 127.0.0.1 - - [31/May/2025 19:16:41] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:16:42,241 [INFO] 127.0.0.1 - - [31/May/2025 19:16:42] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:16:54,712 [INFO] 127.0.0.1 - - [31/May/2025 19:16:54] "GET /grafo HTTP/1.1" 200 -
+2025-05-31 19:16:55,366 [INFO] 127.0.0.1 - - [31/May/2025 19:16:55] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:16:55,772 [INFO] 127.0.0.1 - - [31/May/2025 19:16:55] "GET /config HTTP/1.1" 200 -
+2025-05-31 19:16:56,615 [INFO] 127.0.0.1 - - [31/May/2025 19:16:56] "GET /admin HTTP/1.1" 200 -
+2025-05-31 19:16:57,248 [INFO] 127.0.0.1 - - [31/May/2025 19:16:57] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:17:33,319 [INFO] 127.0.0.1 - - [31/May/2025 19:17:33] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:29:59,218 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-31 19:29:59,218 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-31 19:29:59,226 [INFO]  * Restarting with stat
+2025-05-31 19:30:28,987 [WARNING]  * Debugger is active!
+2025-05-31 19:30:28,999 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 19:30:30,564 [INFO] 127.0.0.1 - - [31/May/2025 19:30:30] "GET / HTTP/1.1" 200 -
+2025-05-31 19:30:30,568 [INFO] 127.0.0.1 - - [31/May/2025 19:30:30] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:31:29,340 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\utils\\doc_loader.py', reloading
+2025-05-31 19:31:30,631 [INFO]  * Restarting with stat
+2025-05-31 19:31:55,237 [WARNING]  * Debugger is active!
+2025-05-31 19:31:55,260 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 19:31:56,868 [INFO] 127.0.0.1 - - [31/May/2025 19:31:56] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:37:14,860 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\utils\\doc_loader.py', reloading
+2025-05-31 19:37:16,331 [INFO]  * Restarting with stat
+2025-05-31 19:39:30,506 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-05-31 19:39:30,506 [INFO] [33mPress CTRL+C to quit[0m
+2025-05-31 19:39:30,508 [INFO]  * Restarting with stat
+2025-05-31 19:39:52,763 [WARNING]  * Debugger is active!
+2025-05-31 19:39:52,782 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 19:40:16,547 [INFO] 127.0.0.1 - - [31/May/2025 19:40:16] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:44:44,923 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_documents.py', reloading
+2025-05-31 19:44:46,275 [INFO]  * Restarting with stat
+2025-05-31 19:45:10,600 [WARNING]  * Debugger is active!
+2025-05-31 19:45:10,616 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 19:46:42,680 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_documents.py', reloading
+2025-05-31 19:46:44,183 [INFO]  * Restarting with stat
+2025-05-31 19:47:09,468 [WARNING]  * Debugger is active!
+2025-05-31 19:47:09,485 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 19:47:10,838 [INFO] 127.0.0.1 - - [31/May/2025 19:47:10] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:47:14,071 [INFO] 127.0.0.1 - - [31/May/2025 19:47:14] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:47:18,789 [INFO] 127.0.0.1 - - [31/May/2025 19:47:18] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:47:21,021 [INFO] 127.0.0.1 - - [31/May/2025 19:47:21] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:47:23,042 [INFO] 127.0.0.1 - - [31/May/2025 19:47:23] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:47:24,015 [INFO] 127.0.0.1 - - [31/May/2025 19:47:24] "GET /admin HTTP/1.1" 200 -
+2025-05-31 19:47:25,571 [INFO] 127.0.0.1 - - [31/May/2025 19:47:25] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:47:26,164 [INFO] 127.0.0.1 - - [31/May/2025 19:47:26] "GET / HTTP/1.1" 200 -
+2025-05-31 19:48:02,287 [INFO] 127.0.0.1 - - [31/May/2025 19:48:02] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:50:37,669 [INFO] 127.0.0.1 - - [31/May/2025 19:50:37] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:51:45,181 [INFO] 127.0.0.1 - - [31/May/2025 19:51:45] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-05-31 19:51:46,628 [INFO] 127.0.0.1 - - [31/May/2025 19:51:46] "GET / HTTP/1.1" 200 -
+2025-05-31 19:51:50,363 [INFO] 127.0.0.1 - - [31/May/2025 19:51:50] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 19:53:37,944 [INFO] 127.0.0.1 - - [31/May/2025 19:53:37] "POST / HTTP/1.1" 200 -
+2025-05-31 20:46:26,979 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_documents.py', reloading
+2025-05-31 20:46:32,944 [INFO]  * Restarting with stat
+2025-05-31 20:47:08,461 [WARNING]  * Debugger is active!
+2025-05-31 20:47:08,474 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 20:58:02,326 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_documents.py', reloading
+2025-05-31 20:58:04,106 [INFO]  * Restarting with stat
+2025-05-31 20:58:25,180 [WARNING]  * Debugger is active!
+2025-05-31 20:58:25,195 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 20:58:26,419 [INFO] 127.0.0.1 - - [31/May/2025 20:58:26] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 21:02:21,533 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\vectorstore.py', reloading
+2025-05-31 21:02:23,523 [INFO]  * Restarting with stat
+2025-05-31 21:02:45,286 [WARNING]  * Debugger is active!
+2025-05-31 21:02:45,298 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 21:02:46,583 [INFO] 127.0.0.1 - - [31/May/2025 21:02:46] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 21:03:31,422 [INFO] 127.0.0.1 - - [31/May/2025 21:03:31] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 21:07:38,832 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\__init__.py', reloading
+2025-05-31 21:07:40,194 [INFO]  * Restarting with stat
+2025-05-31 21:08:06,386 [WARNING]  * Debugger is active!
+2025-05-31 21:08:06,397 [INFO]  * Debugger PIN: 486-404-401
+2025-05-31 21:09:13,780 [INFO] 127.0.0.1 - - [31/May/2025 21:09:13] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 21:09:16,779 [INFO] 127.0.0.1 - - [31/May/2025 21:09:16] "GET /vectorstore/documento/copia_Matrícula%20uji.pdf HTTP/1.1" 200 -
+2025-05-31 21:09:23,428 [INFO] 127.0.0.1 - - [31/May/2025 21:09:23] "GET /vectorstore HTTP/1.1" 200 -
+2025-05-31 21:09:26,781 [INFO] 127.0.0.1 - - [31/May/2025 21:09:26] "GET /vectorstore/documento/CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf HTTP/1.1" 200 -
+2025-05-31 21:09:35,936 [INFO] 127.0.0.1 - - [31/May/2025 21:09:35] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 12:55:37,976 [INFO] 127.0.0.1 - - [01/Jun/2025 12:55:37] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 12:55:40,215 [INFO] 127.0.0.1 - - [01/Jun/2025 12:55:40] "GET / HTTP/1.1" 200 -
+2025-06-01 22:02:01,927 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-01 22:02:01,927 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-01 22:02:01,930 [INFO]  * Restarting with stat
+2025-06-01 22:02:34,794 [WARNING]  * Debugger is active!
+2025-06-01 22:02:34,815 [INFO]  * Debugger PIN: 486-404-401
+2025-06-01 22:02:36,147 [INFO] 127.0.0.1 - - [01/Jun/2025 22:02:36] "GET / HTTP/1.1" 200 -
+2025-06-01 22:02:46,553 [INFO] 127.0.0.1 - - [01/Jun/2025 22:02:46] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:12:18,583 [INFO] 127.0.0.1 - - [01/Jun/2025 22:12:18] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:12:23,730 [INFO] 127.0.0.1 - - [01/Jun/2025 22:12:23] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:12:32,400 [INFO] 127.0.0.1 - - [01/Jun/2025 22:12:32] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:12:34,167 [INFO] 127.0.0.1 - - [01/Jun/2025 22:12:34] "GET /config HTTP/1.1" 200 -
+2025-06-01 22:12:41,094 [INFO] 127.0.0.1 - - [01/Jun/2025 22:12:41] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-06-01 22:12:41,111 [INFO] 127.0.0.1 - - [01/Jun/2025 22:12:41] "GET /config HTTP/1.1" 200 -
+2025-06-01 22:13:02,007 [INFO] 127.0.0.1 - - [01/Jun/2025 22:13:02] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-06-01 22:13:02,020 [INFO] 127.0.0.1 - - [01/Jun/2025 22:13:02] "GET /config HTTP/1.1" 200 -
+2025-06-01 22:14:40,776 [INFO] 127.0.0.1 - - [01/Jun/2025 22:14:40] "GET /config HTTP/1.1" 200 -
+2025-06-01 22:19:22,472 [INFO] 127.0.0.1 - - [01/Jun/2025 22:19:22] "[33mGET /chat HTTP/1.1[0m" 404 -
+2025-06-01 22:19:23,600 [INFO] 127.0.0.1 - - [01/Jun/2025 22:19:23] "GET / HTTP/1.1" 200 -
+2025-06-01 22:19:25,338 [INFO] 127.0.0.1 - - [01/Jun/2025 22:19:25] "GET /admin HTTP/1.1" 200 -
+2025-06-01 22:19:26,582 [INFO] 127.0.0.1 - - [01/Jun/2025 22:19:26] "GET /config HTTP/1.1" 200 -
+2025-06-01 22:19:27,473 [INFO] 127.0.0.1 - - [01/Jun/2025 22:19:27] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:19:28,508 [INFO] 127.0.0.1 - - [01/Jun/2025 22:19:28] "GET /grafo HTTP/1.1" 200 -
+2025-06-01 22:20:30,546 [INFO] 127.0.0.1 - - [01/Jun/2025 22:20:30] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:20:32,805 [INFO] 127.0.0.1 - - [01/Jun/2025 22:20:32] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:21:30,645 [INFO] 127.0.0.1 - - [01/Jun/2025 22:21:30] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-01 22:36:59,696 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-01 22:37:02,871 [INFO]  * Restarting with stat
+2025-06-01 22:37:24,688 [WARNING]  * Debugger is active!
+2025-06-01 22:37:24,700 [INFO]  * Debugger PIN: 486-404-401
+2025-06-01 22:37:40,878 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-01 22:37:42,183 [INFO]  * Restarting with stat
+2025-06-01 22:38:06,404 [WARNING]  * Debugger is active!
+2025-06-01 22:38:06,420 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 17:00:12,564 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-02 17:00:12,565 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-02 17:00:12,575 [INFO]  * Restarting with stat
+2025-06-02 17:00:41,579 [WARNING]  * Debugger is active!
+2025-06-02 17:00:41,594 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 17:00:42,825 [INFO] 127.0.0.1 - - [02/Jun/2025 17:00:42] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 17:02:58,434 [INFO] 127.0.0.1 - - [02/Jun/2025 17:02:58] "GET /config HTTP/1.1" 200 -
+2025-06-02 17:02:59,143 [INFO] 127.0.0.1 - - [02/Jun/2025 17:02:59] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 17:03:01,861 [INFO] 127.0.0.1 - - [02/Jun/2025 17:03:01] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 17:03:02,570 [INFO] 127.0.0.1 - - [02/Jun/2025 17:03:02] "GET /config HTTP/1.1" 200 -
+2025-06-02 17:03:55,288 [INFO] 127.0.0.1 - - [02/Jun/2025 17:03:55] "GET /admin HTTP/1.1" 200 -
+2025-06-02 17:03:55,999 [INFO] 127.0.0.1 - - [02/Jun/2025 17:03:55] "GET /config HTTP/1.1" 200 -
+2025-06-02 17:03:56,598 [INFO] 127.0.0.1 - - [02/Jun/2025 17:03:56] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 17:14:51,045 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 17:14:56,051 [INFO]  * Restarting with stat
+2025-06-02 17:15:27,391 [WARNING]  * Debugger is active!
+2025-06-02 17:15:27,411 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 17:16:28,797 [INFO] 127.0.0.1 - - [02/Jun/2025 17:16:28] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 17:16:33,411 [INFO] 127.0.0.1 - - [02/Jun/2025 17:16:33] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 17:26:31,058 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 17:26:34,001 [INFO]  * Restarting with stat
+2025-06-02 17:27:00,302 [WARNING]  * Debugger is active!
+2025-06-02 17:27:00,319 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 17:29:01,837 [INFO] 127.0.0.1 - - [02/Jun/2025 17:29:01] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 17:29:07,580 [INFO] 127.0.0.1 - - [02/Jun/2025 17:29:07] "GET /config HTTP/1.1" 200 -
+2025-06-02 17:29:50,785 [INFO] 127.0.0.1 - - [02/Jun/2025 17:29:50] "[32mPOST /config HTTP/1.1[0m" 302 -
+2025-06-02 17:29:50,821 [INFO] 127.0.0.1 - - [02/Jun/2025 17:29:50] "GET /config HTTP/1.1" 200 -
+2025-06-02 17:40:42,150 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 17:40:46,208 [INFO]  * Restarting with stat
+2025-06-02 17:41:11,274 [WARNING]  * Debugger is active!
+2025-06-02 17:41:11,285 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 17:44:30,864 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 17:44:32,456 [INFO]  * Restarting with stat
+2025-06-02 17:45:01,121 [WARNING]  * Debugger is active!
+2025-06-02 17:45:01,135 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 17:58:56,078 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 17:58:58,102 [INFO]  * Restarting with stat
+2025-06-02 17:59:13,499 [WARNING]  * Debugger is active!
+2025-06-02 17:59:13,512 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 18:21:14,172 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 18:21:18,200 [INFO]  * Restarting with stat
+2025-06-02 19:57:36,164 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-02 19:57:36,164 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-02 19:57:36,173 [INFO]  * Restarting with stat
+2025-06-02 19:57:50,087 [WARNING]  * Debugger is active!
+2025-06-02 19:57:50,112 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 19:59:58,899 [INFO] 127.0.0.1 - - [02/Jun/2025 19:59:58] "GET /config HTTP/1.1" 200 -
+2025-06-02 20:00:02,293 [INFO] 127.0.0.1 - - [02/Jun/2025 20:00:02] "GET /config HTTP/1.1" 200 -
+2025-06-02 20:00:03,278 [INFO] 127.0.0.1 - - [02/Jun/2025 20:00:03] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:10,816 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_documents.py', reloading
+2025-06-02 20:27:12,888 [INFO]  * Restarting with stat
+2025-06-02 20:27:36,248 [WARNING]  * Debugger is active!
+2025-06-02 20:27:36,263 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 20:27:36,440 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:36] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:36,445 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:36] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:40,407 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:40] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:42,080 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:42] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:42,918 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:42] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:43,607 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:43] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:46,488 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:46] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:49,501 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:49] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:52,568 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:52] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:53,797 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:53] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:27:54,092 [INFO] 127.0.0.1 - - [02/Jun/2025 20:27:54] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:32:48,383 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\routes\\vectorstore.py', reloading
+2025-06-02 20:32:51,502 [INFO]  * Restarting with stat
+2025-06-02 20:33:13,298 [WARNING]  * Debugger is active!
+2025-06-02 20:33:13,310 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 20:34:11,670 [INFO] 127.0.0.1 - - [02/Jun/2025 20:34:11] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:34:12,616 [INFO] 127.0.0.1 - - [02/Jun/2025 20:34:12] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:40:20,732 [INFO] 127.0.0.1 - - [02/Jun/2025 20:40:20] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:40:21,974 [INFO] 127.0.0.1 - - [02/Jun/2025 20:40:21] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 20:41:22,834 [INFO] 127.0.0.1 - - [02/Jun/2025 20:41:22] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-02 21:41:55,079 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 21:41:58,949 [INFO]  * Restarting with stat
+2025-06-02 21:42:24,340 [WARNING]  * Debugger is active!
+2025-06-02 21:42:24,375 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 21:47:22,397 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_web.py', reloading
+2025-06-02 21:47:25,573 [INFO]  * Restarting with stat
+2025-06-02 21:47:48,318 [WARNING]  * Debugger is active!
+2025-06-02 21:47:48,330 [INFO]  * Debugger PIN: 486-404-401
+2025-06-02 21:50:14,650 [INFO]  * Detected change in 'C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\chatbot_comparador\\app\\services\\ingest_documents.py', reloading
+2025-06-02 21:50:16,129 [INFO]  * Restarting with stat
+2025-06-02 21:50:37,345 [WARNING]  * Debugger is active!
+2025-06-02 21:50:37,376 [INFO]  * Debugger PIN: 486-404-401

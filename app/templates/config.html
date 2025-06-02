@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}Configuración de Ingestión{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+  <h2 class="mb-4">⚙️ Configuración de Fuentes RAG</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- 📁 Carpetas de documentos -->
+  <div class="card shadow p-4 mb-4 rounded">
+    <h4>📄 Carpetas de documentos</h4>
+    <ul class="list-group mb-3">
+      {% for carpeta in carpetas %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ carpeta }}
+        <form method="post" class="d-inline">
+          <input type="hidden" name="eliminar_carpeta" value="{{ carpeta }}">
+          <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+        </form>
+      </li>
+      {% else %}
+      <li class="list-group-item text-muted">No hay carpetas configuradas</li>
+      {% endfor %}
+    </ul>
+    <form method="post" class="row g-3">
+      <div class="col-md-10">
+        <input type="text" name="nueva_carpeta" class="form-control" placeholder="Ej: C:/documentos/leyes">
+      </div>
+      <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary">➕ Añadir carpeta</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 🌐 URLs individuales -->
+  <div class="card shadow p-4 mb-4 rounded">
+    <h4>🌐 URLs individuales (con profundidad)</h4>
+    <ul class="list-group mb-3">
+      {% for fuente in urls %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ fuente.url }} <span class="badge bg-secondary">🔁 {{ fuente.depth }} página(s)</span>
+        <form method="post" class="d-inline">
+          <input type="hidden" name="eliminar_url" value="{{ fuente.url }}">
+          <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+        </form>
+      </li>
+      {% else %}
+      <li class="list-group-item text-muted">No hay URLs configuradas</li>
+      {% endfor %}
+    </ul>
+    <form method="post" class="row g-3">
+      <div class="col-md-7">
+        <input type="text" name="nueva_url" class="form-control" placeholder="https://ejemplo.com">
+      </div>
+      <div class="col-md-3">
+        <input type="number" name="profundidad_url" class="form-control" placeholder="Páginas" min="1" max="100">
+      </div>
+      <div class="col-md-2 d-grid">
+        <button type="submit" name="accion" value="add_url" class="btn btn-primary">➕ Añadir URL</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 🔌 APIs configuradas -->
+  <div class="card shadow p-4 mb-4 rounded">
+    <h4>🔌 APIs configuradas</h4>
+    <ul class="list-group mb-3">
+      {% for api in apis %}
+      <li class="list-group-item d-flex justify-content-between align-items-start flex-column">
+        <div>
+          <strong>{{ api.name }}</strong><br>
+          <small>{{ api.url }}</small>
+          <span class="badge bg-info text-dark">{{ api.auth }}</span>
+          {% if api.env_key %}<span class="badge bg-warning text-dark">{{ api.env_key }}</span>{% endif %}
+        </div>
+        <form method="post" class="d-inline mt-2">
+          <input type="hidden" name="eliminar_api" value="{{ api.url }}">
+          <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+        </form>
+      </li>
+      {% else %}
+      <li class="list-group-item text-muted">No hay APIs configuradas</li>
+      {% endfor %}
+    </ul>
+    <form method="post" class="row g-3">
+      <div class="col-md-3">
+        <input type="text" name="api_name" class="form-control" placeholder="Nombre API" required>
+      </div>
+      <div class="col-md-4">
+        <input type="url" name="api_url" class="form-control" placeholder="https://api.example.com/data" required>
+      </div>
+      <div class="col-md-2">
+        <select name="api_auth" class="form-select">
+          <option value="none">Sin autenticación</option>
+          <option value="env">.env key</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <input type="text" name="api_env_key" class="form-control" placeholder="API_KEY_NAME">
+      </div>
+      <div class="col-md-1 d-grid">
+        <button type="submit" name="accion" value="add_api" class="btn btn-primary">➕</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 🗃️ Bases de datos -->
+  <div class="card shadow p-4 mb-4 rounded">
+    <h4>🗃️ Bases de datos</h4>
+    <ul class="list-group mb-3">
+      {% for db in bases_datos %}
+      <li class="list-group-item d-flex justify-content-between align-items-start flex-column">
+        <div>
+          <strong>{{ db.name }}</strong> <small class="text-muted">({{ db.uri }})</small><br>
+          <code>{{ db.query }}</code>
+        </div>
+        <form method="post" class="d-inline mt-2">
+          <input type="hidden" name="eliminar_db" value="{{ db.name }}">
+          <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+        </form>
+      </li>
+      {% else %}
+      <li class="list-group-item text-muted">No hay bases de datos configuradas</li>
+      {% endfor %}
+    </ul>
+    <form method="post" class="row g-3">
+      <div class="col-md-3">
+        <input type="text" name="db_name" class="form-control" placeholder="Nombre" required>
+      </div>
+      <div class="col-md-4">
+        <input type="text" name="db_uri" class="form-control" placeholder="sqlite:///archivo.db" required>
+      </div>
+      <div class="col-md-4">
+        <input type="text" name="db_query" class="form-control" placeholder="SELECT * FROM tabla" required>
+      </div>
+      <div class="col-md-1 d-grid">
+        <button type="submit" name="accion" value="add_db" class="btn btn-primary">➕</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 🔢 Parámetros RAG -->
+  <div class="card shadow p-4 mb-4 rounded">
+    <h4>🔢 Parámetros generales</h4>
+    <form method="post" class="row g-3">
+      <div class="col-md-10">
+        <label for="rag_k" class="form-label">Número de fragmentos a recuperar (RAG):</label>
+        <input type="number" id="rag_k" name="rag_k" class="form-control" value="{{ rag_k }}" min="1" max="10">
+        <div class="form-text">
+          Define cuántos fragmentos se recuperarán del índice vectorial para construir el contexto del chatbot.
+          Un valor mayor puede enriquecer las respuestas, pero también aumentar el ruido.
+        </div>
+      </div>
+      <div class="col-md-2 d-grid align-items-end">
+        <button type="submit" name="accion" value="guardar_k" class="btn btn-success">Guardar</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

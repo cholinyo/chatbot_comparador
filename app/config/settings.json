@@ -1,0 +1,31 @@
+{
+  "modelo_local": "llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+  "modelo_openai": "gpt-4",
+  "document_folders": [
+    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes2",
+    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes1"
+  ],
+  "web_sources": [
+    {
+      "url": "https://transparencia.onda.es",
+      "depth": 10
+    },
+    {
+      "url": "https://joventut.onda.es/",
+      "depth": 4
+    }
+  ],
+  "api_sources": [
+    {
+      "name": "OpenData Onda",
+      "url": "https://api.onda.es/datos",
+      "auth": "env",
+      "env_key": "API_KEY_ONDA"
+    },
+    {
+      "name": "GeoInfo",
+      "url": "https://api.geo.com/v1/info",
+      "auth": "none"
+    }
+  ]
+}

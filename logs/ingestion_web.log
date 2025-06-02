@@ -1,0 +1,45 @@
+2025-06-02 18:43:19,338 [INFO] Use pytorch device_name: cpu
+2025-06-02 18:43:19,338 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 18:43:24,206 [INFO] 🚀 Procesando dominio: https://transparencia.onda.es (máx 10 páginas)
+2025-06-02 18:43:24,206 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 18:46:07,894 [INFO] Use pytorch device_name: cpu
+2025-06-02 18:46:07,894 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 18:46:12,083 [INFO] 🚀 Procesando dominio: https://transparencia.onda.es (máx 10 páginas)
+2025-06-02 18:46:12,083 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 21:52:06,117 [INFO] Use pytorch device_name: cpu
+2025-06-02 21:52:06,117 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 21:52:14,230 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 21:52:14,230 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 21:52:14,381 [WARNING] ❌ Error en https://transparencia.onda.es: name 'extraer_fragmentos' is not defined
+2025-06-02 21:52:14,382 [WARNING] ⚠️ Enlaces no extraídos de https://transparencia.onda.es: module 'app.utils.ingestion' has no attribute 'extraer_enlaces'
+2025-06-02 21:52:14,382 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 0
+2025-06-02 22:08:40,547 [INFO] Use pytorch device_name: cpu
+2025-06-02 22:08:40,548 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 22:08:44,673 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 22:08:44,673 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 22:08:44,817 [WARNING] ❌ Error en https://transparencia.onda.es: name 'extraer_fragmentos' is not defined
+2025-06-02 22:08:44,818 [WARNING] ⚠️ Enlaces no extraídos de https://transparencia.onda.es: module 'app.utils.ingestion' has no attribute 'extraer_enlaces'
+2025-06-02 22:08:44,818 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 0
+2025-06-02 22:08:44,826 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 22:08:44,827 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 22:08:44,931 [WARNING] ⚠️ Error con requests en https://joventut.onda.es/: HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 22:08:45,011 [WARNING] ⚠️ Error con requests en https://joventut.onda.es/: HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 22:08:45,011 [WARNING] ❌ No se pudo obtener contenido de: https://joventut.onda.es/
+2025-06-02 22:08:45,011 [WARNING] ⚠️ Enlaces no extraídos de https://joventut.onda.es/: module 'app.utils.ingestion' has no attribute 'extraer_enlaces'
+2025-06-02 22:08:45,011 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 0
+2025-06-02 22:08:45,012 [WARNING] ❌ No se generaron embeddings
+2025-06-02 22:11:05,422 [INFO] Use pytorch device_name: cpu
+2025-06-02 22:11:05,422 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 22:11:09,649 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 22:11:09,649 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 22:11:09,768 [WARNING] ❌ Error en https://transparencia.onda.es: name 'extraer_fragmentos' is not defined
+2025-06-02 22:11:09,768 [WARNING] ⚠️ Enlaces no extraídos de https://transparencia.onda.es: module 'app.utils.ingestion' has no attribute 'extraer_enlaces'
+2025-06-02 22:11:09,768 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 0
+2025-06-02 22:11:09,770 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 22:11:09,770 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 22:11:09,847 [WARNING] ⚠️ Error con requests en https://joventut.onda.es/: HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 22:11:09,968 [WARNING] ⚠️ Error con requests en https://joventut.onda.es/: HTTPSConnectionPool(host='joventut.onda.es', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1028)')))
+2025-06-02 22:11:09,968 [WARNING] ❌ No se pudo obtener contenido de: https://joventut.onda.es/
+2025-06-02 22:11:09,968 [WARNING] ⚠️ Enlaces no extraídos de https://joventut.onda.es/: module 'app.utils.ingestion' has no attribute 'extraer_enlaces'
+2025-06-02 22:11:09,968 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 0
+2025-06-02 22:11:09,969 [WARNING] ❌ No se generaron embeddings
