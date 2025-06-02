@@ -44,7 +44,7 @@ def crawl_por_paginas(dominio, max_paginas):
 
         logging.info(f"🌐 Visitando: {url}")
         try:
-            fragmentos = ingestion.extraer_texto_web(url)
+            fragmentos = ingestion.extraer_texto(url)
             if fragmentos:
                 paginas.append({"url": url, "fragmentos": fragmentos})
                 logging.info(f"✅ {url} -> {len(fragmentos)} fragmentos")
@@ -52,7 +52,7 @@ def crawl_por_paginas(dominio, max_paginas):
             logging.warning(f"❌ Error en {url}: {e}")
 
         try:
-            enlaces = ingestion.extraer_enlaces(url)
+            enlaces = ingestion.obtener_enlaces(url)
             for enlace in enlaces:
                 absoluto = urljoin(url, enlace)
                 if urlparse(absoluto).netloc == urlparse(dominio).netloc and absoluto not in visitadas:
@@ -103,6 +103,11 @@ def main():
         return
 
     embeddings_np = np.array(all_embeddings).astype("float32")
+
+    if embeddings_np.ndim != 2:
+        logging.error(f"❌ Error en embeddings: forma inesperada {embeddings_np.shape}")
+        return
+
     index = faiss.IndexFlatL2(embeddings_np.shape[1])
     index.add(embeddings_np)
 

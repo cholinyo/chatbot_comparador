@@ -1,40 +1,53 @@
 from bs4 import BeautifulSoup
-import requests
-from typing import List
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import WebDriverException
-import logging
-import re
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+import requests
+from urllib.parse import urljoin, urlparse
 
-MIN_LONGITUD_FRAGMENTO = 30
-MAX_LONGITUD_FRAGMENTO = 1000  # caracteres, configurable
+# Configuración del navegador sin interfaz (headless)
+def get_driver():
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(options=options)
+    return driver
 
-def extraer_texto_web(url: str, selectores: List[str] = None) -> List[str]:
-    if selectores is None:
-        selectores = ['p', 'h1', 'h2', 'h3', 'article', 'section', 'div']
+# Extrae texto limpio desde una URL
 
-    html = obtener_html_con_requests(url)
-    if html is None:
-        html = obtener_html_con_requests(url)
-
-    if html is None:
-        logging.warning(f"❌ No se pudo obtener contenido de: {url}")
-        return []
-
-    fragmentos = extraer_fragmentos(html, selectores)
-    fragmentos_limpios = limpiar_fragmentos(fragmentos)
-
-    logging.info(f"📄 {len(fragmentos_limpios)} fragmentos extraídos de: {url}")
-    return fragmentos_limpios
-
-
-def obtener_html_con_requests(url: str) -> str:
+def extraer_texto(url):
     try:
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()
-        return response.text
+        driver = get_driver()
+        driver.get(url)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+        html = driver.page_source
+        driver.quit()
+        soup = BeautifulSoup(html, "html.parser")
+        return soup.get_text(separator="\n").strip()
     except Exception as e:
-        logging.warning(f"⚠️ Error con requests en {url}: {e}")
-        return None
+        return ""
+
+# Extrae enlaces del mismo dominio
+
+def obtener_enlaces(url):
+    try:
+        driver = get_driver()
+        driver.get(url)
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "a")))
+        html = driver.page_source
+        driver.quit()
+        soup = BeautifulSoup(html, "html.parser")
+        enlaces = []
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            absoluto = urljoin(url, href)
+            if urlparse(absoluto).netloc == urlparse(url).netloc:
+                enlaces.append(absoluto)
+        return list(set(enlaces))
+    except Exception:
+        return []

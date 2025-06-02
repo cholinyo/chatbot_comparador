@@ -8,22 +8,24 @@ from sentence_transformers import SentenceTransformer
 from unstructured.partition.pdf import partition_pdf
 from docx import Document as DocxDocument
 
+# Directorio de almacenamiento
 DATA_DIR = "indexed_data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# Modelo de embeddings
+# Carga o inicialización del modelo
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# Inicialización o carga del índice
+# Rutas del índice y metadatos
 index_path = os.path.join(DATA_DIR, "faiss.index")
 meta_path = os.path.join(DATA_DIR, "metadata.pkl")
 
+# Cargar índice o inicializar nuevo
 if os.path.exists(index_path) and os.path.exists(meta_path):
     index = faiss.read_index(index_path)
     with open(meta_path, "rb") as f:
         metadata = pickle.load(f)
 else:
-    index = faiss.IndexFlatL2(384)  # 384 = dimensiones de all-MiniLM-L6-v2
+    index = faiss.IndexFlatL2(384)  # 384 = dim. de all-MiniLM-L6-v2
     metadata = []
 
 def save_index():
@@ -62,9 +64,9 @@ def index_document(file, etiquetas=""):
 def index_url(url, etiquetas=""):
     etiquetas = etiquetas.split(",")
     try:
-        res = requests.get(url)
+        res = requests.get(url, timeout=10)
         soup = BeautifulSoup(res.text, "html.parser")
-        text = soup.get_text()
+        text = soup.get_text(separator="\n")
         chunks = [text[i:i+500] for i in range(0, len(text), 500)]
         _add_to_index(chunks, etiquetas)
         return "URL indexada correctamente"
@@ -74,10 +76,9 @@ def index_url(url, etiquetas=""):
 def index_api(endpoint, etiquetas=""):
     etiquetas = etiquetas.split(",")
     try:
-        res = requests.get(endpoint)
+        res = requests.get(endpoint, timeout=10)
         if res.headers.get("Content-Type", "").startswith("application/json"):
-            json_data = res.json()
-            text = str(json_data)
+            text = str(res.json())
         else:
             text = res.text
         chunks = [text[i:i+500] for i in range(0, len(text), 500)]
@@ -85,15 +86,8 @@ def index_api(endpoint, etiquetas=""):
         return "API indexada correctamente"
     except Exception as e:
         return f"Error al indexar API: {str(e)}"
-    
+
 def buscar_contexto(query, top_k=5, filtro_etiquetas=None):
-    """
-    Devuelve los fragmentos más relevantes desde el índice vectorial.
-    :param query: texto de consulta
-    :param top_k: número de resultados
-    :param filtro_etiquetas: lista de etiquetas opcional para filtrar
-    :return: lista de fragmentos de texto relevantes
-    """
     if not index.is_trained or index.ntotal == 0:
         return ["⚠️ No hay datos indexados"]
 

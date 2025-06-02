@@ -43,3 +43,77 @@
 2025-06-02 22:11:09,968 [WARNING] ⚠️ Enlaces no extraídos de https://joventut.onda.es/: module 'app.utils.ingestion' has no attribute 'extraer_enlaces'
 2025-06-02 22:11:09,968 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 0
 2025-06-02 22:11:09,969 [WARNING] ❌ No se generaron embeddings
+2025-06-02 22:36:56,825 [INFO] Use pytorch device_name: cpu
+2025-06-02 22:36:56,825 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 22:37:05,190 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 22:37:05,191 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 22:37:05,191 [WARNING] ❌ Error en https://transparencia.onda.es: module 'app.utils.ingestion' has no attribute 'extraer_texto'
+2025-06-02 22:37:05,191 [WARNING] ⚠️ Enlaces no extraídos de https://transparencia.onda.es: module 'app.utils.ingestion' has no attribute 'obtener_enlaces'
+2025-06-02 22:37:05,191 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 0
+2025-06-02 22:37:05,194 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 22:37:05,194 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 22:37:05,194 [WARNING] ❌ Error en https://joventut.onda.es/: module 'app.utils.ingestion' has no attribute 'extraer_texto'
+2025-06-02 22:37:05,194 [WARNING] ⚠️ Enlaces no extraídos de https://joventut.onda.es/: module 'app.utils.ingestion' has no attribute 'obtener_enlaces'
+2025-06-02 22:37:05,194 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 0
+2025-06-02 22:37:05,195 [WARNING] ❌ No se generaron embeddings
+2025-06-02 22:46:14,470 [INFO] Use pytorch device_name: cpu
+2025-06-02 22:46:14,471 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 22:46:19,414 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 22:46:19,415 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 22:46:24,828 [INFO] ✅ https://transparencia.onda.es -> 23 fragmentos
+2025-06-02 22:46:30,636 [INFO] 🌐 Visitando: https://transparencia.onda.es#!https://www.onda.es/ond/web_php/index.php?contenido=descripcion&id_boto=360
+2025-06-02 22:46:34,867 [INFO] ✅ https://transparencia.onda.es#!https://www.onda.es/ond/web_php/index.php?contenido=descripcion&id_boto=360 -> 23 fragmentos
+2025-06-02 22:46:40,239 [INFO] 🌐 Visitando: https://transparencia.onda.es#!transparencia/ordenanzas-municipales
+2025-06-02 22:46:44,551 [INFO] ✅ https://transparencia.onda.es#!transparencia/ordenanzas-municipales -> 23 fragmentos
+2025-06-02 22:46:50,084 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/textos-normativos-aplicables-en-materia-de-medio-ambiente
+2025-06-02 22:46:54,407 [INFO] ✅ https://transparencia.onda.es#!/transparencia/textos-normativos-aplicables-en-materia-de-medio-ambiente -> 23 fragmentos
+2025-06-02 22:47:00,006 [INFO] 🌐 Visitando: https://transparencia.onda.es#!transparencia/gestion-presupuestaria
+2025-06-02 22:47:04,330 [INFO] ✅ https://transparencia.onda.es#!transparencia/gestion-presupuestaria -> 23 fragmentos
+2025-06-02 22:47:09,671 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/institucional/ita
+2025-06-02 22:47:14,109 [INFO] ✅ https://transparencia.onda.es#!/institucional/ita -> 23 fragmentos
+2025-06-02 22:47:19,975 [INFO] 🌐 Visitando: https://transparencia.onda.es#!https://onda.es
+2025-06-02 22:47:24,196 [INFO] ✅ https://transparencia.onda.es#!https://onda.es -> 23 fragmentos
+2025-06-02 22:47:29,457 [INFO] 🌐 Visitando: https://transparencia.onda.es#!transparencia/textos-normativos-aplicables-en-materia-de-medio-ambiente
+2025-06-02 22:47:33,720 [INFO] ✅ https://transparencia.onda.es#!transparencia/textos-normativos-aplicables-en-materia-de-medio-ambiente -> 23 fragmentos
+2025-06-02 22:47:39,104 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/ordenanzas-municipales
+2025-06-02 22:47:43,365 [INFO] ✅ https://transparencia.onda.es#!/transparencia/ordenanzas-municipales -> 23 fragmentos
+2025-06-02 22:47:48,734 [INFO] 🌐 Visitando: https://transparencia.onda.es#!transparencia/acceso-a-la-informacion-de-transparencia-del-ayuntamiento
+2025-06-02 22:47:53,096 [INFO] ✅ https://transparencia.onda.es#!transparencia/acceso-a-la-informacion-de-transparencia-del-ayuntamiento -> 23 fragmentos
+2025-06-02 22:47:58,517 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 10
+2025-06-02 22:47:58,858 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 22:47:58,858 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 22:48:38,892 [INFO] ✅ https://joventut.onda.es/ -> 4699 fragmentos
+2025-06-02 22:49:20,371 [INFO] 🌐 Visitando: https://joventut.onda.es/#main-content
+2025-06-02 22:50:10,952 [INFO] ✅ https://joventut.onda.es/#main-content -> 4699 fragmentos
+2025-06-02 22:50:35,219 [INFO] 🌐 Visitando: https://joventut.onda.es
+2025-06-02 22:51:32,511 [INFO] ✅ https://joventut.onda.es -> 4699 fragmentos
+2025-06-02 22:52:21,558 [INFO] 🌐 Visitando: https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=ca_ES
+2025-06-02 22:53:19,301 [INFO] ✅ https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=ca_ES -> 4723 fragmentos
+2025-06-02 22:53:51,397 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 4
+2025-06-02 22:59:37,096 [INFO] Use pytorch device_name: cpu
+2025-06-02 22:59:37,097 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-02 22:59:40,655 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-02 22:59:40,655 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-02 22:59:45,337 [INFO] ✅ https://transparencia.onda.es -> 23 fragmentos
+2025-06-02 22:59:50,878 [INFO] 🌐 Visitando: https://transparencia.onda.es#!transparencia/cargos-de-confianza-o-de-libre-designacion
+2025-06-02 22:59:55,099 [INFO] ✅ https://transparencia.onda.es#!transparencia/cargos-de-confianza-o-de-libre-designacion -> 23 fragmentos
+2025-06-02 23:00:00,292 [INFO] 🌐 Visitando: https://transparencia.onda.es#!https://onda.es
+2025-06-02 23:00:04,483 [INFO] ✅ https://transparencia.onda.es#!https://onda.es -> 23 fragmentos
+2025-06-02 23:00:09,800 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/institucional/ita
+2025-06-02 23:00:13,939 [INFO] ✅ https://transparencia.onda.es#!/institucional/ita -> 23 fragmentos
+2025-06-02 23:00:18,540 [INFO] 🌐 Visitando: https://transparencia.onda.es#!transparencia/ordenanzas-municipales
+2025-06-02 23:00:23,316 [INFO] ✅ https://transparencia.onda.es#!transparencia/ordenanzas-municipales -> 23 fragmentos
+2025-06-02 23:00:28,532 [INFO] 🌐 Visitando: https://transparencia.onda.es#!accesibilidad
+2025-06-02 23:00:32,780 [INFO] ✅ https://transparencia.onda.es#!accesibilidad -> 23 fragmentos
+2025-06-02 23:00:37,635 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/gestion-presupuestaria
+2025-06-02 23:00:41,919 [INFO] ✅ https://transparencia.onda.es#!/transparencia/gestion-presupuestaria -> 23 fragmentos
+2025-06-02 23:00:46,994 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/alcaldia
+2025-06-02 23:00:51,368 [INFO] ✅ https://transparencia.onda.es#!/transparencia/alcaldia -> 23 fragmentos
+2025-06-02 23:00:56,991 [INFO] 🌐 Visitando: https://transparencia.onda.es#!transparencia/alcaldia
+2025-06-02 23:01:01,224 [INFO] ✅ https://transparencia.onda.es#!transparencia/alcaldia -> 23 fragmentos
+2025-06-02 23:01:06,598 [INFO] 🌐 Visitando: https://transparencia.onda.es#!/transparencia/cargos-de-confianza-o-de-libre-designacion
+2025-06-02 23:01:10,614 [INFO] ✅ https://transparencia.onda.es#!/transparencia/cargos-de-confianza-o-de-libre-designacion -> 23 fragmentos
+2025-06-02 23:01:15,450 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 10
+2025-06-02 23:01:15,764 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-02 23:01:15,764 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-02 23:01:55,200 [INFO] ✅ https://joventut.onda.es/ -> 4699 fragmentos
