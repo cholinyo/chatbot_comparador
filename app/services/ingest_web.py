@@ -1,122 +1,144 @@
 import os
-import json
-import logging
-import pickle
-import ssl
-import numpy as np
 import faiss
-from tqdm import tqdm
-from urllib.parse import urljoin, urlparse
+import pickle
+import requests
+from urllib.parse import urlparse
+
+from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer
-from app.utils import ingestion
+from unstructured.partition.pdf import partition_pdf
+from docx import Document as DocxDocument
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-# Configuración de entorno
-ssl._create_default_https_context = ssl._create_unverified_context
-CONFIG_PATH = os.path.join("app", "config", "settings.json")
-VECTOR_DIR = os.path.join("vectorstore", "web")
-LOG_PATH = os.path.join("logs", "ingestion_web.log")
+DATA_DIR = "indexed_data"
+os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs("debug_html", exist_ok=True)  # Para guardar HTML temporal
 
-# Crear carpetas necesarias
-os.makedirs("logs", exist_ok=True)
-os.makedirs(VECTOR_DIR, exist_ok=True)
+# Modelo de embeddings
+model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# Configurar logging
-logging.basicConfig(
-    filename=LOG_PATH,
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    encoding="utf-8"
-)
+# Inicialización o carga del índice
+index_path = os.path.join(DATA_DIR, "faiss.index")
+meta_path = os.path.join(DATA_DIR, "metadata.pkl")
 
-def cargar_config():
-    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+if os.path.exists(index_path) and os.path.exists(meta_path):
+    index = faiss.read_index(index_path)
+    with open(meta_path, "rb") as f:
+        metadata = pickle.load(f)
+else:
+    index = faiss.IndexFlatL2(384)  # 384 = dimensiones de all-MiniLM-L6-v2
+    metadata = []
 
-def crawl_por_paginas(dominio, max_paginas):
-    visitadas = set()
-    por_visitar = [dominio]
-    paginas = []
+def save_index():
+    faiss.write_index(index, index_path)
+    with open(meta_path, "wb") as f:
+        pickle.dump(metadata, f)
 
-    while por_visitar and len(paginas) < max_paginas:
-        url = por_visitar.pop(0)
-        if url in visitadas:
-            continue
+def partir_en_bloques(texto, max_caracteres=500):
+    palabras = texto.split()
+    fragmentos = []
+    fragmento = []
+    for palabra in palabras:
+        if sum(len(p) + 1 for p in fragmento) + len(palabra) < max_caracteres:
+            fragmento.append(palabra)
+        else:
+            fragmentos.append(" ".join(fragmento))
+            fragmento = [palabra]
+    if fragmento:
+        fragmentos.append(" ".join(fragmento))
+    return fragmentos
 
-        logging.info(f"🌐 Visitando: {url}")
-        try:
-            fragmentos = ingestion.extraer_texto(url)
-            if fragmentos:
-                paginas.append({"url": url, "fragmentos": fragmentos})
-                logging.info(f"✅ {url} -> {len(fragmentos)} fragmentos")
-        except Exception as e:
-            logging.warning(f"❌ Error en {url}: {e}")
+def _add_to_index(text_chunks, etiquetas):
+    vectors = model.encode(text_chunks)
+    index.add(vectors)
+    metadata.extend([{"texto": t, "etiquetas": etiquetas} for t in text_chunks])
+    save_index()
 
-        try:
-            enlaces = ingestion.obtener_enlaces(url)
-            for enlace in enlaces:
-                absoluto = urljoin(url, enlace)
-                if urlparse(absoluto).netloc == urlparse(dominio).netloc and absoluto not in visitadas:
-                    por_visitar.append(absoluto)
-        except Exception as e:
-            logging.warning(f"⚠️ Enlaces no extraídos de {url}: {e}")
+def index_document(file, etiquetas=""):
+    ext = file.filename.lower().split(".")[-1]
+    etiquetas = etiquetas.split(",")
 
-        visitadas.add(url)
+    try:
+        if ext == "pdf":
+            elements = partition_pdf(file=file.stream)
+            text = "\n".join([e.text for e in elements if e.text])
+        elif ext == "txt":
+            text = file.read().decode("utf-8")
+        elif ext == "docx":
+            doc = DocxDocument(file)
+            text = "\n".join([p.text for p in doc.paragraphs])
+        else:
+            return f"Formato no soportado: {ext}"
 
-    logging.info(f"🔎 Total páginas visitadas desde {dominio}: {len(paginas)}")
-    return paginas
+        chunks = partir_en_bloques(text)
+        _add_to_index(chunks, etiquetas)
+        return "Documento indexado correctamente"
+    except Exception as e:
+        return f"Error al indexar documento: {str(e)}"
 
-def main():
-    config = cargar_config()
-    fuentes = config.get("web_sources", [])
+def index_url(url, etiquetas=""):
+    etiquetas = etiquetas.split(",")
+    try:
+        fragmentos = extraer_texto_web(url)
+        _add_to_index(fragmentos, etiquetas)
+        return "URL indexada correctamente"
+    except Exception as e:
+        return f"Error al indexar URL: {str(e)}"
 
-    if not fuentes:
-        logging.warning("⚠️ No hay URLs configuradas en settings.json")
-        return
+def extraer_texto_web(url):
+    options = Options()
+    options.headless = True
+    driver = webdriver.Chrome(options=options)
 
-    modelo = SentenceTransformer("all-MiniLM-L6-v2")
-    all_embeddings = []
-    metadatos = []
-    total_fragmentos = 0
+    try:
+        driver.get(url)
+        driver.implicitly_wait(5)
+        html = driver.page_source
 
-    for fuente in fuentes:
-        url = fuente.get("url")
-        k = int(fuente.get("depth", 1))
-        if not url:
-            continue
+        # Guardar HTML para depuración
+        nombre_archivo = os.path.join("debug_html", f"{urlparse(url).netloc}_{hash(url)}.html")
+        with open(nombre_archivo, "w", encoding="utf-8") as f:
+            f.write(html)
 
-        logging.info(f"🚀 Procesando URL: {url} con máximo de páginas {k}")
-        paginas = crawl_por_paginas(url, max_paginas=k)
+        soup = BeautifulSoup(html, "html.parser")
+        texto = soup.get_text(separator="\n")
+        fragmentos = partir_en_bloques(texto)
 
-        for pagina in tqdm(paginas, desc="Procesando fragmentos"):
-            embeddings = modelo.encode(pagina["fragmentos"], show_progress_bar=False)
-            all_embeddings.extend(embeddings)
+        return list(set(fragmentos))  # evitar duplicados
+    finally:
+        driver.quit()
 
-            metadatos.append({
-                "nombre": pagina["url"],
-                "total_fragmentos": len(pagina["fragmentos"]),
-                "origen": "url"
-            })
-            total_fragmentos += len(pagina["fragmentos"])
+def index_api(endpoint, etiquetas=""):
+    etiquetas = etiquetas.split(",")
+    try:
+        res = requests.get(endpoint)
+        if res.headers.get("Content-Type", "").startswith("application/json"):
+            json_data = res.json()
+            text = str(json_data)
+        else:
+            text = res.text
+        chunks = partir_en_bloques(text)
+        _add_to_index(chunks, etiquetas)
+        return "API indexada correctamente"
+    except Exception as e:
+        return f"Error al indexar API: {str(e)}"
 
-    if not all_embeddings:
-        logging.warning("❌ No se generaron embeddings")
-        return
+def buscar_contexto(query, top_k=5, filtro_etiquetas=None):
+    if not index.is_trained or index.ntotal == 0:
+        return ["⚠️ No hay datos indexados"]
 
-    embeddings_np = np.array(all_embeddings).astype("float32")
+    query_vector = model.encode([query])
+    distances, indices = index.search(query_vector, top_k)
 
-    if embeddings_np.ndim != 2:
-        logging.error(f"❌ Error en embeddings: forma inesperada {embeddings_np.shape}")
-        return
+    resultados = []
+    for idx in indices[0]:
+        if idx < len(metadata):
+            meta = metadata[idx]
+            if filtro_etiquetas:
+                etiquetas = [e.strip() for e in meta.get("etiquetas", [])]
+                if not any(e in etiquetas for e in filtro_etiquetas):
+                    continue
+            resultados.append(meta["texto"])
 
-    index = faiss.IndexFlatL2(embeddings_np.shape[1])
-    index.add(embeddings_np)
-
-    np.save(os.path.join(VECTOR_DIR, "embeddings.npy"), embeddings_np)
-    faiss.write_index(index, os.path.join(VECTOR_DIR, "index.faiss"))
-    with open(os.path.join(VECTOR_DIR, "metadatos.pkl"), "wb") as f:
-        pickle.dump(metadatos, f)
-
-    logging.info(f"🌟 Ingesta web completada. Total fragmentos: {total_fragmentos}")
-
-if __name__ == "__main__":
-    main()
+    return resultados if resultados else ["⚠️ No se encontraron coincidencias con esas etiquetas"]

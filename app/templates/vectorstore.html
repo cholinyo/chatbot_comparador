@@ -1,16 +1,26 @@
+
 {% extends "base.html" %}
 {% block title %}📦 VectorStore{% endblock %}
 {% block content %}
 
 <div class="container mt-4">
-  <h2 class="mb-4">📦 VectorStore: Fragmentos Indexados</h2>
+  <h2 class="mb-4">📦 VectorStore: Estado de las Fuentes Indexadas</h2>
 
-  {% if resumen %}
-  <div class="alert alert-info">
-    <strong>Resumen general:</strong><br>
-    Total de fragmentos: <strong>{{ resumen.total_fragmentos }}</strong><br>
-    Dimensiones del vector: <strong>{{ resumen.dimensiones }}</strong><br>
-    Última actualización: <strong>{{ resumen.fecha }}</strong>
+  {% if resumen_docs %}
+  <div class="alert alert-primary">
+    <strong>📄 Documentos:</strong><br>
+    Total de fragmentos: <strong>{{ resumen_docs.total_fragmentos }}</strong><br>
+    Dimensiones de vector: <strong>{{ resumen_docs.dimensiones }}</strong><br>
+    Última actualización: <strong>{{ resumen_docs.fecha }}</strong>
+  </div>
+  {% endif %}
+
+  {% if resumen_web %}
+  <div class="alert alert-success">
+    <strong>🌐 Webs:</strong><br>
+    Total de fragmentos: <strong>{{ resumen_web.total_fragmentos }}</strong><br>
+    Dimensiones de vector: <strong>{{ resumen_web.dimensiones }}</strong><br>
+    Última actualización: <strong>{{ resumen_web.fecha }}</strong>
   </div>
   {% endif %}
 
@@ -19,8 +29,7 @@
     <thead class="table-light">
       <tr>
         <th>Nombre</th>
-        <th>Fragmentos</th>
-        <th>Fuente</th>
+        <th>Origen</th>
         <th>Acción</th>
       </tr>
     </thead>
@@ -28,7 +37,6 @@
       {% for doc in documentos %}
       <tr>
         <td>{{ doc.nombre }}</td>
-        <td>{{ doc.fragmentos }}</td>
         <td>{{ doc.origen }}</td>
         <td>
           <a href="/vectorstore/documento/{{ doc.nombre | urlencode }}" class="btn btn-sm btn-outline-primary">Ver fragmentos</a>
@@ -43,8 +51,7 @@
     <thead class="table-light">
       <tr>
         <th>URL</th>
-        <th>Fragmentos</th>
-        <th>Fuente</th>
+        <th>Origen</th>
         <th>Acción</th>
       </tr>
     </thead>
@@ -52,7 +59,6 @@
       {% for url in urls %}
       <tr>
         <td>{{ url.nombre }}</td>
-        <td>{{ url.fragmentos }}</td>
         <td>{{ url.origen }}</td>
         <td>
           <a href="/vectorstore/documento/{{ url.nombre | urlencode }}" class="btn btn-sm btn-outline-primary">Ver fragmentos</a>
@@ -62,11 +68,20 @@
     </tbody>
   </table>
 
-  {% if ejemplo_embedding %}
+  {% if ejemplo_embedding_docs %}
   <div class="card mt-5">
-    <div class="card-header">🧠 Ejemplo de vector de embedding</div>
+    <div class="card-header">🧠 Ejemplo de vector (documentos)</div>
     <div class="card-body">
-      <pre style="max-height: 250px; overflow-y: auto;">{{ ejemplo_embedding }}</pre>
+      <pre style="max-height: 250px; overflow-y: auto;">{{ ejemplo_embedding_docs }}</pre>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if ejemplo_embedding_web %}
+  <div class="card mt-4">
+    <div class="card-header">🌐 Ejemplo de vector (web)</div>
+    <div class="card-body">
+      <pre style="max-height: 250px; overflow-y: auto;">{{ ejemplo_embedding_web }}</pre>
     </div>
   </div>
   {% endif %}
@@ -81,7 +96,7 @@
   {% endif %}
 
   {% if log_web %}
-  <div class="card mt-5">
+  <div class="card mt-4">
     <div class="card-header">🌐 Log de ingesta desde URLs</div>
     <div class="card-body">
       <pre style="max-height: 300px; overflow-y: scroll;">{{ log_web }}</pre>
@@ -90,5 +105,4 @@
   {% endif %}
 
 </div>
-
 {% endblock %}

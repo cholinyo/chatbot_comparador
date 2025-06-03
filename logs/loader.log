@@ -229,3 +229,126 @@
 2025-06-02 21:51:34,612 [WARNING] ⚠️ Documento sin fragmentos: DOSIER-AI-Y-CIUDADES-2025.pdf
 2025-06-02 21:51:34,612 [WARNING] ⚠️ Documento sin fragmentos: CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf
 2025-06-02 21:51:34,613 [WARNING] ❌ No se generaron embeddings
+2025-06-03 09:43:55,683 [INFO] Use pytorch device_name: cpu
+2025-06-03 09:43:55,684 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 09:44:06,593 [INFO] 📄 Total documentos procesados: 0
+2025-06-03 09:44:06,593 [INFO] 📁 Iniciando ingesta de 0 documentos
+2025-06-03 09:44:06,594 [WARNING] ❌ No se generaron embeddings
+2025-06-03 11:48:48,816 [INFO] Use pytorch device_name: cpu
+2025-06-03 11:48:48,817 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 11:49:50,227 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-03 11:49:51,123 [INFO] ✅ Comunicacion_cambio_de_datos_DPD.pdf procesado (4 fragmentos)
+2025-06-03 11:49:51,214 [INFO] ✅ Convocatoria_MGN_28_05_25.pdf procesado (2 fragmentos)
+2025-06-03 11:49:51,564 [INFO] ✅ IGD-PRINTNET-G0_1714649529680.HERJTIPGG01 (Onda Colegio Monteblanco).pdf procesado (16 fragmentos)
+2025-06-03 11:49:51,565 [INFO] 📄 Total documentos procesados: 3
+2025-06-03 11:49:51,565 [INFO] 📁 Iniciando ingesta de 3 documentos
+2025-06-03 11:49:51,567 [WARNING] ⚠️ Documento sin fragmentos: Comunicacion_cambio_de_datos_DPD.pdf
+2025-06-03 11:49:51,568 [WARNING] ⚠️ Documento sin fragmentos: Convocatoria_MGN_28_05_25.pdf
+2025-06-03 11:49:51,568 [WARNING] ⚠️ Documento sin fragmentos: IGD-PRINTNET-G0_1714649529680.HERJTIPGG01 (Onda Colegio Monteblanco).pdf
+2025-06-03 11:49:51,569 [WARNING] ❌ No se generaron embeddings
+2025-06-03 12:22:56,075 [INFO] Use pytorch device_name: cpu
+2025-06-03 12:22:56,075 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 12:23:00,863 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-03 12:23:03,513 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (155 fragmentos)
+2025-06-03 12:23:08,540 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (170 fragmentos)
+2025-06-03 12:23:08,785 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-03 12:23:08,824 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-03 12:23:08,845 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-03 12:23:09,467 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-03 12:23:09,483 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-03 12:23:09,483 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-03 12:23:09,483 [INFO] 📄 Total documentos procesados: 2
+2025-06-03 12:23:09,484 [INFO] 📁 Iniciando ingesta de 2 documentos
+2025-06-03 12:23:09,485 [WARNING] ⚠️ Documento sin fragmentos: Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf
+2025-06-03 12:23:09,486 [WARNING] ⚠️ Documento sin fragmentos: Ordenanza reguladora de SandBox Urbano Valencia.pdf
+2025-06-03 12:23:09,486 [WARNING] ❌ No se generaron embeddings
+2025-06-03 13:13:49,619 [INFO] Use pytorch device_name: cpu
+2025-06-03 13:13:49,619 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 13:13:52,759 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-03 13:13:52,999 [INFO] ✅ Ejemplo2.pdf procesado (2 fragmentos)
+2025-06-03 13:13:54,671 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (155 fragmentos)
+2025-06-03 13:13:54,696 [INFO] ✅ Ejemplo1.pdf procesado (2 fragmentos)
+2025-06-03 13:13:57,115 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (170 fragmentos)
+2025-06-03 13:13:57,137 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-03 13:13:57,158 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-03 13:13:57,168 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-03 13:13:57,521 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-03 13:13:57,529 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-03 13:13:57,529 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-03 13:13:57,530 [INFO] 📄 Total documentos procesados: 4
+2025-06-03 13:13:57,530 [INFO] 📁 Iniciando ingesta de 4 documentos
+2025-06-03 13:13:57,531 [WARNING] ⚠️ Documento sin fragmentos: Ejemplo2.pdf
+2025-06-03 13:13:57,531 [WARNING] ⚠️ Documento sin fragmentos: Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf
+2025-06-03 13:13:57,532 [WARNING] ⚠️ Documento sin fragmentos: Ejemplo1.pdf
+2025-06-03 13:13:57,532 [WARNING] ⚠️ Documento sin fragmentos: Ordenanza reguladora de SandBox Urbano Valencia.pdf
+2025-06-03 13:13:57,532 [WARNING] ❌ No se generaron embeddings
+2025-06-03 13:51:50,846 [INFO] Use pytorch device_name: cpu
+2025-06-03 13:51:50,846 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 13:51:54,006 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-03 13:51:54,230 [INFO] ✅ Ejemplo2.pdf procesado (2 fragmentos)
+2025-06-03 13:51:56,137 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (155 fragmentos)
+2025-06-03 13:51:56,160 [INFO] ✅ Ejemplo1.pdf procesado (2 fragmentos)
+2025-06-03 13:51:58,674 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (170 fragmentos)
+2025-06-03 13:51:58,698 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-03 13:51:58,722 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-03 13:51:58,732 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-03 13:51:59,086 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-03 13:51:59,095 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-03 13:51:59,095 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-03 13:54:46,642 [INFO] Use pytorch device_name: cpu
+2025-06-03 13:54:46,642 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 13:54:49,782 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-03 13:54:50,031 [INFO] ✅ Ejemplo2.pdf procesado (2 fragmentos)
+2025-06-03 13:54:52,211 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (155 fragmentos)
+2025-06-03 13:54:52,240 [INFO] ✅ Ejemplo1.pdf procesado (2 fragmentos)
+2025-06-03 13:54:54,919 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (170 fragmentos)
+2025-06-03 13:54:54,942 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-03 13:54:54,964 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-03 13:54:54,973 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-03 13:54:55,328 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-03 13:54:55,336 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-03 13:54:55,336 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-03 14:01:29,089 [INFO] Use pytorch device_name: cpu
+2025-06-03 14:01:29,089 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 14:01:32,975 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-03 14:01:33,311 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ejemplo2.pdf - 778 caracteres extraídos
+2025-06-03 14:01:33,312 [INFO] ✅ Ejemplo2.pdf procesado (2 fragmentos)
+2025-06-03 14:01:35,864 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf - 76911 caracteres extraídos
+2025-06-03 14:01:35,919 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (155 fragmentos)
+2025-06-03 14:01:35,947 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ejemplo1.pdf - 537 caracteres extraídos
+2025-06-03 14:01:35,948 [INFO] ✅ Ejemplo1.pdf procesado (2 fragmentos)
+2025-06-03 14:01:39,491 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ordenanza reguladora de SandBox Urbano Valencia.pdf - 83778 caracteres extraídos
+2025-06-03 14:01:39,569 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (170 fragmentos)
+2025-06-03 14:01:39,608 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-03 14:01:39,645 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-03 14:01:39,662 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-03 14:01:40,302 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-03 14:01:40,318 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-03 14:01:40,318 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-03 14:01:40,318 [INFO] 📄 Total documentos procesados: 4
+2025-06-03 14:01:40,318 [INFO] 📁 Iniciando ingesta de 4 documentos
+2025-06-03 14:01:40,320 [WARNING] ⚠️ Documento sin fragmentos: Ejemplo2.pdf
+2025-06-03 14:01:40,320 [WARNING] ⚠️ Documento sin fragmentos: Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf
+2025-06-03 14:01:40,320 [WARNING] ⚠️ Documento sin fragmentos: Ejemplo1.pdf
+2025-06-03 14:01:40,320 [WARNING] ⚠️ Documento sin fragmentos: Ordenanza reguladora de SandBox Urbano Valencia.pdf
+2025-06-03 14:01:40,321 [WARNING] ❌ No se generaron embeddings
+2025-06-03 14:57:19,654 [INFO] Use pytorch device_name: cpu
+2025-06-03 14:57:19,654 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 14:57:22,765 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-03 14:57:22,986 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ejemplo2.pdf - 789 caracteres extraídos
+2025-06-03 14:57:22,987 [INFO] ✅ Ejemplo2.pdf procesado (2 fragmentos)
+2025-06-03 14:57:24,600 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf - 77509 caracteres extraídos
+2025-06-03 14:57:24,648 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (157 fragmentos)
+2025-06-03 14:57:24,678 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ejemplo1.pdf - 544 caracteres extraídos
+2025-06-03 14:57:24,678 [INFO] ✅ Ejemplo1.pdf procesado (2 fragmentos)
+2025-06-03 14:57:27,240 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ordenanza reguladora de SandBox Urbano Valencia.pdf - 84086 caracteres extraídos
+2025-06-03 14:57:27,276 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (171 fragmentos)
+2025-06-03 14:57:27,298 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-03 14:57:27,319 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-03 14:57:27,328 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-03 14:57:27,666 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-03 14:57:27,675 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-03 14:57:27,675 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-03 14:57:27,675 [INFO] 📄 Total documentos procesados: 4
+2025-06-03 14:57:27,675 [INFO] 📁 Iniciando ingesta de 4 documentos
+2025-06-03 14:57:37,125 [INFO] ✅ Ingesta completada. Total fragmentos: 332
