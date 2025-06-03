@@ -2,8 +2,8 @@
   "modelo_local": "llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
   "modelo_openai": "gpt-4",
   "document_folders": [
-    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes2",
-    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes1"
+    "D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes2",
+    "D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1"
   ],
   "web_sources": [
     {

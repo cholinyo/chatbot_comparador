@@ -9,3 +9,4 @@ llama-cpp-python
 python-dotenv
 pdfminer.six
 trafilatura
+openai

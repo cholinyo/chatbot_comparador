@@ -125,3 +125,21 @@
 2025-06-02 23:05:39,395 [INFO] ✅ https://joventut.onda.es -> 4699 fragmentos
 2025-06-02 23:06:15,963 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 4
 2025-06-02 23:06:16,248 [ERROR] ❌ Error en embeddings: forma inesperada (5376,)
+2025-06-03 09:03:12,608 [INFO] Use pytorch device_name: cpu
+2025-06-03 09:03:12,609 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-03 09:03:27,234 [WARNING] Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2025-06-03 09:03:32,903 [INFO] 🚀 Procesando URL: https://transparencia.onda.es con máximo de páginas 10
+2025-06-03 09:03:32,903 [INFO] 🌐 Visitando: https://transparencia.onda.es
+2025-06-03 09:03:40,683 [INFO] ✅ https://transparencia.onda.es -> 23 fragmentos
+2025-06-03 09:03:45,610 [INFO] 🔎 Total páginas visitadas desde https://transparencia.onda.es: 1
+2025-06-03 09:03:45,955 [INFO] 🚀 Procesando URL: https://joventut.onda.es/ con máximo de páginas 4
+2025-06-03 09:03:45,955 [INFO] 🌐 Visitando: https://joventut.onda.es/
+2025-06-03 09:03:52,388 [INFO] ✅ https://joventut.onda.es/ -> 4699 fragmentos
+2025-06-03 09:03:57,733 [INFO] 🌐 Visitando: https://joventut.onda.es/#main-content
+2025-06-03 09:04:03,031 [INFO] ✅ https://joventut.onda.es/#main-content -> 4699 fragmentos
+2025-06-03 09:04:08,761 [INFO] 🌐 Visitando: https://joventut.onda.es
+2025-06-03 09:04:14,220 [INFO] ✅ https://joventut.onda.es -> 4699 fragmentos
+2025-06-03 09:04:19,517 [INFO] 🌐 Visitando: https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=ca_ES
+2025-06-03 09:04:26,979 [INFO] ✅ https://joventut.onda.es/c/portal/update_language?p_l_id=55401&redirect=%2F&p_p_id=com_liferay_site_admin_web_portlet_SiteSettingsPortlet&languageId=ca_ES -> 4723 fragmentos
+2025-06-03 09:04:32,359 [INFO] 🔎 Total páginas visitadas desde https://joventut.onda.es/: 4
+2025-06-03 09:04:32,610 [ERROR] ❌ Error en embeddings: forma inesperada (1920,)

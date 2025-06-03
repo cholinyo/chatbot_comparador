@@ -365,3 +365,32 @@
 2025-06-02 21:50:16,129 [INFO]  * Restarting with stat
 2025-06-02 21:50:37,345 [WARNING]  * Debugger is active!
 2025-06-02 21:50:37,376 [INFO]  * Debugger PIN: 486-404-401
+2025-06-03 15:24:01,245 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-03 15:24:01,245 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-03 15:24:01,259 [INFO]  * Restarting with stat
+2025-06-03 15:24:18,187 [WARNING]  * Debugger is active!
+2025-06-03 15:24:18,205 [INFO]  * Debugger PIN: 414-808-028
+2025-06-03 15:25:30,366 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:30] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-03 15:25:30,801 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:30] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-03 15:25:33,556 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:33] "GET /vectorstore/documento/Ejemplo2.pdf HTTP/1.1" 200 -
+2025-06-03 15:25:34,967 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:34] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-03 15:25:37,902 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:37] "GET /vectorstore/documento/Ley%2062020,%20de%2011%20de%20noviembre,%20reguladora%20de%20determinados%20aspectos%20de%20los%20servicios%20electrónicos%20de%20confianza.pdf HTTP/1.1" 200 -
+2025-06-03 15:25:42,128 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:42] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-03 15:25:43,023 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:43] "GET /vectorstore/documento/Ejemplo1.pdf HTTP/1.1" 200 -
+2025-06-03 15:25:45,162 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:45] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-03 15:25:46,094 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:46] "GET /vectorstore/documento/Ordenanza%20reguladora%20de%20SandBox%20Urbano%20Valencia.pdf HTTP/1.1" 200 -
+2025-06-03 15:25:48,597 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:48] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-03 15:25:51,900 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:51] "GET /vectorstore/documento/Ordenanza%20reguladora%20de%20SandBox%20Urbano%20Valencia.pdf HTTP/1.1" 200 -
+2025-06-03 15:25:54,013 [INFO] 127.0.0.1 - - [03/Jun/2025 15:25:54] "GET /vectorstore HTTP/1.1" 200 -
+2025-06-03 15:27:21,023 [INFO]  * Detected change in 'D:\\vcaruncho\\documents\\Proyectos SW\\chatbot_comparador\\app\\services\\comparador.py', reloading
+2025-06-03 15:27:22,050 [INFO]  * Restarting with stat
+2025-06-03 15:31:01,074 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-03 15:31:01,074 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-03 15:31:01,079 [INFO]  * Restarting with stat
+2025-06-03 15:31:16,154 [WARNING]  * Debugger is active!
+2025-06-03 15:31:16,168 [INFO]  * Debugger PIN: 414-808-028
+2025-06-03 15:31:17,496 [INFO] 127.0.0.1 - - [03/Jun/2025 15:31:17] "[33mGET /c HTTP/1.1[0m" 404 -
+2025-06-03 15:31:17,521 [INFO] 127.0.0.1 - - [03/Jun/2025 15:31:17] "GET / HTTP/1.1" 200 -
+2025-06-03 15:31:42,399 [INFO]  * Detected change in 'D:\\vcaruncho\\documents\\Proyectos SW\\chatbot_comparador\\app\\routes\\chat.py', reloading

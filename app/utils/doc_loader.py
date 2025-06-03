@@ -27,12 +27,14 @@ def leer_txt(path):
 
 def leer_docx(path):
     doc = docx.Document(path)
-    return "\n".join([p.text for p in doc.paragraphs])
+    return "\\n".join([p.text for p in doc.paragraphs if p.text.strip()])
 
 def leer_pdf(path):
     try:
         elementos = partition_pdf(filename=path)
-        return "\n".join(str(e) for e in elementos)
+        texto = "\\n".join(e.text.strip() for e in elementos if hasattr(e, "text") and e.text)
+        logging.info(f"PDF procesado: {path} - {len(texto)} caracteres extraídos")
+        return texto
     except Exception as e:
         logging.warning(f"PDF no procesado: {path} - {e}")
         return ""
@@ -41,7 +43,7 @@ def leer_html(path):
     try:
         with open(path, "r", encoding="utf-8", errors="ignore") as f:
             soup = BeautifulSoup(f, "html.parser")
-            return soup.get_text(separator="\n")
+            return soup.get_text(separator="\\n")
     except Exception as e:
         logging.warning(f"HTML no procesado: {path} - {e}")
         return ""
@@ -91,7 +93,7 @@ def cargar_documentos(rutas_directas=None):
                     bloques = partir_en_bloques(texto)
                     documentos.append({
                         "nombre": nombre,
-                        "texto": "\n".join(bloques),
+                        "fragmentos": bloques,
                         "origen": "documento"
                     })
                     logging.info(f"✅ {nombre} procesado ({len(bloques)} fragmentos)")
