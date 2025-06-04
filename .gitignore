@@ -4,9 +4,10 @@
 *.env
 venv/
 venvp/
-logs/
-logs*.log
-__pycache__/
-*.pyc
 # Carpeta de modelos pesados
 models/
+__pycache__/
+*.pyc
+*.pkl
+*.faiss
+vectorstore/web/

@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container mt-4">
-  <h2 class="mb-4">💬 Consulta con recuperación desde múltiples fuentes</h2>
+  <h2 class="mb-4">💬 Consulta con recuperación desde documentos</h2>
 
   <form method="post" class="mb-4">
     <div class="input-group">
@@ -12,9 +12,9 @@
     </div>
   </form>
 
-  {% if contexto %}
+  {% if respuesta %}
   <div class="card shadow-sm p-4 mb-4">
-    <h5>📚 Fragmentos recuperados</h5>
+    <h5>📄 Fragmentos recuperados</h5>
     <ul class="list-group">
       {% for frag in contexto %}
       <li class="list-group-item">
@@ -25,9 +25,7 @@
       {% endfor %}
     </ul>
   </div>
-  {% endif %}
 
-  {% if respuesta %}
   <div class="card shadow-sm p-4">
     <h5>🧠 Respuesta generada (simulada)</h5>
     <p>{{ respuesta }}</p>
