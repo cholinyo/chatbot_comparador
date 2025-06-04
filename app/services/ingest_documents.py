@@ -40,7 +40,7 @@ def main():
     documentos = doc_loader.cargar_documentos(carpetas)
 
     all_embeddings = []
-    metadatos = []
+    fragmento_metadatos = []
     total_fragmentos = 0
 
     logging.info(f"📁 Iniciando ingesta de {len(documentos)} documentos")
@@ -54,11 +54,12 @@ def main():
         embeddings = modelo.encode(bloques, show_progress_bar=False)
         all_embeddings.extend(embeddings)
 
-        metadatos.append({
-            "nombre": doc["nombre"],
-            "total_fragmentos": len(bloques),
-            "origen": "documento"
-        })
+        for bloque in bloques:
+            fragmento_metadatos.append({
+                "documento": doc["nombre"],
+                "fragmento": bloque,
+                "origen": "documento"
+            })
 
         total_fragmentos += len(bloques)
 
@@ -72,8 +73,13 @@ def main():
 
     np.save(os.path.join(VECTOR_DIR, "embeddings.npy"), embeddings_np)
     faiss.write_index(index, os.path.join(VECTOR_DIR, "index.faiss"))
+
+    with open(os.path.join(VECTOR_DIR, "fragmentos.pkl"), "wb") as f:
+        fragmentos = [m["fragmento"] for m in fragmento_metadatos]
+        pickle.dump(fragmentos, f)
+
     with open(os.path.join(VECTOR_DIR, "metadatos.pkl"), "wb") as f:
-        pickle.dump(metadatos, f)
+        pickle.dump(fragmento_metadatos, f)
 
     logging.info(f"✅ Ingesta completada. Total fragmentos: {total_fragmentos}")
 

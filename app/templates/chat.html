@@ -1,47 +1,34 @@
-
 {% extends "base.html" %}
-{% block title %}🤖 Comparador de Modelos{% endblock %}
+{% block title %}Chat RAG{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
-  <h2>🤖 Comparación de Chatbots</h2>
-  <form method="post" action="/comparar">
-    <div class="mb-3">
-      <label for="pregunta" class="form-label">Introduce tu pregunta:</label>
-      <textarea class="form-control" id="pregunta" name="pregunta" rows="3" required>{{ pregunta or '' }}</textarea>
+  <h2 class="mb-4">💬 Consulta con recuperación desde documentos</h2>
+
+  <form method="post" class="mb-4">
+    <div class="input-group">
+      <input type="text" name="pregunta" class="form-control" placeholder="Escribe tu pregunta..." value="{{ pregunta }}" required>
+      <button type="submit" class="btn btn-primary">Enviar</button>
     </div>
-    <button type="submit" class="btn btn-primary">Comparar</button>
   </form>
 
-  {% if respuesta_openai %}
-  <div class="mt-4">
-    <h4>🔷 OpenAI</h4>
-    <div class="border p-3 bg-light rounded">
-      <pre style="white-space: pre-wrap;">{{ respuesta_openai }}</pre>
-    </div>
-  </div>
-  {% endif %}
-
-  {% if respuesta_local %}
-  <div class="mt-4">
-    <h4>🔶 Modelo Local</h4>
-    <div class="border p-3 bg-light rounded">
-      <pre style="white-space: pre-wrap;">{{ respuesta_local }}</pre>
-    </div>
-  </div>
-  {% endif %}
-
-  {% if fragmentos %}
-  <div class="card mt-5">
-    <div class="card-header">📚 Fragmentos utilizados (RAG)</div>
-    <div class="card-body">
-      {% for frag in fragmentos %}
-      <div class="mb-3">
-        <strong>{{ frag.nombre }}</strong> — fragmento {{ frag.fragmento_id if frag.fragmento_id is defined else '?' }}<br>
-        <pre style="white-space: pre-wrap;">{{ frag.texto if frag.texto is defined else '(sin texto disponible)' }}</pre>
-        <hr>
-      </div>
+  {% if respuesta %}
+  <div class="card shadow-sm p-4 mb-4">
+    <h5>📄 Fragmentos recuperados</h5>
+    <ul class="list-group">
+      {% for frag in contexto %}
+      <li class="list-group-item">
+        <div><strong>Fuente:</strong> {{ frag.fuente }}</div>
+        <div><strong>Distancia:</strong> {{ frag.distancia | round(3) }}</div>
+        <div class="mt-2">{{ frag.texto }}</div>
+      </li>
       {% endfor %}
-    </div>
+    </ul>
+  </div>
+
+  <div class="card shadow-sm p-4">
+    <h5>🧠 Respuesta generada (simulada)</h5>
+    <p>{{ respuesta }}</p>
   </div>
   {% endif %}
 </div>

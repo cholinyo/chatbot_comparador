@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Fragmentos Ingestados{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">🧠 Fragmentos Ingestados (máx. 100)</h2>
+  <a href="/config" class="btn btn-secondary mb-3">← Volver a configuración</a>
+
+  {% if fragmentos %}
+  <ul class="list-group">
+    {% for frag in fragmentos %}
+      <li class="list-group-item">
+        <div class="mt-2">{{ frag }}</div>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>No hay fragmentos cargados.</p>
+  {% endif %}
+</div>
+{% endblock %}
