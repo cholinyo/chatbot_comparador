@@ -17,15 +17,10 @@
   ],
   "api_sources": [
     {
-      "name": "OpenData Onda",
-      "url": "https://api.onda.es/datos",
+      "name": "IOT",
+      "url": "https://openapi.iotsens.com/",
       "auth": "env",
-      "env_key": "API_KEY_ONDA"
-    },
-    {
-      "name": "GeoInfo",
-      "url": "https://api.geo.com/v1/info",
-      "auth": "none"
+      "env_key": "iot"
     }
   ]
 }
