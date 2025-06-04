@@ -1,4 +1,4 @@
-# app/routes/chat.py
+# app/routes/chat.py (unificando fuentes: documentos + web con relevancia y fuente visible)
 from flask import Blueprint, render_template, request
 from app.services.rag_context import recuperar_contexto
 from app.config.settings import cargar_config
@@ -10,16 +10,28 @@ def chat():
     respuesta = None
     contexto = []
     pregunta = ""
+    origen = "ambas"  # Unifica documentos + web
 
     if request.method == "POST":
         pregunta = request.form.get("pregunta")
         config = cargar_config()
         k = config.get("rag_k", 3)
 
-        # Recuperar contexto desde documentos
-        contexto = recuperar_contexto(pregunta, k=k, fuente="documentos")
+        # Recuperar contexto desde ambas fuentes
+        contexto = recuperar_contexto(pregunta, k=k, fuente="ambas")
 
-        # Simular respuesta concatenando fragmentos
-        respuesta = "\n\n".join([f"- {c['texto']}" for c in contexto])
+        # Ordenar por relevancia (distancia más baja primero)
+        contexto.sort(key=lambda x: x.get("distancia", 0))
 
-    return render_template("chat.html", pregunta=pregunta, contexto=contexto, respuesta=respuesta)
+        # Simular respuesta concatenando fragmentos con fuente
+        respuesta = "\n\n".join([
+            f"[{c.get('fuente', '¿?')} | {c.get('distancia', '?'):.3f}] {c['texto']}" for c in contexto
+        ])
+
+    return render_template(
+        "chat.html",
+        pregunta=pregunta,
+        contexto=contexto,
+        respuesta=respuesta,
+        origen=origen
+    )
