@@ -4,7 +4,7 @@
 
 <div class="container mt-4">
   <h2 class="mb-4">⚙️ Configuración de Fuentes RAG</h2>
-  
+  '<a href="/ver_fragmentos" class="btn btn-outline-info mb-3">🧠 Ver fragmentos indexados</a>'
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
@@ -19,7 +19,6 @@
   <!-- 📁 Carpetas de documentos -->
   <div class="card shadow p-4 mb-4 rounded">
     <h4>📄 Carpetas de documentos</h4>
-    <a href="/ver_fragmentos?origen=documentos" class="btn btn-outline-info mb-3">🧠 Ver fragmentos indexados</a>
     <ul class="list-group mb-3">
       {% for carpeta in carpetas %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -44,10 +43,8 @@
   </div>
 
   <!-- 🌐 URLs individuales -->
- 
   <div class="card shadow p-4 mb-4 rounded">
     <h4>🌐 URLs individuales (con profundidad)</h4>
-    <a href="/ver_fragmentos?origen=web" class="btn btn-sm btn-outline-success mt-2">🌐 Ver fragmentos web</a>
     <ul class="list-group mb-3">
       {% for fuente in urls %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -77,7 +74,6 @@
   <!-- 🔌 APIs configuradas -->
   <div class="card shadow p-4 mb-4 rounded">
     <h4>🔌 APIs configuradas</h4>
-    <a href="/ver_fragmentos?origen=apis" class="btn btn-sm btn-outline-warning mt-2">🔌 Ver fragmentos APIs</a>
     <ul class="list-group mb-3">
       {% for api in apis %}
       <li class="list-group-item d-flex justify-content-between align-items-start flex-column">
@@ -121,7 +117,6 @@
   <!-- 🗃️ Bases de datos -->
   <div class="card shadow p-4 mb-4 rounded">
     <h4>🗃️ Bases de datos</h4>
-    <a href="/ver_fragmentos?origen=bbdd" class="btn btn-sm btn-outline-info mt-2">🗃️ Ver fragmentos BBDD</a
     <ul class="list-group mb-3">
       {% for db in bases_datos %}
       <li class="list-group-item d-flex justify-content-between align-items-start flex-column">
