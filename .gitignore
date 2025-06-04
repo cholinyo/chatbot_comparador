@@ -3,5 +3,6 @@
 .env.*
 *.env
 venv/
+venvp/
 # Carpeta de modelos pesados
 models/

@@ -17,7 +17,9 @@
     <h4>🔷 OpenAI</h4>
     <div class="border p-3 bg-light rounded">
       <pre style="white-space: pre-wrap;">{{ respuesta_openai }}</pre>
+      <p class="text-muted">⏱️ Tiempo OpenAI: {{ tiempo_openai }}s</p>
     </div>
+    
   </div>
   {% endif %}
 
@@ -26,6 +28,7 @@
     <h4>🔶 Modelo Local</h4>
     <div class="border p-3 bg-light rounded">
       <pre style="white-space: pre-wrap;">{{ respuesta_local }}</pre>
+      <p class="text-muted">⏱️ Tiempo Local: {{ tiempo_local }}s</p>
     </div>
   </div>
   {% endif %}

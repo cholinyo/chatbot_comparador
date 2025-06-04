@@ -352,3 +352,43 @@
 2025-06-03 14:57:27,675 [INFO] 📄 Total documentos procesados: 4
 2025-06-03 14:57:27,675 [INFO] 📁 Iniciando ingesta de 4 documentos
 2025-06-03 14:57:37,125 [INFO] ✅ Ingesta completada. Total fragmentos: 332
+2025-06-04 14:18:16,249 [INFO] Use pytorch device_name: cpu
+2025-06-04 14:18:16,250 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-04 14:18:28,771 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-04 14:18:29,246 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ejemplo2.pdf - 789 caracteres extraídos
+2025-06-04 14:18:29,247 [INFO] ✅ Ejemplo2.pdf procesado (2 fragmentos)
+2025-06-04 14:18:30,952 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf - 77509 caracteres extraídos
+2025-06-04 14:18:30,989 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (157 fragmentos)
+2025-06-04 14:18:31,021 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ejemplo1.pdf - 544 caracteres extraídos
+2025-06-04 14:18:31,021 [INFO] ✅ Ejemplo1.pdf procesado (2 fragmentos)
+2025-06-04 14:18:34,053 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ordenanza reguladora de SandBox Urbano Valencia.pdf - 84086 caracteres extraídos
+2025-06-04 14:18:34,089 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (171 fragmentos)
+2025-06-04 14:18:34,222 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-04 14:18:34,249 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-04 14:18:34,259 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-04 14:18:34,629 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-04 14:18:34,637 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-04 14:18:34,637 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-04 14:18:34,637 [INFO] 📄 Total documentos procesados: 4
+2025-06-04 14:18:34,637 [INFO] 📁 Iniciando ingesta de 4 documentos
+2025-06-04 14:18:43,981 [INFO] ✅ Ingesta completada. Total fragmentos: 332
+2025-06-04 14:23:02,038 [INFO] Use pytorch device_name: cpu
+2025-06-04 14:23:02,038 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-04 14:23:05,169 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-04 14:23:05,446 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ejemplo2.pdf - 789 caracteres extraídos
+2025-06-04 14:23:05,447 [INFO] ✅ Ejemplo2.pdf procesado (2 fragmentos)
+2025-06-04 14:23:07,617 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes2\Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf - 77509 caracteres extraídos
+2025-06-04 14:23:07,659 [INFO] ✅ Ley 62020, de 11 de noviembre, reguladora de determinados aspectos de los servicios electrónicos de confianza.pdf procesado (157 fragmentos)
+2025-06-04 14:23:07,683 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ejemplo1.pdf - 544 caracteres extraídos
+2025-06-04 14:23:07,683 [INFO] ✅ Ejemplo1.pdf procesado (2 fragmentos)
+2025-06-04 14:23:10,593 [INFO] PDF procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Ordenanza reguladora de SandBox Urbano Valencia.pdf - 84086 caracteres extraídos
+2025-06-04 14:23:10,632 [INFO] ✅ Ordenanza reguladora de SandBox Urbano Valencia.pdf procesado (171 fragmentos)
+2025-06-04 14:23:10,654 [WARNING] The PDF <_io.BufferedReader name='D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1\\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf'> contains a metadata field indicating that it should not allow text extraction. Ignoring this field and proceeding. Use the check_extractable if you want to raise an error in this case
+2025-06-04 14:23:10,676 [WARNING] Cannot set gray non-stroke color because /'Paint3' is an invalid float value
+2025-06-04 14:23:10,688 [WARNING] Cannot set gray non-stroke color because /'Paint10' is an invalid float value
+2025-06-04 14:23:11,106 [INFO] PDF text extraction failed, skip text extraction...
+2025-06-04 14:23:11,117 [WARNING] PDF no procesado: D:\vcaruncho\Downloads\Fuentes\Fuentes1\Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf - Unable to get page count. Is poppler installed and in PATH?
+2025-06-04 14:23:11,117 [WARNING] ⚠️ Presentación COSITAL_IA_ADMINISTRACIONES LOCALES.pdf sin contenido procesable
+2025-06-04 14:23:11,117 [INFO] 📄 Total documentos procesados: 4
+2025-06-04 14:23:11,117 [INFO] 📁 Iniciando ingesta de 4 documentos
+2025-06-04 14:23:20,981 [INFO] ✅ Ingesta completada. Total fragmentos: 332

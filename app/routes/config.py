@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, flash
 import os
 import json
+import pickle
+import faiss
 
 config_bp = Blueprint("config", __name__)
 CONFIG_PATH = os.path.join("app", "config", "settings.json")
@@ -153,3 +155,19 @@ def config():
         return redirect("/config")
 
     return render_template("config.html", carpetas=carpetas, urls=urls, apis=apis, bases_datos=bases_datos, rag_k=rag_k)
+
+@config_bp.route("/ver_fragmentos", methods=["GET"])
+def ver_fragmentos():
+    VECTOR_DIR = os.path.join("vectorstore", "documents")
+    index_path = os.path.join(VECTOR_DIR, "index.faiss")
+    fragmentos_path = os.path.join(VECTOR_DIR, "fragmentos.pkl")
+
+    if not os.path.exists(index_path) or not os.path.exists(fragmentos_path):
+        flash("❌ No se encontró el índice o los fragmentos", "danger")
+        return redirect("/config")
+
+    with open(fragmentos_path, "rb") as f:
+        fragmentos = pickle.load(f)
+
+    fragmentos = fragmentos[:100]
+    return render_template("ver_fragmentos.html", fragmentos=fragmentos)

@@ -17,3 +17,7 @@ def get_openai_model():
 def get_local_model_path():
     modelo_relativo = load_settings().get("modelo_local")
     return os.path.join("models", modelo_relativo)
+
+# Alias para compatibilidad retroactiva con chat.py
+cargar_config = load_settings
+guardar_config = save_settings

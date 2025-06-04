@@ -11,6 +11,7 @@ def create_app():
     from app.routes.config import config_bp
     from app.routes.vectorstore import vectorstore_bp
     from app.routes.fragmentos import fragmentos_bp
+    from app.routes.comparador import comparador_bp
 
     app.register_blueprint(chat_bp)
     app.register_blueprint(admin_bp)
@@ -18,6 +19,7 @@ def create_app():
     app.register_blueprint(config_bp)  
     app.register_blueprint(vectorstore_bp)
     app.register_blueprint(fragmentos_bp)
+    app.register_blueprint(comparador_bp)
 
     # ✅ Manejador para error 404 - Página no encontrada
     @app.errorhandler(404)
