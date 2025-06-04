@@ -1,35 +1,12 @@
+# Archivos de configuración de entorno
+*.env
+.env.*
+*.env
+venv/
+venvp/
+logs/
+logs*.log
+__pycache__/
+*.pyc
 # Carpeta de modelos pesados
 models/
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*.so
-
-# Logs
-*.log
-logs/
-logs/*.log
-
-# FAISS and vectorstore artifacts
-*.faiss
-*.pkl
-vectorstore/
-vectorstore/*
-
-# Jupyter Notebooks checkpoints
-.ipynb_checkpoints/
-
-# Environment files
-.env
-.env.*
-
-# VS Code settings
-.vscode/
-
-# MacOS/Linux/Windows system files
-.DS_Store
-Thumbs.db
-
-# Python virtual environments
-venv/
-.env/
