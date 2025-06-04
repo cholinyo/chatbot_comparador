@@ -12,3 +12,4 @@ trafilatura
 openai
 numpy
 tqdm
+webdriver-manager

@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container mt-4">
-  <h2 class="mb-4">💬 Consulta con recuperación desde documentos</h2>
+  <h2 class="mb-4">💬 Consulta con recuperación desde fuentes múltiples</h2>
 
   <form method="post" class="mb-4">
     <div class="input-group">
@@ -18,7 +18,7 @@
     <ul class="list-group">
       {% for frag in contexto %}
       <li class="list-group-item">
-        <div><strong>Fuente:</strong> {{ frag.fuente }}</div>
+        <div><strong>Fuente:</strong> {{ frag.fuente | capitalize }}</div>
         <div><strong>Distancia:</strong> {{ frag.distancia | round(3) }}</div>
         <div class="mt-2">{{ frag.texto }}</div>
       </li>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="card shadow-sm p-4">
-    <h5>🧠 Respuesta generada (simulada)</h5>
+    <h5>🧠 Respuesta generada</h5>
     <p>{{ respuesta }}</p>
   </div>
   {% endif %}

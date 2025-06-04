@@ -1,13 +1,59 @@
-# Archivos de configuración de entorno
-*.env
-.env.*
-*.env
-venv/
-venvp/
-# Carpeta de modelos pesados
+#Carpeta de modelos pesados
 models/
+# Bytecode y entorno virtual
 __pycache__/
-*.pyc
-*.pkl
-*.faiss
+*.py[cod]
+*.pyo
+*.pyd
+
+# Entornos
+.venv/
+venv/
+ENV/
+.env
+.env.*
+
+# Archivos de configuración local
+.settings/
+*.local
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs y bases de datos temporales
+*.log
+*.sqlite3
+*.db
+*.bak
+
+# Directorios de ejecución
+.logs/
+logs/
+
+# Vectorstore generado
+vectorstore/documents/
 vectorstore/web/
+vectorstore/apis/
+vectorstore/bbdd/
+
+# Otros archivos temporales
+*.tmp
+*.swp
+
+# Selenium: perfiles temporales
+selenium_profile/
+
+# Node.js si usas frontend
+node_modules/
+build/
+dist/
+
+# Jupyter / notebooks temporales
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

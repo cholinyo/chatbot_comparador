@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Configuración de Ingestión{% endblock %}
-{% block content %}
 
+{% block content %}
 <div class="container mt-4">
   <h2 class="mb-4">⚙️ Configuración de Fuentes RAG</h2>
-  '<a href="/ver_fragmentos" class="btn btn-outline-info mb-3">🧠 Ver fragmentos indexados</a>'
+
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
@@ -16,9 +16,10 @@
     {% endif %}
   {% endwith %}
 
-  <!-- 📁 Carpetas de documentos -->
+  <!-- 📄 Documentos -->
   <div class="card shadow p-4 mb-4 rounded">
     <h4>📄 Carpetas de documentos</h4>
+    <a href="/ver_fragmentos?origen=documentos" class="btn btn-sm btn-outline-primary mb-3">📄 Ver fragmentos documentos</a>
     <ul class="list-group mb-3">
       {% for carpeta in carpetas %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -42,9 +43,10 @@
     </form>
   </div>
 
-  <!-- 🌐 URLs individuales -->
+  <!-- 🌐 URLs -->
   <div class="card shadow p-4 mb-4 rounded">
     <h4>🌐 URLs individuales (con profundidad)</h4>
+    <a href="/ver_fragmentos?origen=web" class="btn btn-sm btn-outline-success mb-3">🌐 Ver fragmentos web</a>
     <ul class="list-group mb-3">
       {% for fuente in urls %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -71,9 +73,10 @@
     </form>
   </div>
 
-  <!-- 🔌 APIs configuradas -->
+  <!-- 🔌 APIs -->
   <div class="card shadow p-4 mb-4 rounded">
     <h4>🔌 APIs configuradas</h4>
+    <a href="/ver_fragmentos?origen=apis" class="btn btn-sm btn-outline-warning mb-3">🔌 Ver fragmentos APIs</a>
     <ul class="list-group mb-3">
       {% for api in apis %}
       <li class="list-group-item d-flex justify-content-between align-items-start flex-column">
@@ -114,9 +117,10 @@
     </form>
   </div>
 
-  <!-- 🗃️ Bases de datos -->
+  <!-- 🗃️ BBDD -->
   <div class="card shadow p-4 mb-4 rounded">
     <h4>🗃️ Bases de datos</h4>
+    <a href="/ver_fragmentos?origen=bbdd" class="btn btn-sm btn-outline-info mb-3">🗃️ Ver fragmentos BBDD</a>
     <ul class="list-group mb-3">
       {% for db in bases_datos %}
       <li class="list-group-item d-flex justify-content-between align-items-start flex-column">
@@ -149,17 +153,14 @@
     </form>
   </div>
 
-  <!-- 🔢 Parámetros RAG -->
+  <!-- 🔢 RAG K -->
   <div class="card shadow p-4 mb-4 rounded">
-    <h4>🔢 Parámetros generales</h4>
+    <h4>🔢 Parámetro RAG (k)</h4>
     <form method="post" class="row g-3">
       <div class="col-md-10">
-        <label for="rag_k" class="form-label">Número de fragmentos a recuperar (RAG):</label>
+        <label for="rag_k" class="form-label">Fragmentos a recuperar:</label>
         <input type="number" id="rag_k" name="rag_k" class="form-control" value="{{ rag_k }}" min="1" max="10">
-        <div class="form-text">
-          Define cuántos fragmentos se recuperarán del índice vectorial para construir el contexto del chatbot.
-          Un valor mayor puede enriquecer las respuestas, pero también aumentar el ruido.
-        </div>
+        <div class="form-text">Mayor valor puede mejorar contexto, pero aumentar ruido.</div>
       </div>
       <div class="col-md-2 d-grid align-items-end">
         <button type="submit" name="accion" value="guardar_k" class="btn btn-success">Guardar</button>
@@ -168,5 +169,4 @@
   </div>
 
 </div>
-
 {% endblock %}

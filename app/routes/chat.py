@@ -1,25 +1,28 @@
-# app/routes/chat.py
 from flask import Blueprint, render_template, request
-from app.services.rag_context import recuperar_contexto
-from app.config.settings import cargar_config
+from app.utils.rag_utils import buscar_fragmentos_combinados
+from app.services.bot_openai import get_openai_response
+from app.services.bot_local import get_local_response
 
 chat_bp = Blueprint("chat", __name__)
 
 @chat_bp.route("/chat", methods=["GET", "POST"])
 def chat():
     respuesta = None
-    contexto = []
+    fragmentos = []
     pregunta = ""
 
     if request.method == "POST":
         pregunta = request.form.get("pregunta")
-        config = cargar_config()
-        k = config.get("rag_k", 3)
+        fragmentos = buscar_fragmentos_combinados(pregunta, k=5)
 
-        # Recuperar contexto desde documentos
-        contexto = recuperar_contexto(pregunta, k=k, fuente="documentos")
+        contexto = "\n".join([f"- {f['texto']}" for f in fragmentos])
+        prompt = f"""Usa la siguiente información para responder a la pregunta:
 
-        # Simular respuesta concatenando fragmentos
-        respuesta = "\n\n".join([f"- {c['texto']}" for c in contexto])
+{contexto}
 
-    return render_template("chat.html", pregunta=pregunta, contexto=contexto, respuesta=respuesta)
+Pregunta: {pregunta}
+Respuesta:"""
+
+        respuesta = get_local_response(prompt)
+
+    return render_template("chat.html", pregunta=pregunta, respuesta=respuesta, contexto=fragmentos)
