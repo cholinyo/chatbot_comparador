@@ -2,8 +2,8 @@
   "modelo_local": "llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
   "modelo_openai": "gpt-4",
   "document_folders": [
-    "D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes2",
-    "D:\\vcaruncho\\Downloads\\Fuentes\\Fuentes1"
+    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes1",
+    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes2"
   ],
   "web_sources": [
     {
@@ -11,8 +11,8 @@
       "depth": 10
     },
     {
-      "url": "https://joventut.onda.es/",
-      "depth": 4
+      "url": "https://www.onda.es",
+      "depth": 10
     }
   ],
   "api_sources": [

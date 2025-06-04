@@ -1,107 +1,96 @@
 import os
-import faiss
 import pickle
+import faiss
 import requests
-
+from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer
-from unstructured.partition.pdf import partition_pdf
-from docx import Document as DocxDocument
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
-# Directorio de almacenamiento
-DATA_DIR = "indexed_data"
-os.makedirs(DATA_DIR, exist_ok=True)
+# Configurar rutas
+VECTOR_DIR = os.path.join("vectorstore", "web")
+os.makedirs(VECTOR_DIR, exist_ok=True)
 
-# Carga o inicialización del modelo
-model = SentenceTransformer("all-MiniLM-L6-v2")
+# Inicializar modelo y estructuras
+embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+index_path = os.path.join(VECTOR_DIR, "index.faiss")
+metadata_path = os.path.join(VECTOR_DIR, "fragmentos.pkl")
 
-# Rutas del índice y metadatos
-index_path = os.path.join(DATA_DIR, "faiss.index")
-meta_path = os.path.join(DATA_DIR, "metadata.pkl")
-
-# Cargar índice o inicializar nuevo
-if os.path.exists(index_path) and os.path.exists(meta_path):
+if os.path.exists(index_path) and os.path.exists(metadata_path):
     index = faiss.read_index(index_path)
-    with open(meta_path, "rb") as f:
+    with open(metadata_path, "rb") as f:
         metadata = pickle.load(f)
 else:
-    index = faiss.IndexFlatL2(384)  # 384 = dim. de all-MiniLM-L6-v2
+    index = faiss.IndexFlatL2(384)  # 384 dimensiones para MiniLM
     metadata = []
 
 def save_index():
     faiss.write_index(index, index_path)
-    with open(meta_path, "wb") as f:
+    with open(metadata_path, "wb") as f:
         pickle.dump(metadata, f)
 
-def _add_to_index(text_chunks, etiquetas):
-    vectors = model.encode(text_chunks)
-    index.add(vectors)
-    metadata.extend([{"texto": t, "etiquetas": etiquetas} for t in text_chunks])
-    save_index()
-
-def index_document(file, etiquetas=""):
-    ext = file.filename.lower().split(".")[-1]
-    etiquetas = etiquetas.split(",")
-
-    try:
-        if ext == "pdf":
-            elements = partition_pdf(file=file.stream)
-            text = "\n".join([e.text for e in elements if e.text])
-        elif ext == "txt":
-            text = file.read().decode("utf-8")
-        elif ext == "docx":
-            doc = DocxDocument(file)
-            text = "\n".join([p.text for p in doc.paragraphs])
+def partir_en_bloques(texto, max_caracteres=500):
+    palabras = texto.split()
+    fragmentos, fragmento = [], []
+    for palabra in palabras:
+        if sum(len(p) + 1 for p in fragmento) + len(palabra) < max_caracteres:
+            fragmento.append(palabra)
         else:
-            return f"Formato no soportado: {ext}"
+            fragmentos.append(" ".join(fragmento))
+            fragmento = [palabra]
+    if fragmento:
+        fragmentos.append(" ".join(fragmento))
+    return fragmentos
 
-        chunks = [text[i:i+500] for i in range(0, len(text), 500)]
-        _add_to_index(chunks, etiquetas)
-        return "Documento indexado correctamente"
-    except Exception as e:
-        return f"Error al indexar documento: {str(e)}"
+def extraer_texto_web(url):
+    options = Options()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+    driver = webdriver.Chrome(options=options)
 
-def index_url(url, etiquetas=""):
-    etiquetas = etiquetas.split(",")
     try:
-        res = requests.get(url, timeout=10)
-        soup = BeautifulSoup(res.text, "html.parser")
-        text = soup.get_text(separator="\n")
-        chunks = [text[i:i+500] for i in range(0, len(text), 500)]
-        _add_to_index(chunks, etiquetas)
-        return "URL indexada correctamente"
-    except Exception as e:
-        return f"Error al indexar URL: {str(e)}"
+        driver.get(url)
+        driver.implicitly_wait(5)
+        html = driver.page_source
+        soup = BeautifulSoup(html, "html.parser")
+        texto = soup.get_text(separator="\n")
+        fragmentos = partir_en_bloques(texto)
+        return list(set(fragmentos))
+    finally:
+        driver.quit()
 
-def index_api(endpoint, etiquetas=""):
-    etiquetas = etiquetas.split(",")
+def index_url(url, etiquetas="web"):
     try:
-        res = requests.get(endpoint, timeout=10)
-        if res.headers.get("Content-Type", "").startswith("application/json"):
-            text = str(res.json())
-        else:
-            text = res.text
-        chunks = [text[i:i+500] for i in range(0, len(text), 500)]
-        _add_to_index(chunks, etiquetas)
-        return "API indexada correctamente"
+        fragmentos = extraer_texto_web(url)
+        vectores = embedding_model.encode(fragmentos)
+        index.add(vectores)
+        metadata.extend([
+            {"texto": frag, "fuente": "web", "url": url, "etiquetas": etiquetas} for frag in fragmentos
+        ])
+        save_index()
+        return True, f"✅ Ingestada URL: {url}"
     except Exception as e:
-        return f"Error al indexar API: {str(e)}"
+        return False, f"❌ Error con {url}: {str(e)}"
 
-def buscar_contexto(query, top_k=5, filtro_etiquetas=None):
-    if not index.is_trained or index.ntotal == 0:
-        return ["⚠️ No hay datos indexados"]
+if __name__ == "__main__":
+    import json
+    config_path = os.path.join("app", "config", "settings.json")
 
-    query_vector = model.encode([query])
-    distances, indices = index.search(query_vector, top_k)
+    if not os.path.exists(config_path):
+        print("❌ No se encontró settings.json")
+        exit()
 
-    resultados = []
-    for idx in indices[0]:
-        if idx < len(metadata):
-            meta = metadata[idx]
-            if filtro_etiquetas:
-                etiquetas = [e.strip() for e in meta.get("etiquetas", [])]
-                if not any(e in etiquetas for e in filtro_etiquetas):
-                    continue
-            resultados.append(meta["texto"])
+    with open(config_path, "r", encoding="utf-8") as f:
+        settings = json.load(f)
 
-    return resultados if resultados else ["⚠️ No se encontraron coincidencias con esas etiquetas"]
+    fuentes = settings.get("web_sources", [])
+    if not fuentes:
+        print("⚠️ No hay URLs configuradas")
+    else:
+        for fuente in fuentes:
+            url = fuente.get("url")
+            print(f"🌐 Ingestando: {url}")
+            exito, mensaje = index_url(url)
+            print(mensaje)

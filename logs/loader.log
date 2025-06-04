@@ -392,3 +392,32 @@
 2025-06-04 14:23:11,117 [INFO] 📄 Total documentos procesados: 4
 2025-06-04 14:23:11,117 [INFO] 📁 Iniciando ingesta de 4 documentos
 2025-06-04 14:23:20,981 [INFO] ✅ Ingesta completada. Total fragmentos: 332
+2025-06-04 18:26:19,373 [INFO] Use pytorch device_name: cpu
+2025-06-04 18:26:19,374 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-04 18:26:23,793 [INFO] 📄 Total documentos procesados: 0
+2025-06-04 18:26:23,793 [INFO] 📁 Iniciando ingesta de 0 documentos
+2025-06-04 18:26:23,795 [WARNING] ❌ No se generaron embeddings
+2025-06-04 18:28:42,551 [INFO] Use pytorch device_name: cpu
+2025-06-04 18:28:42,551 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-04 18:28:47,581 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-04 18:28:52,028 [INFO] PDF procesado: C:\Users\vcaruncho\Documents\Desarrollo SW\Fuentes\Fuentes1\CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf - 40879 caracteres extraídos
+2025-06-04 18:28:52,046 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (83 fragmentos)
+2025-06-04 18:28:52,105 [INFO] PDF procesado: C:\Users\vcaruncho\Documents\Desarrollo SW\Fuentes\Fuentes2\copia_Matrícula uji.pdf - 1686 caracteres extraídos
+2025-06-04 18:28:52,105 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-06-04 18:28:55,690 [INFO] PDF procesado: C:\Users\vcaruncho\Documents\Desarrollo SW\Fuentes\Fuentes2\DOSIER-AI-Y-CIUDADES-2025.pdf - 42499 caracteres extraídos
+2025-06-04 18:28:55,709 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (86 fragmentos)
+2025-06-04 18:28:55,709 [INFO] 📄 Total documentos procesados: 3
+2025-06-04 18:28:55,709 [INFO] 📁 Iniciando ingesta de 3 documentos
+2025-06-04 18:29:06,276 [INFO] ✅ Ingesta completada. Total fragmentos: 173
+2025-06-04 19:52:01,869 [INFO] Use pytorch device_name: cpu
+2025-06-04 19:52:01,869 [INFO] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-06-04 19:52:06,937 [INFO] pikepdf C++ to Python logger bridge initialized
+2025-06-04 19:52:10,622 [INFO] PDF procesado: C:\Users\vcaruncho\Documents\Desarrollo SW\Fuentes\Fuentes1\CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf - 40879 caracteres extraídos
+2025-06-04 19:52:10,637 [INFO] ✅ CCN-TEC_014_Informe_Securizacion-Instalacion-ChatBot.pdf procesado (83 fragmentos)
+2025-06-04 19:52:10,688 [INFO] PDF procesado: C:\Users\vcaruncho\Documents\Desarrollo SW\Fuentes\Fuentes2\copia_Matrícula uji.pdf - 1686 caracteres extraídos
+2025-06-04 19:52:10,689 [INFO] ✅ copia_Matrícula uji.pdf procesado (4 fragmentos)
+2025-06-04 19:52:14,116 [INFO] PDF procesado: C:\Users\vcaruncho\Documents\Desarrollo SW\Fuentes\Fuentes2\DOSIER-AI-Y-CIUDADES-2025.pdf - 42499 caracteres extraídos
+2025-06-04 19:52:14,131 [INFO] ✅ DOSIER-AI-Y-CIUDADES-2025.pdf procesado (86 fragmentos)
+2025-06-04 19:52:14,131 [INFO] 📄 Total documentos procesados: 3
+2025-06-04 19:52:14,131 [INFO] 📁 Iniciando ingesta de 3 documentos
+2025-06-04 19:52:21,985 [INFO] ✅ Ingesta completada. Total fragmentos: 173

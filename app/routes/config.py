@@ -3,8 +3,6 @@ import os
 import json
 import pickle
 import faiss
-import pickle
-import faiss
 
 config_bp = Blueprint("config", __name__)
 CONFIG_PATH = os.path.join("app", "config", "settings.json")
@@ -160,18 +158,9 @@ def config():
 
 @config_bp.route("/ver_fragmentos", methods=["GET"])
 def ver_fragmentos():
-    VECTOR_DIR = os.path.join("vectorstore", "documents")
-    index_path = os.path.join(VECTOR_DIR, "index.faiss")
-    fragmentos_path = os.path.join(VECTOR_DIR, "fragmentos.pkl")
+    import pickle
 
-    if not os.path.exists(index_path) or not os.path.exists(fragmentos_path):
-        flash("❌ No se encontró el índice o los fragmentos", "danger")
-        return redirect("/config")
-
-    with open(fragmentos_path, "rb") as f:
-        fragmentos = pickle.load(f)
-
-    fragmentos = fragmentos[:100]
+    origen = request.args.get("origen", "documentos")
     origen_label = {
         "documentos": "📄 Ver fragmentos de documentos",
         "web": "🌐 Ver fragmentos de URLs",
@@ -179,4 +168,31 @@ def ver_fragmentos():
         "bbdd": "🗃️ Ver fragmentos de bases de datos"
     }.get(origen, "Ver fragmentos")
 
+    if origen == "documentos":
+        base_path = os.path.join("vectorstore", "documents")
+    elif origen == "web":
+        base_path = os.path.join("vectorstore", "web")
+    elif origen == "apis":
+        base_path = os.path.join("vectorstore", "apis")
+    elif origen == "bbdd":
+        base_path = os.path.join("vectorstore", "bbdd")
+    else:
+        flash("❌ Origen desconocido", "danger")
+        return redirect("/config")
+
+    index_path = os.path.join(base_path, "index.faiss")
+    fragmentos_path = os.path.join(base_path, "fragmentos.pkl")
+
+    if not os.path.exists(index_path):
+        flash(f"❌ No se encontró el índice FAISS en {base_path}", "danger")
+        return redirect("/config")
+
+    if not os.path.exists(fragmentos_path):
+        flash(f"❌ No se encontró el archivo fragmentos.pkl en {base_path}", "danger")
+        return redirect("/config")
+
+    with open(fragmentos_path, "rb") as f:
+        fragmentos = pickle.load(f)
+
+    fragmentos = fragmentos[:100]
     return render_template("ver_fragmentos.html", fragmentos=fragmentos, origen=origen, origen_label=origen_label)

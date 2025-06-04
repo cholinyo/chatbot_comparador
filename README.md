@@ -1,89 +1,119 @@
-# 🧠 Chatbot Comparador con RAG (OpenAI vs Local LLaMA)
+# 🧠 Chatbot Comparador RAG
 
-Este proyecto es una aplicación Flask diseñada para comparar respuestas entre dos modelos de lenguaje:
-
-- ✅ Un modelo **local** (LLaMA 3.1 8B Instruct, en formato `.gguf`) usando `llama-cpp-python`
-- ☁️ Un modelo **OpenAI** (por ejemplo, `gpt-4` o `gpt-3.5-turbo`)
-
-Además, el sistema permite incorporar **fuentes externas de conocimiento** mediante RAG (Retrieval-Augmented Generation).
+Este proyecto Flask permite comparar respuestas generadas por dos modelos de lenguaje (uno local y otro de OpenAI) usando RAG (Retrieval-Augmented Generation). Además, ofrece un chat conversacional que accede a fuentes múltiples: documentos, páginas web, APIs y bases de datos.
 
 ---
 
-## ✨ Características principales
-
-### 🔍 Comparador de modelos
-- Pregunta al modelo local y a OpenAI simultáneamente
-- Visualiza y compara respuestas
-- Selección de modelos desde `/admin`
-
-### 🧠 RAG: Configuración de fuentes
-Desde la página `/config` puedes configurar múltiples fuentes:
-
-- 📁 **Carpetas de documentos locales** (PDF, DOCX, TXT)
-- 🌐 **URLs individuales** con profundidad de indexación
-- 🔌 **APIs externas** (con o sin autenticación vía `.env`)
-- 🗃️ **Bases de datos** SQL (URI + consulta)
-
----
-
-## 🛠️ Estructura del proyecto
+## 📦 Estructura del Proyecto
 
 ```
 chatbot_comparador/
 ├── app/
-│   ├── routes/           # Blueprints: chat, admin, config, system, grafo
-│   ├── services/         # Lógica de comparación e ingestión (FAISS, APIs, etc.)
-│   ├── templates/        # HTML con Bootstrap
-│   ├── config/           # `settings.json` con fuentes configuradas
-├── models/               # Modelos LLaMA `.gguf`
-├── logs/                 # Logs de administración
-├── .env                  # Variables privadas (API keys)
-├── run.py                # Punto de entrada Flask
-└── requirements.txt
+│   ├── routes/                  # Blueprints Flask (chat, config, comparador)
+│   ├── services/                # Ingestores e interfaces con modelos
+│   ├── utils/                   # Utilidades (RAG, validaciones, etc)
+│   ├── templates/               # Plantillas HTML (Jinja2)
+│   ├── config/settings.json     # Configuración de fuentes RAG
+│   └── static/
+├── vectorstore/
+│   ├── documents/               # Índices FAISS de documentos
+│   ├── web/                     # Índices FAISS de URLs
+│   ├── apis/                    # Índices FAISS de APIs
+│   └── bbdd/                    # Índices FAISS de bases de datos
+└── run.py                       # Lanzador principal
 ```
 
 ---
 
-## ⚙️ Configuración
+## ⚙️ Funcionalidades
 
-### 1. Variables de entorno (`.env`)
+### 🔄 Comparador
+Accede a `/comparar` y realiza una pregunta. Obtendrás dos respuestas:
+- 🧠 Modelo Local (por defecto)
+- ☁️ OpenAI (si está disponible)
 
-Guarda tu clave de OpenAI y claves de API aquí:
+Cada respuesta se basa en la recuperación contextual usando FAISS.
 
+### 💬 Chat Unificado
+Accede a `/chat` para preguntar sobre cualquier fuente indexada:
+- Recupera fragmentos por relevancia desde documentos, URLs, APIs y bases de datos.
+- Se muestra la fuente, la distancia FAISS y el contenido.
+- Solo se usa el modelo **local** para generar la respuesta.
+
+### 🧠 Ingestión RAG por fuentes
+
+Puedes configurar y lanzar la ingestión desde:
 ```
-OPENAI_API_KEY=sk-...
-API_KEY_MIS_DATOS=abc123
-API_KEY_ONDA=xyz456
+http://127.0.0.1:5000/config
 ```
 
-### 2. Instalación y ejecución
+Allí puedes añadir:
+- 📄 Carpetas de documentos (PDF, DOCX, TXT)
+- 🌐 URLs individuales (con profundidad)
+- 🔌 APIs configurables (con o sin autenticación)
+- 🗃️ Consultas a bases de datos (SQLite u otras)
+
+### ✨ Sistema de vectorización
+
+- Se utiliza `SentenceTransformers` con `all-MiniLM-L6-v2`
+- Se crean índices independientes para cada tipo de fuente
+- Cada fuente se guarda en su carpeta dentro de `vectorstore/`
+- Se utilizan archivos:
+  - `index.faiss`
+  - `fragmentos.pkl`
+
+---
+
+## 🚫 Clave OpenAI no configurada
+
+Actualmente, el sistema **funciona con modelo local por defecto**.  
+Si deseas usar OpenAI, añade tu clave en un archivo `.env` como:
 
 ```bash
-python -m venv venv
-venv\Scripts\activate    # En Windows
-pip install -r requirements.txt
-python run.py
+OPENAI_API_KEY=sk-xxx
 ```
 
-Luego visita: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+---
+
+## 🧪 Scripts de ingestión
+
+Puedes ejecutar directamente:
+
+```bash
+python -m app.services.ingest_documents
+python -m app.services.ingest_web
+# futuros: ingest_api.py, ingest_bbdd.py
+```
 
 ---
 
-## 🔧 Configuración desde el navegador
+## 📋 Requisitos
 
-- `/admin`: seleccionar modelos (local y OpenAI)
-- `/config`: añadir fuentes para RAG (carpetas, URLs, APIs, BBDD)
+- Python 3.9+
+- Selenium
+- FAISS
+- SentenceTransformers
+- Flask
+- webdriver-manager
+- unstructured (para PDF)
+
+Instalación recomendada:
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## 🚧 Próximas funcionalidades
+## 🛠️ Pendiente / Futuro
 
-- Ingestión real de documentos y web
-- Vectorización con FAISS y búsqueda semántica
-- Integración con grafos de conocimiento
-- Panel de control y métricas
+- Ingesta automatizada por dominio completo
+- Historial de preguntas/respuestas
+- Interfaz para exploración del vectorstore
+- Migración completa a uso de modelos locales y fallback a OpenAI si se desea
 
 ---
 
-## 👨‍💻 Autor
-Desarrollado por Vicente Caruncho (@vcaruncho) – Ayuntamiento de Onda
+## 📄 Licencia
+
+MIT
