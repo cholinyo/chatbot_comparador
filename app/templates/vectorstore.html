@@ -1,108 +1,100 @@
-
 {% extends "base.html" %}
-{% block title %}📦 VectorStore{% endblock %}
 {% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">📊 Estado del VectorStore</h2>
+    <table class="table table-striped table-hover text-center align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>📁 Fuente</th>
+                <th>🧩 Fragmentos</th>
+                <th>📚 Nº de fuentes</th>
+                <th>🔢 Dimensiones</th>
+                <th>⏱ Última actualización</th>
+                <th>📊 Distancia media</th>
+                <th>📊 Histograma</th>
+                <th>🛠️ Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fuente, info in datos.items() %}
+            <tr>
+                <td><strong>{{ fuente|capitalize }}</strong></td>
+                <td>{{ info.fragmentos }}</td>
+                <td>{{ info.fuentes }}</td>
+                <td>{{ info.dimensiones }}</td>
+                <td>{{ info.actualizacion }}</td>
+                <td>{{ info.analisis.similitud_media }}</td>
+                <td>
+                    {% if info.analisis.histograma %}
+                        <canvas id="histograma_{{ fuente }}" width="250" height="120"></canvas>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" action="{{ url_for('vectorstore.reindex_fuente', fuente=fuente) }}">
+                        <button type="submit" class="btn btn-outline-primary btn-sm reindex-btn" data-fuente="{{ fuente }}">🔄 Reindexar</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-<div class="container mt-4">
-  <h2 class="mb-4">📦 VectorStore: Estado de las Fuentes Indexadas</h2>
-
-  {% if resumen_docs %}
-  <div class="alert alert-primary">
-    <strong>📄 Documentos:</strong><br>
-    Total de fragmentos: <strong>{{ resumen_docs.total_fragmentos }}</strong><br>
-    Dimensiones de vector: <strong>{{ resumen_docs.dimensiones }}</strong><br>
-    Última actualización: <strong>{{ resumen_docs.fecha }}</strong>
-  </div>
-  {% endif %}
-
-  {% if resumen_web %}
-  <div class="alert alert-success">
-    <strong>🌐 Webs:</strong><br>
-    Total de fragmentos: <strong>{{ resumen_web.total_fragmentos }}</strong><br>
-    Dimensiones de vector: <strong>{{ resumen_web.dimensiones }}</strong><br>
-    Última actualización: <strong>{{ resumen_web.fecha }}</strong>
-  </div>
-  {% endif %}
-
-  <h4>📄 Documentos cargados ({{ documentos|length }})</h4>
-  <table class="table table-striped table-bordered align-middle">
-    <thead class="table-light">
-      <tr>
-        <th>Nombre</th>
-        <th>Origen</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for doc in documentos %}
-      <tr>
-        <td>{{ doc.nombre }}</td>
-        <td>{{ doc.origen }}</td>
-        <td>
-          <a href="/vectorstore/documento/{{ doc.nombre | urlencode }}" class="btn btn-sm btn-outline-primary">Ver fragmentos</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  <h4 class="mt-5">🌐 URLs indexadas ({{ urls|length }})</h4>
-  <table class="table table-striped table-bordered align-middle">
-    <thead class="table-light">
-      <tr>
-        <th>URL</th>
-        <th>Origen</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for url in urls %}
-      <tr>
-        <td>{{ url.nombre }}</td>
-        <td>{{ url.origen }}</td>
-        <td>
-          <a href="/vectorstore/documento/{{ url.nombre | urlencode }}" class="btn btn-sm btn-outline-primary">Ver fragmentos</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-
-  {% if ejemplo_embedding_docs %}
-  <div class="card mt-5">
-    <div class="card-header">🧠 Ejemplo de vector (documentos)</div>
-    <div class="card-body">
-      <pre style="max-height: 250px; overflow-y: auto;">{{ ejemplo_embedding_docs }}</pre>
+    <div class="mt-5">
+        <h4>📖 ¿Qué significan estas métricas?</h4>
+        <ul>
+            <li><strong>Fragmentos</strong>: secciones divididas del texto de cada fuente para facilitar la búsqueda semántica.</li>
+            <li><strong>Nº de fuentes</strong>: número de documentos o URLs únicos indexados en esa categoría.</li>
+            <li><strong>Dimensiones</strong>: tamaño del vector de embedding generado para cada fragmento.</li>
+            <li><strong>Distancia media</strong>: promedio de distancias entre todos los pares de vectores. Cuanto menor, más coherentes entre sí.</li>
+            <li><strong>Histograma</strong>: visualiza cómo se distribuyen esas distancias entre los fragmentos. Ayuda a detectar ruido o redundancia.</li>
+        </ul>
     </div>
-  </div>
-  {% endif %}
-
-  {% if ejemplo_embedding_web %}
-  <div class="card mt-4">
-    <div class="card-header">🌐 Ejemplo de vector (web)</div>
-    <div class="card-body">
-      <pre style="max-height: 250px; overflow-y: auto;">{{ ejemplo_embedding_web }}</pre>
-    </div>
-  </div>
-  {% endif %}
-
-  {% if log_docs %}
-  <div class="card mt-5">
-    <div class="card-header">📜 Log de ingesta de documentos</div>
-    <div class="card-body">
-      <pre style="max-height: 300px; overflow-y: scroll;">{{ log_docs }}</pre>
-    </div>
-  </div>
-  {% endif %}
-
-  {% if log_web %}
-  <div class="card mt-4">
-    <div class="card-header">🌐 Log de ingesta desde URLs</div>
-    <div class="card-body">
-      <pre style="max-height: 300px; overflow-y: scroll;">{{ log_web }}</pre>
-    </div>
-  </div>
-  {% endif %}
-
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    {% for fuente, info in datos.items() %}
+        {% if info.analisis.histograma %}
+            const ctx_{{ fuente }} = document.getElementById('histograma_{{ fuente }}').getContext('2d');
+            new Chart(ctx_{{ fuente }}, {
+                type: 'bar',
+                data: {
+                    labels: ['0-0.2', '0.2-0.4', '0.4-0.6', '0.6-0.8', '0.8-1.0', '1.0-1.2', '1.2-1.4', '1.4-1.6', '1.6-1.8', '1.8-2.0'],
+                    datasets: [{
+                        label: 'Distribución de distancias',
+                        data: {{ info.analisis.histograma }},
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Nº de fragmentos' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Distancia entre fragmentos' }
+                        }
+                    }
+                }
+            });
+        {% endif %}
+    {% endfor %}
+
+    document.querySelectorAll('.reindex-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.disabled = true;
+            btn.innerText = '⏳';
+        });
+    });
+</script>
 {% endblock %}

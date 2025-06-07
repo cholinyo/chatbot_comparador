@@ -1,19 +1,19 @@
 {
   "modelo_local": "llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
   "modelo_openai": "gpt-4",
-  
   "document_folders": [
     "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes1",
-    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes2"
+    "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes2",
+    "C:\\Users\\vcaruncho\\Downloads"
   ],
   "web_sources": [
     {
-      "url": "https://transparencia.onda.es",
-      "depth": 10
+      "url": "https://www.onda.es/",
+      "depth": 100
     },
     {
-      "url": "https://www.onda.es",
-      "depth": 10
+      "url": "https://transparencia.onda.es/",
+      "depth": 100
     }
   ],
   "api_sources": [
@@ -25,7 +25,10 @@
         "Accept": "application/json"
       },
       "campo_texto": "body",
-      "etiquetas": ["blog", "test"]
+      "etiquetas": [
+        "blog",
+        "test"
+      ]
     },
     {
       "name": "DummyJSON Products",
@@ -35,7 +38,10 @@
         "Accept": "application/json"
       },
       "campo_texto": "description",
-      "etiquetas": ["ecommerce", "productos"]
+      "etiquetas": [
+        "ecommerce",
+        "productos"
+      ]
     },
     {
       "name": "BoredAPI",
@@ -45,15 +51,19 @@
         "Accept": "application/json"
       },
       "campo_texto": "activity",
-      "etiquetas": ["ocio", "actividades"]
-    }    
-    ,
+      "etiquetas": [
+        "ocio",
+        "actividades"
+      ]
+    },
     {
       "name": "JSONPlaceholder",
       "url": "https://jsonplaceholder.typicode.com/posts",
       "auth": "none",
       "campo_texto": "body",
-      "etiquetas": ["blog"]
+      "etiquetas": [
+        "blog"
+      ]
     }
   ]
 }
