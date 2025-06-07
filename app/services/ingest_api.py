@@ -22,6 +22,17 @@ def cargar_config():
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
 
+def extraer_valor_anidado(diccionario, clave):
+    """Permite acceder a claves anidadas como 'name.common'"""
+    claves = clave.split(".")
+    valor = diccionario
+    for k in claves:
+        if isinstance(valor, dict) and k in valor:
+            valor = valor[k]
+        else:
+            return None
+    return valor if isinstance(valor, str) else None
+
 def obtener_fragmentos_api(api_config):
     """Realiza una petición a una API REST y extrae los fragmentos de texto"""
     url = api_config.get("url")
@@ -30,7 +41,7 @@ def obtener_fragmentos_api(api_config):
     campo_texto = api_config.get("campo_texto", "texto")
     etiquetas = api_config.get("etiquetas", [])
 
-    if auth:
+    if auth and auth.lower() != "none":
         headers["Authorization"] = auth
 
     try:
@@ -44,18 +55,18 @@ def obtener_fragmentos_api(api_config):
             datos = [datos]
 
         for item in datos:
-            if campo_texto in item and isinstance(item[campo_texto], str):
-                texto = item[campo_texto].strip()
-                if texto:
-                    fragmentos.append(texto)
-                    metadatos.append({
-                        "texto": texto,
-                        "fuente": "api",
-                        "api": api_config.get("nombre", url),
-                        "url": url,
-                        "etiquetas": etiquetas,
-                        "json_original": item
-                    })
+            texto = extraer_valor_anidado(item, campo_texto)
+            if texto:
+                texto = texto.strip()
+                fragmentos.append(texto)
+                metadatos.append({
+                    "texto": texto,
+                    "fuente": "api",
+                    "api": api_config.get("name", url),
+                    "url": url,
+                    "etiquetas": etiquetas,
+                    "json_original": item
+                })
         return fragmentos, metadatos
     except Exception as e:
         print(f"❌ Error al acceder a {url}: {str(e)}")

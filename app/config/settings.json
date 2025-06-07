@@ -1,6 +1,7 @@
 {
   "modelo_local": "llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
   "modelo_openai": "gpt-4",
+  
   "document_folders": [
     "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes1",
     "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes2"
@@ -17,10 +18,42 @@
   ],
   "api_sources": [
     {
-      "name": "IOT",
-      "url": "https://openapi.iotsens.com/",
-      "auth": "env",
-      "env_key": "iot"
+      "name": "JSONPlaceholder Posts",
+      "url": "https://jsonplaceholder.typicode.com/posts",
+      "auth": "none",
+      "headers": {
+        "Accept": "application/json"
+      },
+      "campo_texto": "body",
+      "etiquetas": ["blog", "test"]
+    },
+    {
+      "name": "DummyJSON Products",
+      "url": "https://dummyjson.com/products",
+      "auth": "none",
+      "headers": {
+        "Accept": "application/json"
+      },
+      "campo_texto": "description",
+      "etiquetas": ["ecommerce", "productos"]
+    },
+    {
+      "name": "BoredAPI",
+      "url": "https://www.boredapi.com/api/activity",
+      "auth": "none",
+      "headers": {
+        "Accept": "application/json"
+      },
+      "campo_texto": "activity",
+      "etiquetas": ["ocio", "actividades"]
+    }    
+    ,
+    {
+      "name": "JSONPlaceholder",
+      "url": "https://jsonplaceholder.typicode.com/posts",
+      "auth": "none",
+      "campo_texto": "body",
+      "etiquetas": ["blog"]
     }
   ]
 }
