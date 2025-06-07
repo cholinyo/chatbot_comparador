@@ -1,104 +1,84 @@
 import os
-import json
-import logging
-from bs4 import BeautifulSoup
-import docx
+from pathlib import Path
 from unstructured.partition.pdf import partition_pdf
-from unstructured.partition.text import partition_text
-
-CONFIG_PATH = os.path.join("app", "config", "settings.json")
-LOG_PATH = os.path.join("logs", "loader.log")
-os.makedirs("logs", exist_ok=True)
-
-logging.basicConfig(
-    filename=LOG_PATH,
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    encoding="utf-8"
-)
-
-def cargar_config():
-    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+from unstructured.partition.docx import partition_docx
+from unstructured.partition.html import partition_html
+from PyPDF2 import PdfReader
 
 def leer_txt(path):
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
         return f.read()
 
 def leer_docx(path):
-    doc = docx.Document(path)
-    return "\\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+    elements = partition_docx(filename=path)
+    return "\n".join([str(el) for el in elements])
 
 def leer_pdf(path):
     try:
-        elementos = partition_pdf(filename=path)
-        texto = "\\n".join(e.text.strip() for e in elementos if hasattr(e, "text") and e.text)
-        logging.info(f"PDF procesado: {path} - {len(texto)} caracteres extraídos")
-        return texto
+        elements = partition_pdf(filename=path)
+        return "\n".join([str(el) for el in elements])
     except Exception as e:
-        logging.warning(f"PDF no procesado: {path} - {e}")
-        return ""
+        print(f"⚠️ unstructured falló en {path}, usando PyPDF2: {e}")
+        try:
+            reader = PdfReader(path)
+            texto = ""
+            for pagina in reader.pages:
+                texto += pagina.extract_text() + "\n"
+            return texto
+        except Exception as e2:
+            print(f"❌ PyPDF2 también falló en {path}: {e2}")
+            return ""
 
 def leer_html(path):
-    try:
-        with open(path, "r", encoding="utf-8", errors="ignore") as f:
-            soup = BeautifulSoup(f, "html.parser")
-            return soup.get_text(separator="\\n")
-    except Exception as e:
-        logging.warning(f"HTML no procesado: {path} - {e}")
-        return ""
+    elements = partition_html(filename=path)
+    return "\n".join([str(el) for el in elements])
 
 def partir_en_bloques(texto, max_caracteres=500):
     palabras = texto.split()
-    fragmentos = []
-    fragmento = []
+    bloques = []
+    bloque_actual = ""
 
     for palabra in palabras:
-        if sum(len(p) + 1 for p in fragmento) + len(palabra) < max_caracteres:
-            fragmento.append(palabra)
+        if len(bloque_actual) + len(palabra) + 1 <= max_caracteres:
+            bloque_actual += " " + palabra
         else:
-            fragmentos.append(" ".join(fragmento))
-            fragmento = [palabra]
-    if fragmento:
-        fragmentos.append(" ".join(fragmento))
+            bloques.append(bloque_actual.strip())
+            bloque_actual = palabra
+    if bloque_actual:
+        bloques.append(bloque_actual.strip())
 
-    return fragmentos
+    return bloques
 
-def cargar_documentos(rutas_directas=None):
-    config = cargar_config()
-    carpetas = rutas_directas or config.get("document_folders", [])
+def cargar_documentos(carpetas):
     documentos = []
-    extensiones_validas = [".txt", ".pdf", ".docx", ".html"]
-
     for carpeta in carpetas:
-        for root, _, files in os.walk(carpeta):
-            for nombre in files:
-                ext = os.path.splitext(nombre)[1].lower()
-                if ext not in extensiones_validas:
+        carpeta_path = Path(carpeta)
+        if not carpeta_path.exists():
+            continue
+
+        for ruta in carpeta_path.rglob("*"):
+            if not ruta.is_file() or ruta.name.startswith("~$"):
+                continue
+
+            try:
+                if ruta.suffix.lower() == ".txt":
+                    texto = leer_txt(ruta)
+                elif ruta.suffix.lower() == ".docx":
+                    texto = leer_docx(ruta)
+                elif ruta.suffix.lower() == ".pdf":
+                    texto = leer_pdf(ruta)
+                elif ruta.suffix.lower() == ".html":
+                    texto = leer_html(ruta)
+                else:
                     continue
 
-                ruta = os.path.join(root, nombre)
-                texto = ""
-
-                if ext == ".txt":
-                    texto = leer_txt(ruta)
-                elif ext == ".docx":
-                    texto = leer_docx(ruta)
-                elif ext == ".pdf":
-                    texto = leer_pdf(ruta)
-                elif ext == ".html":
-                    texto = leer_html(ruta)
-
-                if texto.strip():
-                    bloques = partir_en_bloques(texto)
-                    documentos.append({
-                        "nombre": nombre,
-                        "fragmentos": bloques,
-                        "origen": "documento"
-                    })
-                    logging.info(f"✅ {nombre} procesado ({len(bloques)} fragmentos)")
-                else:
-                    logging.warning(f"⚠️ {nombre} sin contenido procesable")
-
-    logging.info(f"📄 Total documentos procesados: {len(documentos)}")
+                bloques = partir_en_bloques(texto)
+                documentos.append({
+                    "nombre": ruta.name,
+                    "ruta": str(ruta),
+                    "fragmentos": bloques
+                })
+            except Exception as e:
+                print(f"❌ Error al procesar {ruta.name}: {e}")
+                continue
     return documentos

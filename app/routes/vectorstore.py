@@ -1,86 +1,100 @@
-
-from flask import Blueprint, render_template, request
 import os
+import subprocess
 import pickle
-import faiss
-import datetime
 import numpy as np
+import faiss
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from datetime import datetime
+from sklearn.metrics.pairwise import pairwise_distances
 
 vectorstore_bp = Blueprint("vectorstore", __name__)
-BASE_DIR = "vectorstore"
-LOG_PATH_DOC = os.path.join("logs", "ingestion_documents.log")
-LOG_PATH_WEB = os.path.join("logs", "ingestion_web.log")
 
-def cargar_metadatos_y_resumen(subcarpeta):
-    ruta = os.path.join(BASE_DIR, subcarpeta)
-    metadatos = []
-    resumen = {}
+def cargar_embeddings(ruta):
+    try:
+        return np.load(ruta)
+    except Exception:
+        return None
 
-    path_meta = os.path.join(ruta, "metadatos.pkl")
-    path_index = os.path.join(ruta, "index.faiss")
-    path_embeddings = os.path.join(ruta, "embeddings.npy")
+def cargar_fragmentos(ruta):
+    try:
+        with open(ruta, "rb") as f:
+            return pickle.load(f)
+    except Exception:
+        return []
 
-    if os.path.exists(path_meta):
-        with open(path_meta, "rb") as f:
-            metadatos = pickle.load(f)
+def obtener_fecha_actualizacion(ruta_archivo):
+    if os.path.exists(ruta_archivo):
+        ts = os.path.getmtime(ruta_archivo)
+        return datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M')
+    return "N/A"
 
-    if os.path.exists(path_index):
-        index = faiss.read_index(path_index)
-        resumen = {
-            "total_fragmentos": index.ntotal,
-            "dimensiones": index.d,
-            "fecha": datetime.datetime.fromtimestamp(os.path.getmtime(path_index)).strftime("%Y-%m-%d %H:%M")
-        }
-    else:
-        resumen = None
+def contar_fuentes(metadatos):
+    if isinstance(metadatos, list):
+        return len(set(meta["documento"] for meta in metadatos if "documento" in meta))
+    return 0
 
-    ejemplo_vector = None
-    if os.path.exists(path_embeddings):
-        try:
-            with open(path_embeddings, "rb") as f:
-                emb = np.load(f)
-                if len(emb) > 0:
-                    ejemplo_vector = emb[0].tolist()
-        except Exception:
-            pass
-
-    return metadatos, resumen, ejemplo_vector
+def analizar(emb):
+    if emb is None or len(emb) == 0:
+        return {"similitud_media": "N/A", "histograma": []}
+    dists = pairwise_distances(emb)
+    tril_indices = np.tril_indices(len(emb), k=-1)
+    valores = dists[tril_indices]
+    histograma = np.histogram(valores, bins=10, range=(0, 2))
+    media = np.mean(valores) if len(valores) > 0 else 0
+    return {"similitud_media": round(media, 4), "histograma": histograma[0].tolist()}
 
 @vectorstore_bp.route("/vectorstore")
 def vista_vectorstore():
-    documentos, resumen_docs, ejemplo_embedding_docs = cargar_metadatos_y_resumen("documents")
-    urls, resumen_web, ejemplo_embedding_web = cargar_metadatos_y_resumen("web")
+    fuentes = {
+        "documents": "vectorstore/documents",
+        "web": "vectorstore/web",
+        "apis": "vectorstore/apis"
+    }
 
-    log_docs = ""
-    log_web = ""
-    if os.path.exists(LOG_PATH_DOC):
-        with open(LOG_PATH_DOC, "r", encoding="utf-8") as f:
-            log_docs = f.read()
-    if os.path.exists(LOG_PATH_WEB):
-        with open(LOG_PATH_WEB, "r", encoding="utf-8") as f:
-            log_web = f.read()
+    datos = {}
 
-    return render_template("vectorstore.html",
-                           resumen_docs=resumen_docs,
-                           resumen_web=resumen_web,
-                           documentos=documentos,
-                           urls=urls,
-                           ejemplo_embedding_docs=ejemplo_embedding_docs,
-                           ejemplo_embedding_web=ejemplo_embedding_web,
-                           log_docs=log_docs,
-                           log_web=log_web)
+    for fuente, ruta in fuentes.items():
+        emb_path = os.path.join(ruta, "embeddings.npy")
+        frag_path = os.path.join(ruta, "fragmentos.pkl")
+        meta_path = os.path.join(ruta, "metadatos.pkl")
 
-@vectorstore_bp.route("/vectorstore/documento/<nombre>")
-def ver_fragmentos(nombre):
-    ruta = os.path.join(BASE_DIR, "documents", "metadatos.pkl")
-    fragmentos = []
+        embeddings = cargar_embeddings(emb_path)
+        fragmentos = cargar_fragmentos(frag_path)
+        try:
+            with open(meta_path, "rb") as f:
+                metadatos = pickle.load(f)
+        except Exception:
+            metadatos = []
 
-    if os.path.exists(ruta):
-        with open(ruta, "rb") as f:
-            metadatos = pickle.load(f)
-            for idx, doc in enumerate(metadatos):
-                if doc.get("nombre") == nombre:
-                    frag = {**doc, "id": idx}
-                    fragmentos.append(frag)
+        datos[fuente] = {
+            "fragmentos": len(fragmentos),
+            "dimensiones": embeddings.shape[1] if embeddings is not None else "N/A",
+            "actualizacion": obtener_fecha_actualizacion(emb_path),
+            "fuentes": contar_fuentes(metadatos),
+            "analisis": analizar(embeddings)
+        }
 
-    return render_template("fragmentos_documento.html", nombre=nombre, fragmentos=fragmentos)
+    return render_template("vectorstore.html", datos=datos)
+
+@vectorstore_bp.route("/vectorstore/reindex/<fuente>", methods=["POST"])
+def reindex_fuente(fuente):
+    scripts = {
+        "documents": "reindex_documents.bat",
+        "web": "reindex_web.bat",
+        "apis": "reindex_apis.bat"
+    }
+
+    if fuente not in scripts:
+        flash("Fuente no válida", "danger")
+        return redirect(url_for("vectorstore.vista_vectorstore"))
+
+    try:
+        script_path = os.path.join(os.getcwd(), scripts[fuente])
+        result = subprocess.run(script_path, shell=True, check=True)
+        flash(f"{fuente.capitalize()} reindexado correctamente", "success")
+    except subprocess.CalledProcessError as e:
+        flash(f"Error al reindexar {fuente}: {str(e)}", "danger")
+    except Exception as e:
+        flash(f"Error inesperado: {str(e)}", "danger")
+
+    return redirect(url_for("vectorstore.vista_vectorstore"))

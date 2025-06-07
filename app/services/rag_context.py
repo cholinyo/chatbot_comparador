@@ -3,56 +3,62 @@ import faiss
 import pickle
 from sentence_transformers import SentenceTransformer
 
-# Directorio de vectorstore para web y documentos
-VECTOR_DIR_DOC = os.path.join("vectorstore", "documents")
-VECTOR_DIR_WEB = os.path.join("vectorstore", "web")
-
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-def cargar_fragmentos_y_metadatos(directorio):
-    index_path = os.path.join(directorio, "index.faiss")
-    meta_path = os.path.join(directorio, "metadatos.pkl")
-    textos_path = os.path.join(directorio, "fragmentos.pkl")
+# Paths por fuente
+SOURCES = {
+    "documentos": "vectorstore/documents",
+    "web": "vectorstore/web",
+    "apis": "vectorstore/apis"
+}
 
-    if not (os.path.exists(index_path) and os.path.exists(meta_path) and os.path.exists(textos_path)):
-        return None, [], [], f"⚠️ Índice no encontrado en {directorio}"
+# Función para cargar fragmentos + metadatos + FAISS
+def cargar_fuente(path):
+    try:
+        index = faiss.read_index(os.path.join(path, "index.faiss"))
+        with open(os.path.join(path, "fragmentos.pkl"), "rb") as f:
+            fragmentos = pickle.load(f)
+        with open(os.path.join(path, "metadatos.pkl"), "rb") as f:
+            metadatos = pickle.load(f)
+        return index, metadatos, fragmentos
+    except:
+        return None, [], []
 
-    index = faiss.read_index(index_path)
-    with open(meta_path, "rb") as f:
-        metadatos = pickle.load(f)
-    with open(textos_path, "rb") as f:
-        fragmentos = pickle.load(f)
+# Cargamos todas las fuentes
+vectores = {}
+for nombre, ruta in SOURCES.items():
+    index, metadatos, fragmentos = cargar_fuente(ruta)
+    vectores[nombre] = {
+        "index": index,
+        "metadatos": metadatos,
+        "fragmentos": fragmentos
+    }
 
-    return index, metadatos, fragmentos, None
-
-# Carga de índices
-index_doc, metadatos_doc, fragmentos_doc, error_doc = cargar_fragmentos_y_metadatos(VECTOR_DIR_DOC)
-index_web, metadatos_web, fragmentos_web, error_web = cargar_fragmentos_y_metadatos(VECTOR_DIR_WEB)
-
-def recuperar_contexto(pregunta, k=3, fuente="ambas"):
-    resultados = []
+def recuperar_contexto(pregunta, k=5, fuente="todas"):
+    """
+    fuente: 'documentos', 'web', 'apis' o 'todas'
+    """
     emb = model.encode([pregunta])
+    resultados = []
 
-    if fuente in ["documentos", "ambas"] and index_doc:
-        dist_doc, ind_doc = index_doc.search(emb, k)
-        for i, idx in enumerate(ind_doc[0]):
-            if idx < len(fragmentos_doc):
-                resultados.append({
-                    "texto": fragmentos_doc[idx],
-                    "metadata": metadatos_doc[idx],
-                    "distancia": float(dist_doc[0][i]),
-                    "fuente": "documento"
-                })
+    fuentes_a_usar = [fuente] if fuente in SOURCES else SOURCES.keys()
 
-    if fuente in ["web", "ambas"] and index_web:
-        dist_web, ind_web = index_web.search(emb, k)
-        for i, idx in enumerate(ind_web[0]):
-            if idx < len(fragmentos_web):
+    for f in fuentes_a_usar:
+        index = vectores[f]["index"]
+        fragmentos = vectores[f]["fragmentos"]
+        metadatos = vectores[f]["metadatos"]
+
+        if index is None:
+            continue
+
+        dist, ind = index.search(emb, k)
+        for i, idx in enumerate(ind[0]):
+            if idx < len(fragmentos):
                 resultados.append({
-                    "texto": fragmentos_web[idx],
-                    "metadata": metadatos_web[idx],
-                    "distancia": float(dist_web[0][i]),
-                    "fuente": "web"
+                    "texto": fragmentos[idx],
+                    "metadata": metadatos[idx],
+                    "distancia": float(dist[0][i]),
+                    "fuente": f
                 })
 
     resultados.sort(key=lambda x: x["distancia"])
