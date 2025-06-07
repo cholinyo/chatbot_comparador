@@ -12,6 +12,7 @@ venv/
 ENV/
 .env
 .env.*
+venvp/
 
 # Archivos de configuración local
 .settings/
@@ -36,6 +37,7 @@ vectorstore/documents/
 vectorstore/web/
 vectorstore/apis/
 vectorstore/bbdd/
+vectorstore/
 
 # Otros archivos temporales
 *.tmp
