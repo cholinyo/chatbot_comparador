@@ -1,9 +1,14 @@
 import os
+import json
 from pathlib import Path
 from unstructured.partition.pdf import partition_pdf
 from unstructured.partition.docx import partition_docx
 from unstructured.partition.html import partition_html
 from PyPDF2 import PdfReader
+
+SETTINGS_PATH = os.path.join("app", "config", "settings.json")
+
+# --- Funciones de lectura de archivos ---
 
 def leer_txt(path):
     with open(path, "r", encoding="utf-8", errors="ignore") as f:
@@ -33,6 +38,8 @@ def leer_html(path):
     elements = partition_html(filename=path)
     return "\n".join([str(el) for el in elements])
 
+# --- Utilidad: partir texto en bloques ---
+
 def partir_en_bloques(texto, max_caracteres=500):
     palabras = texto.split()
     bloques = []
@@ -49,11 +56,20 @@ def partir_en_bloques(texto, max_caracteres=500):
 
     return bloques
 
+# --- Carga desde settings.json si se desea usar en modo autónomo ---
+
+def cargar_config():
+    with open(SETTINGS_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+# --- Función principal ---
+
 def cargar_documentos(carpetas):
     documentos = []
     for carpeta in carpetas:
         carpeta_path = Path(carpeta)
         if not carpeta_path.exists():
+            print(f"⚠️ Carpeta no encontrada: {carpeta}")
             continue
 
         for ruta in carpeta_path.rglob("*"):
@@ -81,4 +97,5 @@ def cargar_documentos(carpetas):
             except Exception as e:
                 print(f"❌ Error al procesar {ruta.name}: {e}")
                 continue
+
     return documentos

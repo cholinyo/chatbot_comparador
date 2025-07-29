@@ -1,14 +1,35 @@
 import os
+import json
 import pickle
-import faiss
 import numpy as np
+import faiss
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup, SoupStrainer
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from sentence_transformers import SentenceTransformer
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-# Configuración de rutas
+def limpiar_texto(texto):
+    import re
+    texto = re.sub(r"\s+", " ", texto)
+    texto = texto.replace("\xa0", " ").strip()
+    return texto
+
+# Configuración
+CONFIG_PATH = os.path.join("app", "config", "settings.json")
+with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+    settings = json.load(f)
+
+modelo_embedding = settings.get("embedding_model", "all-MiniLM-L6-v2")
+embedding_model = SentenceTransformer(modelo_embedding)
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=512,
+    chunk_overlap=64,
+    separators=["\n\n", "\n", ".", " "]
+)
+
 VECTOR_DIR = os.path.join("vectorstore", "web")
 os.makedirs(VECTOR_DIR, exist_ok=True)
 
@@ -17,26 +38,12 @@ fragmentos_path = os.path.join(VECTOR_DIR, "fragmentos.pkl")
 metadatos_path = os.path.join(VECTOR_DIR, "metadatos.pkl")
 embeddings_path = os.path.join(VECTOR_DIR, "embeddings.npy")
 
-# Inicializar modelo
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-
-# Almacenamiento temporal
 fragmentos_totales = []
 metadatos_totales = []
 vectores_totales = []
 
-def partir_en_bloques(texto, max_caracteres=500):
-    palabras = texto.split()
-    fragmentos, fragmento = [], []
-    for palabra in palabras:
-        if sum(len(p) + 1 for p in fragmento) + len(palabra) < max_caracteres:
-            fragmento.append(palabra)
-        else:
-            fragmentos.append(" ".join(fragmento))
-            fragmento = [palabra]
-    if fragmento:
-        fragmentos.append(" ".join(fragmento))
-    return fragmentos
+def partir_en_bloques(texto):
+    return splitter.split_text(limpiar_texto(texto))
 
 def obtener_urls_del_html(html, base_url):
     soup = BeautifulSoup(html, "html.parser", parse_only=SoupStrainer("a"))
@@ -71,7 +78,6 @@ def extraer_y_indexar_url(url):
         return set()
 
     vectores = embedding_model.encode(fragmentos).astype("float32")
-
     fragmentos_totales.extend(fragmentos)
     vectores_totales.extend(vectores)
     metadatos_totales.extend([
@@ -112,8 +118,8 @@ def crawl_dominio(base_url, max_paginas=10):
 def guardar_vectorstore():
     index = faiss.IndexFlatL2(384)
     index.add(np.array(vectores_totales).astype("float32"))
-
     faiss.write_index(index, index_path)
+
     with open(fragmentos_path, "wb") as f:
         pickle.dump(fragmentos_totales, f)
     with open(metadatos_path, "wb") as f:
@@ -122,18 +128,7 @@ def guardar_vectorstore():
 
     print(f"✅ Vectorstore guardado en {VECTOR_DIR}")
 
-# Punto de entrada
 if __name__ == "__main__":
-    import json
-
-    config_path = os.path.join("app", "config", "settings.json")
-    if not os.path.exists(config_path):
-        print("❌ No se encontró settings.json")
-        exit()
-
-    with open(config_path, "r", encoding="utf-8") as f:
-        settings = json.load(f)
-
     fuentes = settings.get("web_sources", [])
     if not fuentes:
         print("⚠️ No hay URLs configuradas")
@@ -141,7 +136,7 @@ if __name__ == "__main__":
         for fuente in fuentes:
             url = fuente.get("url")
             max_paginas = fuente.get("depth", 10)
-            print(f"\n🌐 Iniciando crawl para: {url} con depth={max_paginas}")
+            print(f"🌐 Iniciando crawl para: {url} con depth={max_paginas}")
             crawl_dominio(url, max_paginas)
 
         guardar_vectorstore()

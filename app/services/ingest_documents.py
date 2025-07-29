@@ -1,4 +1,3 @@
-# app/services/ingest_documents.py
 import os
 import logging
 import json
@@ -7,18 +6,23 @@ import numpy as np
 import faiss
 from tqdm import tqdm
 from sentence_transformers import SentenceTransformer
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from app.utils import doc_loader
 
-# Configuración
-CONFIG_PATH = os.path.join("app", "config", "settings.json")
-VECTOR_DIR = os.path.join("vectorstore", "documents")
-LOG_PATH = os.path.join("logs", "ingestion_documents.log")
-
 # Crear carpetas necesarias
+VECTOR_DIR = os.path.join("vectorstore", "documents")
 os.makedirs("logs", exist_ok=True)
 os.makedirs(VECTOR_DIR, exist_ok=True)
 
+# Cargar configuración
+CONFIG_PATH = os.path.join("app", "config", "settings.json")
+def cargar_config():
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+config = cargar_config()
+
 # Configurar logging
+LOG_PATH = os.path.join("logs", "ingestion_documents.log")
 logging.basicConfig(
     filename=LOG_PATH,
     level=logging.INFO,
@@ -26,20 +30,30 @@ logging.basicConfig(
     encoding="utf-8"
 )
 
-def cargar_config():
-    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+# Cargar modelo de embeddings desde config
+modelo_embedding = config.get("embedding_model", "all-MiniLM-L6-v2")
+modelo = SentenceTransformer(modelo_embedding)
+
+# Crear splitter semántico
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=512,
+    chunk_overlap=64,
+    separators=["\n\n", "\n", ".", " "]
+)
+
+def limpiar_texto(texto):
+    import re
+    texto = re.sub(r"\s+", " ", texto)
+    texto = texto.replace("\xa0", " ").strip()
+    return texto
 
 def main():
-    config = cargar_config()
     carpetas = config.get("document_folders", [])
     if not carpetas:
         logging.warning("⚠️ No hay carpetas configuradas en settings.json")
         return
 
-    modelo = SentenceTransformer("all-MiniLM-L6-v2")
     documentos = doc_loader.cargar_documentos(carpetas)
-
     all_embeddings = []
     fragmento_metadatos = []
     total_fragmentos = 0
@@ -47,7 +61,12 @@ def main():
     logging.info(f"📁 Iniciando ingesta de {len(documentos)} documentos")
 
     for doc in tqdm(documentos, desc="Procesando documentos"):
-        bloques = doc.get("fragmentos", [])
+        bloques_raw = doc.get("fragmentos", [])
+        bloques_limpios = [limpiar_texto(b) for b in bloques_raw]
+        bloques = []
+        for b in bloques_limpios:
+            bloques.extend(splitter.split_text(b))
+
         if not bloques:
             logging.warning(f"⚠️ Documento sin fragmentos: {doc['nombre']}")
             continue
@@ -59,7 +78,8 @@ def main():
             fragmento_metadatos.append({
                 "documento": doc["nombre"],
                 "fragmento": bloque,
-                "origen": "documento"
+                "origen": "documento",
+                "etiquetas": ["documento"]
             })
 
         total_fragmentos += len(bloques)

@@ -7,7 +7,7 @@ def create_app():
     # 🔹 Importa y registra blueprints
     from app.routes.chat import chat_bp
     from app.routes.admin import admin_bp
-    from app.routes.grafo import grafo_bp
+    from app.routes.graph import graph_bp
     from app.routes.config import config_bp
     from app.routes.vectorstore import vectorstore_bp
     from app.routes.fragmentos import fragmentos_bp
@@ -15,7 +15,7 @@ def create_app():
 
     app.register_blueprint(chat_bp)
     app.register_blueprint(admin_bp)
-    app.register_blueprint(grafo_bp)
+    app.register_blueprint(graph_bp)
     app.register_blueprint(config_bp)  
     app.register_blueprint(vectorstore_bp)
     app.register_blueprint(fragmentos_bp)

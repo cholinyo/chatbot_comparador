@@ -1,6 +1,6 @@
 {
   "modelo_local": "llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
-  "modelo_openai": "gpt-4",
+  "modelo_openai": "gpt-4-turbo",
   "document_folders": [
     "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes1",
     "C:\\Users\\vcaruncho\\Documents\\Desarrollo SW\\Fuentes\\Fuentes2",
