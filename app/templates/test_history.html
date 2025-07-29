@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% block title %}📊 Historial de Pruebas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📊 Historial de Pruebas de Modelos</h2>
+    <div>
+      <a href="{{ url_for('admin.model_tuning') }}" class="btn btn-primary me-2">🎛️ Configuración</a>
+      <form method="post" action="{{ url_for('admin.clear_tests') }}" class="d-inline">
+        <button type="submit" class="btn btn-outline-danger" 
+                onclick="return confirm('¿Estás seguro de que quieres limpiar el historial?')">
+          🗑️ Limpiar Historial
+        </button>
+      </form>
+    </div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% if tests %}
+    <div class="row">
+      {% for test in tests %}
+        <div class="col-12 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">🧪 Prueba #{{ loop.index }}</h6>
+                <small class="text-muted">
+                  📅 {{ test.timestamp[:19].replace('T', ' ') if test.timestamp else 'Sin fecha' }}
+                </small>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Pregunta -->
+              <div class="mb-3">
+                <strong>❓ Pregunta:</strong>
+                <p class="mt-1 p-2 bg-light rounded">{{ test.prompt }}</p>
+              </div>
+
+              <!-- Comparación de respuestas -->
+              <div class="row">
+                <!-- OpenAI -->
+                <div class="col-md-6">
+                  <div class="card h-100">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between">
+                      <span>☁️ OpenAI</span>
+                      {% if test.openai.error %}
+                        <span class="badge bg-danger">Error</span>
+                      {% else %}
+                        <span class="badge bg-success">✓</span>
+                      {% endif %}
+                    </div>
+                    <div class="card-body">
+                      {% if test.openai.error %}
+                        <div class="alert alert-danger mb-2">
+                          <small>❌ {{ test.openai.error }}</small>
+                        </div>
+                      {% else %}
+                        <p class="card-text">{{ test.openai.response[:200] }}{% if test.openai.response|length > 200 %}...{% endif %}</p>
+                        
+                        <div class="mt-3">
+                          <small class="text-muted d-flex justify-content-between">
+                            <span>⏱️ {{ test.openai.time }}s</span>
+                            <span>🔢 {{ test.openai.tokens }} tokens</span>
+                          </small>
+                          {% if test.openai.response|length > 200 %}
+                            <button class="btn btn-sm btn-outline-primary mt-2" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#openai-full-{{ loop.index }}">
+                              Ver respuesta completa
+                            </button>
+                            <div class="collapse mt-2" id="openai-full-{{ loop.index }}">
+                              <div class="card card-body">
+                                {{ test.openai.response }}
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modelo Local -->
+                <div class="col-md-6">
+                  <div class="card h-100">
+                    <div class="card-header bg-success text-white d-flex justify-content-between">
+                      <span>🖥️ Local</span>
+                      {% if test.local.error %}
+                        <span class="badge bg-danger">Error</span>
+                      {% else %}
+                        <span class="badge bg-success">✓</span>
+                      {% endif %}
+                    </div>
+                    <div class="card-body">
+                      {% if test.local.error %}
+                        <div class="alert alert-danger mb-2">
+                          <small>❌ {{ test.local.error }}</small>
+                        </div>
+                      {% else %}
+                        <p class="card-text">{{ test.local.response[:200] }}{% if test.local.response|length > 200 %}...{% endif %}</p>
+                        
+                        <div class="mt-3">
+                          <small class="text-muted d-flex justify-content-between">
+                            <span>⏱️ {{ test.local.time }}s</span>
+                            <span>🔢 {{ test.local.tokens }} tokens</span>
+                          </small>
+                          {% if test.local.response|length > 200 %}
+                            <button class="btn btn-sm btn-outline-success mt-2" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#local-full-{{ loop.index }}">
+                              Ver respuesta completa
+                            </button>
+                            <div class="collapse mt-2" id="local-full-{{ loop.index }}">
+                              <div class="card card-body">
+                                {{ test.local.response }}
+                              </div>
+                            </div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Métricas comparativas -->
+              {% if not test.openai.error and not test.local.error %}
+                <div class="mt-3">
+                  <h6>📈 Comparativa:</h6>
+                  <div class="row text-center">
+                    <div class="col-3">
+                      <div class="card bg-light">
+                        <div class="card-body p-2">
+                          <small class="text-muted">Velocidad</small><br>
+                          {% if test.openai.time < test.local.time %}
+                            <span class="text-primary">☁️ OpenAI más rápido</span>
+                          {% elif test.local.time < test.openai.time %}
+                            <span class="text-success">🖥️ Local más rápido</span>
+                          {% else %}
+                            <span class="text-muted">⚖️ Empate</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="card bg-light">
+                        <div class="card-body p-2">
+                          <small class="text-muted">Longitud</small><br>
+                          {% if test.openai.response|length > test.local.response|length %}
+                            <span class="text-primary">☁️ Más detallado</span>
+                          {% elif test.local.response|length > test.openai.response|length %}
+                            <span class="text-success">🖥️ Más detallado</span>
+                          {% else %}
+                            <span class="text-muted">⚖️ Similar</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="card bg-light">
+                        <div class="card-body p-2">
+                          <small class="text-muted">Diferencia tiempo</small><br>
+                          <strong>{{ "%.1f"|format((test.local.time - test.openai.time)|abs) }}s</strong>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="card bg-light">
+                        <div class="card-body p-2">
+                          <small class="text-muted">Ratio tokens</small><br>
+                          <strong>{{ "%.1f"|format(test.local.tokens / test.openai.tokens if test.openai.tokens > 0 else 0) }}x</strong>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Paginación si hay muchos tests -->
+    {% if tests|length >= 20 %}
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i>
+        Mostrando los últimos 20 tests. Se guardan máximo 100 tests en el historial.
+      </div>
+    {% endif %}
+
+  {% else %}
+    <div class="text-center mt-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">📋 No hay pruebas registradas</h5>
+          <p class="card-text">
+            No se han realizado pruebas comparativas aún. 
+            Ve a la configuración de modelos para ejecutar tu primera prueba.
+          </p>
+          <a href="{{ url_for('admin.model_tuning') }}" class="btn btn-primary">
+            🎛️ Ir a Configuración de Modelos
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- Resumen estadístico -->
+  {% if tests %}
+    <div class="card mt-4">
+      <div class="card-header">
+        <h6>📊 Resumen Estadístico (últimas {{ tests|length }} pruebas)</h6>
+      </div>
+      <div class="card-body">
+        <div class="row text-center">
+          <div class="col-md-3">
+            <h5 class="text-primary">{{ tests|selectattr('openai.error', 'undefined')|list|length }}</h5>
+            <small>OpenAI exitosos</small>
+          </div>
+          <div class="col-md-3">
+            <h5 class="text-success">{{ tests|selectattr('local.error', 'undefined')|list|length }}</h5>
+            <small>Local exitosos</small>
+          </div>
+          <div class="col-md-3">
+            {% set avg_openai = tests|selectattr('openai.time', 'defined')|map(attribute='openai.time')|list|sum / (tests|selectattr('openai.time', 'defined')|list|length or 1) %}
+            <h5 class="text-info">{{ "%.1f"|format(avg_openai) }}s</h5>
+            <small>Tiempo medio OpenAI</small>
+          </div>
+          <div class="col-md-3">
+            {% set avg_local = tests|selectattr('local.time', 'defined')|map(attribute='local.time')|list|sum / (tests|selectattr('local.time', 'defined')|list|length or 1) %}
+            <h5 class="text-warning">{{ "%.1f"|format(avg_local) }}s</h5>
+            <small>Tiempo medio Local</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

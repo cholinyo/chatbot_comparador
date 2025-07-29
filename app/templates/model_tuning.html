@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+{% block title %}🎛️ Configuración de Modelos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">🎛️ Configuración Avanzada de Modelos</h2>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="post">
+    <div class="row">
+      <!-- Configuración OpenAI -->
+      <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">☁️ OpenAI GPT-4</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="openai_temperature" class="form-label">Temperature (0.0 - 1.0)</label>
+              <input type="range" class="form-range" id="openai_temperature" name="openai_temperature" 
+                     min="0" max="1" step="0.1" value="{{ config.openai_params.temperature or 0.7 }}"
+                     oninput="this.nextElementSibling.value = this.value">
+              <output>{{ config.openai_params.temperature or 0.7 }}</output>
+              <small class="form-text text-muted">Mayor valor = más creatividad</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="openai_max_tokens" class="form-label">Max Tokens</label>
+              <input type="number" class="form-control" id="openai_max_tokens" name="openai_max_tokens" 
+                     min="50" max="2048" value="{{ config.openai_params.max_tokens or 512 }}">
+            </div>
+
+            <div class="mb-3">
+              <label for="openai_top_p" class="form-label">Top P (0.0 - 1.0)</label>
+              <input type="range" class="form-range" id="openai_top_p" name="openai_top_p" 
+                     min="0" max="1" step="0.1" value="{{ config.openai_params.top_p or 1.0 }}"
+                     oninput="this.nextElementSibling.value = this.value">
+              <output>{{ config.openai_params.top_p or 1.0 }}</output>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <label for="openai_frequency_penalty" class="form-label">Frequency Penalty</label>
+                <input type="range" class="form-range" id="openai_frequency_penalty" name="openai_frequency_penalty" 
+                       min="0" max="2" step="0.1" value="{{ config.openai_params.frequency_penalty or 0 }}"
+                       oninput="this.nextElementSibling.value = this.value">
+                <output>{{ config.openai_params.frequency_penalty or 0 }}</output>
+              </div>
+              <div class="col-6">
+                <label for="openai_presence_penalty" class="form-label">Presence Penalty</label>
+                <input type="range" class="form-range" id="openai_presence_penalty" name="openai_presence_penalty" 
+                       min="0" max="2" step="0.1" value="{{ config.openai_params.presence_penalty or 0 }}"
+                       oninput="this.nextElementSibling.value = this.value">
+                <output>{{ config.openai_params.presence_penalty or 0 }}</output>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configuración Modelo Local -->
+      <div class="col-md-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">🖥️ Modelo Local (Ollama)</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="active_model" class="form-label">Modelo Activo</label>
+              <select class="form-select" id="active_model" name="active_model">
+                {% for model in available_models %}
+                  <option value="{{ model }}" 
+                    {% if model == config.get('active_local_model', 'llama3.1:8b') %}selected{% endif %}>
+                    {{ model }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="local_temperature" class="form-label">Temperature (0.0 - 1.0)</label>
+              <input type="range" class="form-range" id="local_temperature" name="local_temperature" 
+                     min="0" max="1" step="0.1" value="{{ config.local_params.temperature or 0.3 }}"
+                     oninput="this.nextElementSibling.value = this.value">
+              <output>{{ config.local_params.temperature or 0.3 }}</output>
+            </div>
+
+            <div class="mb-3">
+              <label for="local_max_tokens" class="form-label">Max Tokens</label>
+              <input type="number" class="form-control" id="local_max_tokens" name="local_max_tokens" 
+                     min="50" max="2048" value="{{ config.local_params.max_tokens or 512 }}">
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <label for="local_top_k" class="form-label">Top K</label>
+                <input type="number" class="form-control" id="local_top_k" name="local_top_k" 
+                       min="1" max="100" value="{{ config.local_params.top_k or 40 }}">
+              </div>
+              <div class="col-6">
+                <label for="local_top_p" class="form-label">Top P</label>
+                <input type="range" class="form-range" id="local_top_p" name="local_top_p" 
+                       min="0" max="1" step="0.1" value="{{ config.local_params.top_p or 0.7 }}"
+                       oninput="this.nextElementSibling.value = this.value">
+                <output>{{ config.local_params.top_p or 0.7 }}</output>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-6">
+                <label for="local_n_threads" class="form-label">CPU Threads</label>
+                <input type="number" class="form-control" id="local_n_threads" name="local_n_threads" 
+                       min="1" max="16" value="{{ config.local_params.n_threads or 6 }}">
+              </div>
+              <div class="col-6">
+                <label for="local_n_gpu_layers" class="form-label">GPU Layers</label>
+                <input type="number" class="form-control" id="local_n_gpu_layers" name="local_n_gpu_layers" 
+                       min="0" max="50" value="{{ config.local_params.n_gpu_layers or 0 }}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <button type="submit" class="btn btn-primary me-2">💾 Guardar Configuración</button>
+                <a href="{{ url_for('admin.admin') }}" class="btn btn-secondary">← Volver a Admin</a>
+              </div>
+              <div>
+                <button type="button" class="btn btn-info" onclick="showTestModal()">🧪 Probar Modelos</button>
+                <a href="{{ url_for('admin.test_history') }}" class="btn btn-outline-info">📊 Historial</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Modal para pruebas -->
+  <div class="modal fade" id="testModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">🧪 Probar Configuración de Modelos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="testForm">
+            <div class="mb-3">
+              <label for="test_prompt" class="form-label">Pregunta de prueba:</label>
+              <textarea class="form-control" id="test_prompt" name="test_prompt" rows="3" 
+                        placeholder="Ej: ¿Cuáles son los pasos para solicitar una licencia de apertura?">¿Qué es la inteligencia artificial?</textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="runTest()">🚀 Ejecutar Prueba</button>
+          </form>
+
+          <div id="testResults" class="mt-4" style="display: none;">
+            <h6>Resultados:</h6>
+            <div class="row">
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header bg-primary text-white">☁️ OpenAI</div>
+                  <div class="card-body">
+                    <div id="openai-result">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status"></div>
+                        <p>Generando respuesta...</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-header bg-success text-white">🖥️ Local</div>
+                  <div class="card-body">
+                    <div id="local-result">
+                      <div class="text-center">
+                        <div class="spinner-border" role="status"></div>
+                        <p>Generando respuesta...</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTestModal() {
+  const modal = new bootstrap.Modal(document.getElementById('testModal'));
+  modal.show();
+}
+
+function runTest() {
+  const prompt = document.getElementById('test_prompt').value;
+  const resultsDiv = document.getElementById('testResults');
+  
+  if (!prompt.trim()) {
+    alert('Por favor, introduce una pregunta de prueba');
+    return;
+  }
+  
+  // Mostrar resultados y spinners
+  resultsDiv.style.display = 'block';
+  document.getElementById('openai-result').innerHTML = `
+    <div class="text-center">
+      <div class="spinner-border" role="status"></div>
+      <p>Generando respuesta...</p>
+    </div>`;
+  document.getElementById('local-result').innerHTML = `
+    <div class="text-center">
+      <div class="spinner-border" role="status"></div>
+      <p>Generando respuesta...</p>
+    </div>`;
+  
+  // Realizar petición
+  fetch('{{ url_for("admin.test_models") }}', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'test_prompt=' + encodeURIComponent(prompt)
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Mostrar resultados OpenAI
+    const openaiDiv = document.getElementById('openai-result');
+    if (data.openai.error) {
+      openaiDiv.innerHTML = `<div class="alert alert-danger">❌ Error: ${data.openai.error}</div>`;
+    } else {
+      openaiDiv.innerHTML = `
+        <p><strong>Respuesta:</strong></p>
+        <p>${data.openai.response}</p>
+        <small class="text-muted">
+          ⏱️ ${data.openai.time}s | 🔢 ${data.openai.tokens} tokens | 🤖 ${data.openai.model}
+        </small>`;
+    }
+    
+    // Mostrar resultados Local
+    const localDiv = document.getElementById('local-result');
+    if (data.local.error) {
+      localDiv.innerHTML = `<div class="alert alert-danger">❌ Error: ${data.local.error}</div>`;
+    } else {
+      localDiv.innerHTML = `
+        <p><strong>Respuesta:</strong></p>
+        <p>${data.local.response}</p>
+        <small class="text-muted">
+          ⏱️ ${data.local.time}s | 🔢 ${data.local.tokens} tokens | 🤖 ${data.local.model}
+        </small>`;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    document.getElementById('openai-result').innerHTML = '<div class="alert alert-danger">Error en la petición</div>';
+    document.getElementById('local-result').innerHTML = '<div class="alert alert-danger">Error en la petición</div>';
+  });
+}
+</script>
+{% endblock %}
