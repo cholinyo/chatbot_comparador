@@ -177,15 +177,16 @@ class DocumentIngestor:
         
         # Leer contenido según extensión
         doc_path_obj = Path(doc_path)
+        doc_path_str = str(doc_path)  # Convertir a string
         try:
             if doc_path_obj.suffix.lower() == ".txt":
-                content = doc_loader.leer_txt(doc_path)
+                content = doc_loader.leer_txt(doc_path_str)
             elif doc_path_obj.suffix.lower() == ".docx":
-                content = doc_loader.leer_docx(doc_path)
+                content = doc_loader.leer_docx(doc_path_str)
             elif doc_path_obj.suffix.lower() == ".pdf":
-                content = doc_loader.leer_pdf(doc_path)
+                content = doc_loader.leer_pdf(doc_path_str)
             elif doc_path_obj.suffix.lower() == ".html":
-                content = doc_loader.leer_html(doc_path)
+                content = doc_loader.leer_html(doc_path_str)
             else:
                 logger.warning(f"Formato no soportado: {doc_path}")
                 return None
