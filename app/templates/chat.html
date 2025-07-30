@@ -1,35 +1,461 @@
 {% extends "base.html" %}
-{% block title %}Chat RAG{% endblock %}
+{% block title %}Chat RAG Avanzado{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-  <h2 class="mb-4">💬 Consulta con recuperación desde fuentes múltiples</h2>
+  <div class="row">
+    <div class="col-lg-8">
+      <h2 class="mb-4">💬 Asistente RAG Municipal</h2>
+      
+      <!-- Formulario de consulta mejorado -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Nueva Consulta</h5>
+        </div>
+        <div class="card-body">
+          <form method="post" id="chatForm">
+            <div class="mb-3">
+              <label for="pregunta" class="form-label">Pregunta:</label>
+              <textarea class="form-control" id="pregunta" name="pregunta" rows="3" 
+                        placeholder="Ej: ¿Qué documentos necesito para solicitar una licencia de obras?"
+                        required>{{ pregunta or '' }}</textarea>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <label for="tipo_documento" class="form-label">Filtrar por tipo:</label>
+                <select class="form-select" id="tipo_documento" name="tipo_documento">
+                  <option value="todos">Todos los tipos</option>
+                  {% for tipo in tipos_disponibles %}
+                  <option value="{{ tipo }}">{{ tipo.title() }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              
+              <div class="col-md-3">
+                <label for="num_fragmentos" class="form-label">Fragmentos (k):</label>
+                <select class="form-select" id="num_fragmentos" name="num_fragmentos">
+                  <option value="3">3</option>
+                  <option value="5" selected>5</option>
+                  <option value="7">7</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+              
+              <div class="col-md-3">
+                <label for="modelo" class="form-label">Modelo:</label>
+                <select class="form-select" id="modelo" name="modelo">
+                  <option value="local" selected>🏠 Local</option>
+                  <option value="openai">☁️ OpenAI</option>
+                </select>
+              </div>
+              
+              <div class="col-md-2">
+                <label class="form-label">Opciones:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="mostrar_metricas" name="mostrar_metricas">
+                  <label class="form-check-label" for="mostrar_metricas">
+                    📊 Métricas
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-3">
+              <button type="submit" class="btn btn-primary me-2">
+                <i class="fas fa-paper-plane"></i> Consultar
+              </button>
+              <button type="button" class="btn btn-outline-info" onclick="compareModels()">
+                ⚖️ Comparar Modelos
+              </button>
+              <button type="button" class="btn btn-outline-success" onclick="loadTestQuery()">
+                🧪 Pregunta Test
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
 
-  <form method="post" class="mb-4">
-    <div class="input-group">
-      <input type="text" name="pregunta" class="form-control" placeholder="Escribe tu pregunta..." value="{{ pregunta }}" required>
-      <button type="submit" class="btn btn-primary">Enviar</button>
+      <!-- Respuesta generada -->
+      {% if respuesta %}
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">🤖 Respuesta Generada</h5>
+          {% if metrics %}
+          <span class="badge bg-light text-dark">⏱️ {{ metrics.latency }}s</span>
+          {% endif %}
+        </div>
+        <div class="card-body">
+          <div class="response-text">{{ respuesta }}</div>
+          
+          {% if metrics %}
+          <div class="mt-3 p-3 bg-light rounded">
+            <h6>📊 Métricas de Rendimiento:</h6>
+            <div class="row">
+              <div class="col-md-3">
+                <strong>Latencia:</strong> {{ metrics.latency }}s
+              </div>
+              <div class="col-md-3">
+                <strong>Fragmentos:</strong> {{ metrics.fragments_count }}
+              </div>
+              <div class="col-md-3">
+                <strong>Modelo:</strong> {{ metrics.model_used }}
+              </div>
+              <div class="col-md-3">
+                <strong>Tipos doc:</strong> {{ metrics.document_types|length }}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Fragmentos utilizados -->
+      {% if contexto %}
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">📚 Fragmentos Recuperados ({{ contexto|length }})</h5>
+        </div>
+        <div class="card-body">
+          <div class="accordion" id="fragmentosAccordion">
+            {% for frag in contexto %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="heading{{ loop.index }}">
+                <button class="accordion-button collapsed" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}">
+                  <div class="d-flex w-100 justify-content-between align-items-center me-3">
+                    <span><strong>Fragmento {{ loop.index }}</strong></span>
+                    <div>
+                      <span class="badge bg-primary me-1">{{ frag.get('document_type', 'Sin tipo') }}</span>
+                      <span class="badge bg-secondary">{{ frag.get('fuente', 'Sin fuente')[:30] }}...</span>
+                      {% if frag.get('distancia') %}
+                      <span class="badge bg-warning">📊 {{ "%.3f"|format(frag.distancia) }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </button>
+              </h2>
+              <div id="collapse{{ loop.index }}" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                  <div class="fragment-content">{{ frag.texto }}</div>
+                  <hr>
+                  <small class="text-muted">
+                    <strong>Fuente:</strong> {{ frag.get('fuente', 'No especificada') }}<br>
+                    <strong>Tipo:</strong> {{ frag.get('document_type', 'No detectado') }}
+                    {% if frag.get('distancia') %}
+                    <br><strong>Similaridad:</strong> {{ "%.3f"|format(frag.distancia) }}
+                    {% endif %}
+                  </small>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
     </div>
-  </form>
-
-  {% if respuesta %}
-  <div class="card shadow-sm p-4 mb-4">
-    <h5>📄 Fragmentos recuperados</h5>
-    <ul class="list-group">
-      {% for frag in contexto %}
-      <li class="list-group-item">
-        <div><strong>Fuente:</strong> {{ frag.fuente | capitalize }}</div>
-        <div><strong>Distancia:</strong> {{ frag.distancia | round(3) }}</div>
-        <div class="mt-2">{{ frag.texto }}</div>
-      </li>
-      {% endfor %}
-    </ul>
+    
+    <!-- Sidebar con información del sistema -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+          <h6 class="mb-0">ℹ️ Información del Sistema</h6>
+        </div>
+        <div class="card-body">
+          <div id="systemStats">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-warning text-dark">
+          <h6 class="mb-0">🧪 Herramientas de Evaluación</h6>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="runTestSuite()">
+            🔬 Ejecutar Suite de Pruebas
+          </button>
+          <button class="btn btn-outline-success btn-sm w-100 mb-2" onclick="exportTFMData()">
+            📊 Exportar Datos TFM
+          </button>
+          <button class="btn btn-outline-info btn-sm w-100" onclick="showMetrics()">
+            📈 Ver Métricas Completas
+          </button>
+          
+          <div id="testResults" class="mt-3" style="display:none;">
+            <!-- Los resultados aparecerán aquí -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h6 class="mb-0">💡 Preguntas de Ejemplo</h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <li><a href="#" onclick="setQuery('¿Qué documentos necesito para solicitar una licencia de obras?')" class="text-decoration-none">📋 Licencia de obras</a></li>
+            <li><a href="#" onclick="setQuery('¿Cuál es el procedimiento para presentar alegaciones?')" class="text-decoration-none">⚖️ Procedimiento alegaciones</a></li>
+            <li><a href="#" onclick="setQuery('¿Qué ordenanza regula el ruido en el municipio?')" class="text-decoration-none">🔇 Ordenanza de ruidos</a></li>
+            <li><a href="#" onclick="setQuery('¿Cómo consulto el estado de mi expediente?')" class="text-decoration-none">📁 Estado expediente</a></li>
+            <li><a href="#" onclick="setQuery('¿Cuáles son los horarios de atención al público?')" class="text-decoration-none">🕐 Horarios atención</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="card shadow-sm p-4">
-    <h5>🧠 Respuesta generada</h5>
-    <p>{{ respuesta }}</p>
-  </div>
-  {% endif %}
 </div>
+
+<!-- Modal para comparación de modelos -->
+<div class="modal fade" id="comparisonModal" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">⚖️ Comparación de Modelos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="comparisonContent">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Comparando modelos...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Funciones JavaScript para la interactividad
+function setQuery(query) {
+  document.getElementById('pregunta').value = query;
+}
+
+function loadTestQuery() {
+  const testQueries = [
+    "¿Qué documentos necesito para solicitar una licencia de obras?",
+    "¿Cuál es el procedimiento para presentar una reclamación municipal?",
+    "¿Qué ordenanza regula el ruido en el municipio?",
+    "¿Cómo consulto el estado de mi expediente electrónico?",
+    "¿Cuáles son los horarios de atención al público?"
+  ];
+  const randomQuery = testQueries[Math.floor(Math.random() * testQueries.length)];
+  setQuery(randomQuery);
+}
+
+function compareModels() {
+  const pregunta = document.getElementById('pregunta').value;
+  if (!pregunta.trim()) {
+    alert('Por favor, introduce una pregunta primero.');
+    return;
+  }
+  
+  // Mostrar modal de comparación
+  const modal = new bootstrap.Modal(document.getElementById('comparisonModal'));
+  modal.show();
+  
+  // Realizar comparación via AJAX
+  fetch('/chat/compare', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ pregunta: pregunta })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      document.getElementById('comparisonContent').innerHTML = 
+        `<div class="alert alert-danger">Error: ${data.error}</div>`;
+    } else {
+      displayComparison(data);
+    }
+  })
+  .catch(error => {
+    document.getElementById('comparisonContent').innerHTML = 
+      `<div class="alert alert-danger">Error de conexión: ${error}</div>`;
+  });
+}
+
+function displayComparison(data) {
+  const content = `
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h6 class="mb-0">☁️ OpenAI GPT-4</h6>
+          </div>
+          <div class="card-body">
+            <p>${data.openai.response}</p>
+            <hr>
+            <small class="text-muted">
+              <strong>Latencia:</strong> ${data.openai.latency.toFixed(3)}s<br>
+              <strong>Fragmentos:</strong> ${data.openai.fragments}<br>
+              <strong>Confianza:</strong> ${(data.openai.confidence * 100).toFixed(1)}%
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-success text-white">
+            <h6 class="mb-0">🏠 Modelo Local</h6>
+          </div>
+          <div class="card-body">
+            <p>${data.local.response}</p>
+            <hr>
+            <small class="text-muted">
+              <strong>Latencia:</strong> ${data.local.latency.toFixed(3)}s<br>
+              <strong>Fragmentos:</strong> ${data.local.fragments}<br>
+              <strong>Confianza:</strong> ${(data.local.confidence * 100).toFixed(1)}%
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <h6>📊 Análisis Comparativo:</h6>
+      <ul>
+        <li><strong>Velocidad:</strong> ${data.openai.latency < data.local.latency ? 'OpenAI más rápido' : 'Local más rápido'} 
+            (${Math.abs(data.openai.latency - data.local.latency).toFixed(3)}s diferencia)</li>
+        <li><strong>Tipos de documentos utilizados:</strong> ${data.metadata.document_types.join(', ')}</li>
+        <li><strong>Consulta:</strong> "${data.metadata.query}"</li>
+      </ul>
+    </div>
+  `;
+  document.getElementById('comparisonContent').innerHTML = content;
+}
+
+function runTestSuite() {
+  const resultsDiv = document.getElementById('testResults');
+  resultsDiv.style.display = 'block';
+  resultsDiv.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> Ejecutando pruebas...';
+  
+  fetch('/chat/test-suite')
+    .then(response => response.json())
+    .then(data => {
+      let html = `<h6>📋 Resultados de Pruebas:</h6>`;
+      html += `<p><strong>Total:</strong> ${data.summary.total_tests} | <strong>Exitosas:</strong> ${data.summary.successful_tests}</p>`;
+      html += '<div class="list-group list-group-flush">';
+      
+      data.test_results.forEach(result => {
+        const status = result.error ? 'danger' : 'success';
+        const icon = result.error ? '❌' : '✅';
+        html += `
+          <div class="list-group-item list-group-item-${status}">
+            <small>${icon} Test ${result.query_number}: ${result.query.substring(0, 50)}...</small>
+            ${result.error ? `<br><small class="text-danger">${result.error}</small>` : 
+              `<br><small>OpenAI: ${result.openai_latency?.toFixed(3)}s | Local: ${result.local_latency?.toFixed(3)}s</small>`}
+          </div>
+        `;
+      });
+      
+      html += '</div>';
+      resultsDiv.innerHTML = html;
+    })
+    .catch(error => {
+      resultsDiv.innerHTML = `<div class="alert alert-danger">Error: ${error}</div>`;
+    });
+}
+
+function exportTFMData() {
+  fetch('/chat/export-tfm')
+    .then(response => response.json())
+    .then(data => {
+      alert(`✅ Datos exportados correctamente!\n\nArchivo: ${data.file_path}\nConsultas totales: ${data.data_summary.total_queries}\nTipos de documento: ${data.data_summary.document_types_analyzed}`);
+    })
+    .catch(error => {
+      alert(`❌ Error al exportar: ${error}`);
+    });
+}
+
+function showMetrics() {
+  window.open('/chat/metrics', '_blank');
+}
+
+// Cargar estadísticas del sistema al inicio
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('/chat/metrics')
+    .then(response => response.json())
+    .then(data => {
+      const statsHtml = `
+        <h6>📊 Rendimiento del Sistema:</h6>
+        <div class="row text-center">
+          <div class="col-6">
+            <div class="border rounded p-2 mb-2">
+              <div class="fw-bold text-primary">OpenAI</div>
+              <small>${data.performance.openai.total_queries} consultas</small><br>
+              <small>${data.performance.openai.avg_latency}s promedio</small>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="border rounded p-2 mb-2">
+              <div class="fw-bold text-success">Local</div>
+              <small>${data.performance.local.total_queries} consultas</small><br>
+              <small>${data.performance.local.avg_latency}s promedio</small>
+            </div>
+          </div>
+        </div>
+        <h6 class="mt-3">📁 Tipos de Documento Más Usados:</h6>
+        <ul class="list-unstyled">
+      `;
+      
+      let docTypesHtml = '';
+      Object.entries(data.document_usage).slice(0, 5).forEach(([type, count]) => {
+        docTypesHtml += `<li><span class="badge bg-secondary me-1">${count}</span> ${type}</li>`;
+      });
+      
+      document.getElementById('systemStats').innerHTML = statsHtml + docTypesHtml + '</ul>';
+    })
+    .catch(error => {
+      document.getElementById('systemStats').innerHTML = 
+        '<div class="alert alert-warning">Error cargando estadísticas</div>';
+    });
+});
+</script>
+
+<style>
+.response-text {
+  white-space: pre-wrap;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+}
+
+.fragment-content {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #e3f2fd;
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.badge {
+  font-size: 0.75em;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+</style>
 {% endblock %}

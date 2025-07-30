@@ -368,55 +368,7 @@ def test_search_performance(test_queries: List[str], k: int = 5) -> Dict[str, An
         performance_data["average_response_time"] = round(total_time / len(test_queries) * 1000, 2)
     
     return performance_data
-def obtener_estadisticas_vectorstore() -> Dict[str, Any]:
-    """Obtener estadísticas completas del vectorstore"""
-    try:
-        from app.utils.chroma_store import get_chroma_store
-        store = get_chroma_store()
-        stats = store.get_collection_stats()
-        stats["status"] = "active"
-        stats["backend"] = "ChromaDB"
-        return stats
-    except Exception as e:
-        return {"total_documents": 0, "status": "error", "backend": "ChromaDB", "error": str(e)}
 
-def diagnosticar_vectorstore() -> Dict[str, Any]:
-    """Diagnóstico completo del vectorstore"""
-    return {"timestamp": "now", "chromadb_status": "active", "collections": [], "errors": []}
-
-def obtener_tipos_documento_disponibles() -> List[str]:
-    """Obtiene lista de tipos de documento disponibles"""
-    try:
-        from app.utils.chroma_store import get_chroma_store
-        store = get_chroma_store()
-        # Versión simplificada - devuelve tipos comunes
-        return ["ordenanza", "acta", "resolucion", "presupuesto", "convenio", "normativa"]
-    except:
-        return ["general"]
-
-def buscar_fragmentos_avanzado(consulta: str, filtros_avanzados: Dict = None, incluir_similares: bool = False) -> List[Dict]:
-    """Búsqueda avanzada - versión simplificada"""
-    return buscar_fragmentos_combinados(consulta, k=10 if incluir_similares else 5)
-
-def reindexar_fuente(tipo_fuente: str, config_path: str = "app/config/settings.json") -> int:
-    """Reindexar una fuente específica"""
-    try:
-        import json
-        with open(config_path, 'r', encoding='utf-8') as f:
-            config = json.load(f)
-        
-        if tipo_fuente == "documents":
-            folders = config.get("document_folders", [])
-            return ingest_documents_with_llamaindex(folders)
-        
-        return 0
-    except Exception as e:
-        return 0
-
-def buscar_por_tipo_documento(consulta: str, tipo_documento: str, k: int = 5) -> List[Dict]:
-    """Búsqueda por tipo de documento"""
-    # Versión simplificada - usa búsqueda normal
-    return buscar_fragmentos_combinados(consulta, k)
 # ============================================================================
 # CONFIGURACIÓN Y CONSTANTES
 # ============================================================================

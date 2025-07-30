@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualización del Grafo</title>
+  <style>
+    iframe {
+      width: 100%;
+      height: 85vh;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 Visualización del grafo</h1>
+  <p><a href="/grafo">⬅ Volver</a></p>
+  {% if graph_file %}
+    <iframe src="{{ url_for('static', filename=graph_file) }}"></iframe>
+  {% else %}
+    <p>⚠️ No se ha proporcionado ningún archivo de grafo.</p>
+  {% endif %}
+</body>
+</html>

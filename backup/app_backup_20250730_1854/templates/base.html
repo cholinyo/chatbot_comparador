@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Comparador Chatbots{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding-top: 60px;
+    }
+    .navbar-brand {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Menú principal mejorado -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">🤖 Chatbots</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="/chat">💬 Chat</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin">⚙️ Modelos</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin/model-tuning">🎛️ Configuración</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin/test-history">📊 Historial</a></li>
+          <li class="nav-item"><a class="nav-link" href="/admin/system-info">🖥️ Sistema</a></li>          <li class="nav-item"><a class="nav-link" href="/config">🧠 Config. RAG</a></li>
+          <li class="nav-item"><a class="nav-link" href="/vectorstore">📊 Vectorstore</a></li>
+          <li class="nav-item"><a class="nav-link" href="/grafo">🧬 Grafo</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>

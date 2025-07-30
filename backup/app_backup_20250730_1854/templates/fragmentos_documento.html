@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{% block title %}📄 Fragmentos de {{ nombre }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>📄 Fragmentos indexados del documento: <strong>{{ nombre }}</strong></h2>
+
+  {% if fragmentos %}
+  <div class="accordion mt-4" id="fragmentosAccordion">
+    {% for frag in fragmentos %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ loop.index }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+          Fragmento {{ frag.fragmento_id if frag.fragmento_id is defined else frag.id }}
+        </button>
+      </h2>
+      <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#fragmentosAccordion">
+        <div class="accordion-body">
+          <pre style="white-space: pre-wrap;">{{ frag.texto if frag.texto is defined else '(sin texto disponible)' }}</pre>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-warning mt-4">⚠️ No se encontraron fragmentos para este documento.</div>
+  {% endif %}
+
+  <a href="/vectorstore" class="btn btn-secondary mt-4">← Volver al listado</a>
+</div>
+{% endblock %}

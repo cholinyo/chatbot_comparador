@@ -1,0 +1,51 @@
+
+{% extends "base.html" %}
+{% block title %}🤖 Comparador de Modelos{% endblock %}
+{% block content %}
+<div class="container mt-4">
+  <h2>🤖 Comparación de Chatbots</h2>
+  <form method="post" action="/comparar">
+    <div class="mb-3">
+      <label for="pregunta" class="form-label">Introduce tu pregunta:</label>
+      <textarea class="form-control" id="pregunta" name="pregunta" rows="3" required>{{ pregunta or '' }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Comparar</button>
+  </form>
+
+  {% if respuesta_openai %}
+  <div class="mt-4">
+    <h4>🔷 OpenAI</h4>
+    <div class="border p-3 bg-light rounded">
+      <pre style="white-space: pre-wrap;">{{ respuesta_openai }}</pre>
+      <p class="text-muted">⏱️ Tiempo OpenAI: {{ tiempo_openai }}s</p>
+    </div>
+    
+  </div>
+  {% endif %}
+
+  {% if respuesta_local %}
+  <div class="mt-4">
+    <h4>🔶 Modelo Local</h4>
+    <div class="border p-3 bg-light rounded">
+      <pre style="white-space: pre-wrap;">{{ respuesta_local }}</pre>
+      <p class="text-muted">⏱️ Tiempo Local: {{ tiempo_local }}s</p>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if fragmentos %}
+  <div class="card mt-5">
+    <div class="card-header">📚 Fragmentos utilizados (RAG)</div>
+    <div class="card-body">
+      {% for frag in fragmentos %}
+      <div class="mb-3">
+        <strong>{{ frag.nombre }}</strong> — fragmento {{ frag.fragmento_id if frag.fragmento_id is defined else '?' }}<br>
+        <pre style="white-space: pre-wrap;">{{ frag.texto if frag.texto is defined else '(sin texto disponible)' }}</pre>
+        <hr>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

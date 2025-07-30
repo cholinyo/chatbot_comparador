@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+{% block title %}Chat RAG Avanzado{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 class="mb-4">💬 Chat Inteligente con ChromaDB + LlamaIndex</h2>
+      
+      <!-- Alerta de mejoras -->
+      <div class="alert alert-info" role="alert">
+        <h6 class="alert-heading">🚀 Sistema Actualizado</h6>
+        <p class="mb-0">
+          Ahora usando <strong>ChromaDB</strong> + <strong>LlamaIndex</strong> para búsqueda semántica optimizada 
+          y detección inteligente de tipos de documento municipal.
+        </p>
+      </div>
+
+      <!-- Formulario principal -->
+      <form method="post" class="mb-4">
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label for="pregunta" class="form-label">Tu consulta:</label>
+            <textarea 
+              class="form-control" 
+              id="pregunta" 
+              name="pregunta" 
+              rows="3" 
+              placeholder="Ej: ¿Qué documentos necesito para solicitar una licencia de obras?"
+              required>{{ pregunta }}</textarea>
+          </div>
+        </div>
+
+        <!-- Filtros avanzados -->
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="tipo_documento" class="form-label">Filtrar por tipo:</label>
+            <select class="form-select" id="tipo_documento" name="tipo_documento">
+              <option value="todos">📄 Todos los documentos</option>
+              {% for tipo in tipos_disponibles %}
+              <option value="{{ tipo }}" {% if tipo == tipo_seleccionado %}selected{% endif %}>
+                {% if tipo == "ordenanza" %}📜{% elif tipo == "acta" %}📝{% elif tipo == "resolucion" %}⚖️{% elif tipo == "presupuesto" %}💰{% else %}📄{% endif %}
+                {{ tipo.title() }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <label for="k_fragmentos" class="form-label">Fragmentos a recuperar:</label>
+            <input type="number" class="form-control" id="k_fragmentos" name="k_fragmentos" 
+                   value="5" min="1" max="20">
+          </div>
+
+          <div class="col-md-3 mb-3 d-flex align-items-end">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="busqueda_avanzada" name="busqueda_avanzada">
+              <label class="form-check-label" for="busqueda_avanzada">
+                🔍 Búsqueda avanzada
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-2 mb-3 d-grid">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-search"></i> Consultar
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Mostrar errores -->
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+        ❌ {{ error }}
+      </div>
+      {% endif %}
+
+      <!-- Resultados -->
+      {% if respuesta %}
+      <!-- Información de la consulta -->
+      <div class="card shadow-sm mb-3">
+        <div class="card-header bg-light">
+          <h6 class="card-title mb-0">
+            🔍 Consulta: "{{ pregunta }}"
+            {% if tipo_seleccionado and tipo_seleccionado != "todos" %}
+            <span class="badge bg-secondary">Filtro: {{ tipo_seleccionado }}</span>
+            {% endif %}
+          </h6>
+          {% if tiempo_respuesta %}
+          <small class="text-muted">⏱️ Tiempo de respuesta: {{ "%.2f"|format(tiempo_respuesta) }}s</small>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Fragmentos recuperados -->
+      {% if contexto %}
+      <div class="card shadow-sm mb-4">
+        <div class="card-header">
+          <h6 class="card-title mb-0">
+            📚 Fragmentos Recuperados ({{ contexto|length }})
+            <button class="btn btn-sm btn-outline-secondary float-end" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#fragmentosCollapse">
+              <i class="fas fa-eye"></i> Ver/Ocultar
+            </button>
+          </h6>
+        </div>
+        <div class="collapse" id="fragmentosCollapse">
+          <div class="card-body">
+            {% for frag in contexto %}
+            <div class="border rounded p-3 mb-3">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <span class="badge bg-info">
+                    {% if frag.fuente == "ordenanza" %}📜
+                    {% elif frag.fuente == "acta" %}📝
+                    {% elif frag.fuente == "resolucion" %}⚖️
+                    {% elif frag.fuente == "presupuesto" %}💰
+                    {% else %}📄{% endif %}
+                    {{ frag.fuente|title }}
+                  </span>
+                  {% if frag.metadata and frag.metadata.get('origen') %}
+                  <small class="text-muted">• {{ frag.metadata.origen }}</small>
+                  {% endif %}
+                </div>
+                <small class="text-muted">
+                  Relevancia: ★★★★☆
+                </small>
+              </div>
+              <div class="text-muted">
+                {{ frag.texto }}
+              </div>
+              {% if frag.metadata %}
+              <div class="mt-2">
+                {% if frag.metadata.get('article_number') %}
+                <small class="badge bg-light text-dark">Art. {{ frag.metadata.article_number }}</small>
+                {% endif %}
+                {% if frag.metadata.get('point_number') %}
+                <small class="badge bg-light text-dark">Punto {{ frag.metadata.point_number }}</small>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Respuesta generada -->
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h6 class="card-title mb-0">🤖 Respuesta del Asistente</h6>
+        </div>
+        <div class="card-body">
+          <div class="response-content">
+            {{ respuesta|replace('\n', '<br>')|safe }}
+          </div>
+          
+          <!-- Advertencia sobre limitaciones -->
+          <div class="alert alert-warning mt-3 mb-0" role="alert">
+            <small>
+              ⚠️ <strong>Importante:</strong> Esta respuesta se basa únicamente en los documentos 
+              indexados en el sistema. Verifica siempre la información con fuentes oficiales actualizadas.
+            </small>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Panel lateral con información -->
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-3">
+        <div class="card-header">
+          <h6 class="card-title mb-0">📊 Estado del Sistema</h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled mb-0">
+            <li>🗂️ Base de datos: <strong>ChromaDB</strong></li>
+            <li>🔍 Motor: <strong>LlamaIndex</strong></li>
+            <li>🧠 Modelo: <strong>Local (Ollama)</strong></li>
+            <li>📄 Tipos disponibles: <strong>{{ tipos_disponibles|length }}</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tipos de documento disponibles -->
+      {% if tipos_disponibles %}
+      <div class="card shadow-sm mb-3">
+        <div class="card-header">
+          <h6 class="card-title mb-0">📋 Tipos de Documento</h6>
+        </div>
+        <div class="card-body">
+          {% for tipo in tipos_disponibles %}
+          <span class="badge bg-secondary me-1 mb-1">
+            {% if tipo == "ordenanza" %}📜{% elif tipo == "acta" %}📝{% elif tipo == "resolucion" %}⚖️{% elif tipo == "presupuesto" %}💰{% else %}📄{% endif %}
+            {{ tipo }}
+          </span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Consejos de uso -->
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h6 class="card-title mb-0">💡 Consejos de Uso</h6>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled small mb-0">
+            <li>🎯 <strong>Específico:</strong> "¿Qué tasa tengo que pagar por licencia de obra?"</li>
+            <li>🏷️ <strong>Por tipo:</strong> Filtra por ordenanza, acta, resolución, etc.</li>
+            <li>🔍 <strong>Avanzado:</strong> Usa la búsqueda avanzada para consultas complejas</li>
+            <li>📊 <strong>Fragmentos:</strong> Aumenta el número para más contexto</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Enlaces rápidos -->
+      <div class="card shadow-sm mt-3">
+        <div class="card-header">
+          <h6 class="card-title mb-0">🔗 Accesos Rápidos</h6>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            <a href="/chat/avanzado" class="btn btn-outline-primary btn-sm">
+              🔬 Chat Avanzado
+            </a>
+            <a href="/comparar" class="btn btn-outline-secondary btn-sm">
+              ⚖️ Comparar Modelos
+            </a>
+            <a href="/config" class="btn btn-outline-info btn-sm">
+              ⚙️ Configuración RAG
+            </a>
+            <a href="/vectorstore" class="btn btn-outline-warning btn-sm">
+              📊 Estado Vectorstore
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.response-content {
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.badge {
+  font-size: 0.75em;
+}
+
+.card {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.card-header {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.text-muted {
+  font-size: 0.9em;
+}
+</style>
+
+<script>
+// Auto-expand textarea
+document.getElementById('pregunta').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = this.scrollHeight + 'px';
+});
+
+// Tooltip para elementos con título
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl);
+});
+</script>
+{% endblock %}

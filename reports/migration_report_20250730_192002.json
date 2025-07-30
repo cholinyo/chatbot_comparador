@@ -1,0 +1,49 @@
+{
+  "timestamp": "2025-07-30T19:20:02.900343",
+  "backup_location": "backup/vectorstore_20250730_191932",
+  "migration_stats": {
+    "documents_migrated": 399,
+    "web_sources_migrated": 0,
+    "api_sources_migrated": 0,
+    "success": false,
+    "errors": [
+      "Falló prueba de búsqueda"
+    ]
+  },
+  "vectorstore_stats": {
+    "total_documents": 399,
+    "collection_name": "admin_local_docs",
+    "metadata_fields": [
+      "article_number",
+      "document_type",
+      "source_folder",
+      "file_name",
+      "metodo_ingesta",
+      "last_modified_date",
+      "file_size",
+      "file_path",
+      "file_type",
+      "added_at",
+      "processed_at",
+      "carpeta_origen",
+      "confidence_score",
+      "section_type",
+      "creation_date",
+      "file_size_kb",
+      "id",
+      "file_extension",
+      "processed_by",
+      "fuente",
+      "chunk_strategy"
+    ],
+    "persist_directory": "vectorstore/chroma",
+    "status": "active",
+    "backend": "ChromaDB"
+  },
+  "diagnostic": {
+    "timestamp": "now",
+    "chromadb_status": "active",
+    "collections": [],
+    "errors": []
+  }
+}

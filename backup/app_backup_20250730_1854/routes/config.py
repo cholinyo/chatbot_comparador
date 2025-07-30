@@ -8,7 +8,7 @@ import json
 import logging
 
 # Imports actualizados
-from app.utils.rag_utils import (
+from app.utils.rag_utils_updated import (
     ingest_documents_with_llamaindex,
     obtener_estadisticas_vectorstore,
     buscar_por_tipo_documento,

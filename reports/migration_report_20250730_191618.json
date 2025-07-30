@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-07-30T19:16:18.268803",
+  "backup_location": "backup/vectorstore_20250730_191612",
+  "migration_stats": {
+    "documents_migrated": 0,
+    "web_sources_migrated": 0,
+    "api_sources_migrated": 0,
+    "success": false,
+    "errors": [
+      "Falló verificación de datos"
+    ]
+  },
+  "vectorstore_stats": {
+    "total_documents": 0,
+    "collection_name": "admin_local_docs",
+    "metadata_fields": [],
+    "persist_directory": "vectorstore/chroma",
+    "status": "active",
+    "backend": "ChromaDB"
+  },
+  "diagnostic": {
+    "timestamp": "now",
+    "chromadb_status": "active",
+    "collections": [],
+    "errors": []
+  }
+}
