@@ -1,17 +1,40 @@
+# Core Flask y web
 flask
+python-dotenv
+
+# Vector store y embeddings
 faiss-cpu
 sentence-transformers
+
+# Procesamiento de documentos
 beautifulsoup4
 unstructured[pdf,docx,html]
 PyPDF2
 python-docx
-requests
-llama-cpp-python
-python-dotenv
 pdfminer.six
 trafilatura
+
+# APIs y requests
+requests
 openai
+
+# Modelos locales
+llama-cpp-python
+
+# Análisis de datos
 numpy
+pandas
 tqdm
+
+# Web scraping
+selenium
 webdriver-manager
-gunicorn
+
+# Grafos de conocimiento y visualización
+pyvis
+networkx
+matplotlib
+plotly
+
+# Utilidades adicionales
+scikit-learn
