@@ -1,10 +1,19 @@
 # Core Flask y web
-flask
-python-dotenv
+flask>=2.3.0
+python-dotenv>=0.19.0
 
-# Vector store y embeddings
-faiss-cpu
-sentence-transformers
+# LangChain framework y integraciones
+langchain>=0.1.0
+langchain-openai>=0.0.8
+langchain-ollama>=0.1.0
+langchain-community>=0.0.20
+langchainhub>=0.1.0
+
+# Vector store y embeddings (orden específico para evitar conflictos)
+numpy>=1.21.0
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.0
+chromadb>=0.4.0
 
 # Procesamiento de documentos
 beautifulsoup4
@@ -38,3 +47,14 @@ plotly
 
 # Utilidades adicionales
 scikit-learn
+
+# Bases de datos y ORM (para futuras expansiones)
+sqlalchemy
+sqlite3
+
+# Logging y monitoreo
+psutil
+
+# Testing (opcional para desarrollo)
+pytest
+pytest-flask
