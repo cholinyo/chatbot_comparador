@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}🖥️ Información del Sistema{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>🖥️ Información del Sistema</h2>
+    <div>
+      <button class="btn btn-outline-primary" onclick="location.reload()">🔄 Actualizar</button>
+      <a href="{{ url_for('admin.admin') }}" class="btn btn-secondary">← Volver a Admin</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Estado de Ollama -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">🦙 Estado de Ollama</h5>
+          {% if info.ollama_status %}
+            <span class="badge bg-success">🟢 Activo</span>
+          {% else %}
+            <span class="badge bg-danger">🔴 Inactivo</span>
+          {% endif %}
+        </div>
+        <div class="card-body">
+          {% if info.ollama_status %}
+            <div class="alert alert-success">
+              <i class="fas fa-check-circle"></i>
+              Ollama está funcionando correctamente
+            </div>
+            <p><strong>Modelos disponibles:</strong> {{ info.available_models|length }}</p>
+            {% if info.available_models %}
+              <ul class="list-group list-group-flush">
+                {% for model in info.available_models %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    🤖 {{ model }}
+                    <span class="badge bg-primary rounded-pill">Disponible</span>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% else %}
+            <div class="alert alert-warning">
+              <i class="fas fa-exclamation-triangle"></i>
+              Ollama no está disponible. Para usar modelos locales:
+              <ul class="mt-2 mb-0">
+                <li>Instala Ollama desde <a href="https://ollama.ai" target="_blank">ollama.ai</a></li>
+                <li>Ejecuta: <code>ollama serve</code></li>
+                <li>Descarga un modelo: <code>ollama pull llama3.1</code></li>
+              </ul>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Recursos del Sistema -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h5 class="mb-0">📊 Recursos del Sistema</h5>
+        </div>
+        <div class="card-body">
+          {% if info.system_resources.cpu_percent != "N/A" %}
+            <div class="mb-3">
+              <div class="d-flex justify-content-between">
+                <span>💻 CPU</span>
+                <span>{{ info.system_resources.cpu_percent }}%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" role="

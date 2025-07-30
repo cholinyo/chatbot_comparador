@@ -76,25 +76,92 @@ def vista_vectorstore():
 
     return render_template("vectorstore.html", datos=datos)
 
+
+# Versión corregida de la función reindex_fuente con mejor debugging:
+
+# Reemplaza tu función reindex_fuente con esta versión de debugging:
+
 @vectorstore_bp.route("/vectorstore/reindex/<fuente>", methods=["POST"])
 def reindex_fuente(fuente):
-    scripts = {
-        "documents": "reindex_documents.bat",
-        "web": "reindex_web.bat",
-        "apis": "reindex_apis.bat"
-    }
-
-    if fuente not in scripts:
-        flash("Fuente no válida", "danger")
-        return redirect(url_for("vectorstore.vista_vectorstore"))
-
+    """Reindexar fuente específica con debugging completo"""
+    import logging
+    import sys
+    import traceback
+    
+    # Configurar logging para que aparezca en consola
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+    
+    print(f"\n{'='*50}")
+    print(f"🚀 INICIANDO REINDEXACIÓN DE: {fuente}")
+    print(f"{'='*50}")
+    
     try:
-        script_path = os.path.join(os.getcwd(), scripts[fuente])
-        result = subprocess.run(script_path, shell=True, check=True)
-        flash(f"{fuente.capitalize()} reindexado correctamente", "success")
-    except subprocess.CalledProcessError as e:
-        flash(f"Error al reindexar {fuente}: {str(e)}", "danger")
+        success = False
+        
+        if fuente == "documents":
+            print("📄 Procesando documentos...")
+            logger.info("📄 Importando módulo de documentos...")
+            
+            try:
+                from app.services.ingest_documents_improved import main
+                print("✅ Módulo importado correctamente")
+                logger.info("📄 Ejecutando ingesta de documentos...")
+                success = main()
+                print(f"📄 Resultado documentos: {success}")
+                
+            except ImportError as e:
+                print(f"❌ Error importando módulo de documentos: {e}")
+                # Intentar con el módulo original
+                try:
+                    from app.services.ingest_documents import main
+                    print("🔄 Usando módulo original...")
+                    success = main()
+                except Exception as e2:
+                    print(f"❌ Error con módulo original: {e2}")
+                    success = False
+                    
+        elif fuente == "web":
+            print("🌐 Procesando web...")
+            logger.info("🌐 Importando módulo web...")
+            from app.services.ingest_web import main
+            print("✅ Módulo web importado")
+            logger.info("🌐 Ejecutando ingesta web...")
+            success = main()
+            print(f"🌐 Resultado web: {success}")
+            
+        elif fuente == "apis":
+            print("🔌 Procesando APIs...")
+            logger.info("🔌 Importando módulo APIs...")
+            from app.services.ingest_api import main
+            print("✅ Módulo APIs importado")
+            logger.info("🔌 Ejecutando ingesta APIs...")
+            success = main()
+            print(f"🔌 Resultado APIs: {success}")
+            
+        else:
+            print(f"❌ Fuente no válida: {fuente}")
+            flash("Fuente no válida", "danger")
+            return redirect(url_for("vectorstore.vista_vectorstore"))
+        
+        # Mostrar resultado final
+        print(f"\n{'='*30}")
+        if success:
+            print(f"✅ {fuente.upper()} REINDEXADO CORRECTAMENTE")
+            flash(f"✅ {fuente.capitalize()} reindexado correctamente", "success")
+        else:
+            print(f"❌ FALLÓ LA REINDEXACIÓN DE {fuente.upper()}")
+            flash(f"❌ Error al reindexar {fuente}", "danger")
+        print(f"{'='*30}\n")
+            
     except Exception as e:
-        flash(f"Error inesperado: {str(e)}", "danger")
+        error_msg = f"❌ ERROR CRÍTICO en {fuente}: {str(e)}"
+        print(f"\n{error_msg}")
+        print("📋 TRACEBACK COMPLETO:")
+        traceback.print_exc()
+        
+        logger.error(error_msg)
+        flash(f"❌ Error inesperado: {str(e)}", "danger")
 
+    print(f"🔚 FINALIZANDO REINDEXACIÓN DE {fuente.upper()}")
     return redirect(url_for("vectorstore.vista_vectorstore"))

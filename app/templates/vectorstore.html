@@ -32,7 +32,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <form method="post" action="{{ url_for('vectorstore.reindex_fuente', fuente=fuente) }}">
+                    <form method="post" action="{{ url_for('vectorstore.reindex_fuente', fuente=fuente) }}" class="reindex-form">
                         <button type="submit" class="btn btn-outline-primary btn-sm reindex-btn" data-fuente="{{ fuente }}">🔄 Reindexar</button>
                     </form>
                 </td>
@@ -64,7 +64,7 @@
                     labels: ['0-0.2', '0.2-0.4', '0.4-0.6', '0.6-0.8', '0.8-1.0', '1.0-1.2', '1.2-1.4', '1.4-1.6', '1.6-1.8', '1.8-2.0'],
                     datasets: [{
                         label: 'Distribución de distancias',
-                        data: {{ info.analisis.histograma }},
+                        data: {{ info.analisis.histograma | tojson }},
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
@@ -90,10 +90,16 @@
         {% endif %}
     {% endfor %}
 
-    document.querySelectorAll('.reindex-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            btn.disabled = true;
-            btn.innerText = '⏳';
+    // JavaScript corregido: cambia el botón DESPUÉS de enviar el formulario
+    document.querySelectorAll('.reindex-form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const btn = this.querySelector('.reindex-btn');
+            
+            // Cambiar el botón después de que se envíe el formulario
+            setTimeout(() => {
+                btn.disabled = true;
+                btn.innerHTML = '⏳ Procesando...';
+            }, 100);
         });
     });
 </script>
