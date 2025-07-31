@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Script de validación completa del sistema ChromaDB + LlamaIndex
 Ejecutar después de la migración para verificar funcionalidades
