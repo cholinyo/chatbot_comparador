@@ -240,7 +240,12 @@ tokens.json
 
 # Archivos de debug específicos del proyecto
 debug_output.txt
-test_results.json
+*.sample
+*.tmp
+*.bak
+debug_*
+test_*
+
 
 # ====================================
 # EXCEPTIONES (archivos que SÍ queremos)
