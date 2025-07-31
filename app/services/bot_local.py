@@ -1,316 +1,197 @@
-"""
-bot_local_langchain.py - Servicio modelos locales usando LangChain
-Migración del TFM a LangChain para mejor arquitectura
-"""
-
 import os
-import time
 import logging
-from typing import Dict, Any, List, Optional
+from llama_cpp import Llama
+import requests
+import json
+from app.config.settings import get_local_model_path
 
-from langchain_ollama import ChatOllama
-from langchain.schema import HumanMessage, SystemMessage
-from langchain.callbacks.base import BaseCallbackHandler
-
-# Configurar logging
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class TokenCounterCallback(BaseCallbackHandler):
-    """Callback personalizado para contar tokens en modelos locales"""
-    
-    def __init__(self):
-        self.token_count = 0
-        self.start_time = None
-        
-    def on_llm_start(self, serialized, prompts, **kwargs):
-        self.start_time = time.time()
-        self.token_count = 0
-        
-    def on_llm_new_token(self, token: str, **kwargs):
-        self.token_count += 1
+# Variables globales para los modelos cargados
+_llm_file = None  # Para modelos .gguf locales
+_ollama_available = None  # Para verificar disponibilidad de Ollama
 
-class LangChainOllamaService:
-    """Servicio Ollama mejorado usando LangChain"""
+def check_ollama_available():
+    """Verifica si Ollama está disponible en el sistema"""
+    global _ollama_available
+    if _ollama_available is None:
+        try:
+            response = requests.get("http://localhost:11434/api/tags", timeout=5)
+            _ollama_available = response.status_code == 200
+            if _ollama_available:
+                logger.info("✅ Ollama disponible en localhost:11434")
+            else:
+                logger.warning("⚠️ Ollama no responde correctamente")
+        except Exception as e:
+            _ollama_available = False
+            logger.warning(f"⚠️ Ollama no disponible: {e}")
+    return _ollama_available
+
+def get_ollama_models():
+    """Obtiene la lista de modelos disponibles en Ollama"""
+    if not check_ollama_available():
+        return []
     
-    def __init__(self, base_url: str = "http://localhost:11434"):
-        self.base_url = base_url
-        self.default_model = "llama3.1:8b"
-        self.current_model = self.default_model
+    try:
+        response = requests.get("http://localhost:11434/api/tags", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            models = [model['name'] for model in data.get('models', [])]
+            logger.info(f"📋 Modelos Ollama disponibles: {models}")
+            return models
+        else:
+            logger.error(f"❌ Error obteniendo modelos Ollama: {response.status_code}")
+            return []
+    except Exception as e:
+        logger.error(f"❌ Error conectando con Ollama: {e}")
+        return []
+
+def get_local_response_ollama(prompt, model_name="llama3.2"):
+    """Genera respuesta usando Ollama"""
+    if not check_ollama_available():
+        raise Exception("Ollama no está disponible. Asegúrate de que esté ejecutándose.")
+    
+    try:
+        payload = {
+            "model": model_name,
+            "prompt": prompt,
+            "stream": False,
+            "options": {
+                "temperature": 0.3,
+                "top_k": 40,
+                "top_p": 0.7
+            }
+        }
         
-        # Inicializar modelo con LangChain
-        self.llm = ChatOllama(
-            model=self.default_model,
-            base_url=base_url,
-            temperature=0.3
+        logger.info(f"🔵 Enviando prompt a Ollama (modelo: {model_name})")
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json=payload,
+            timeout=60
         )
         
-        # Verificar que Ollama esté funcionando
-        if not self._check_ollama_status():
-            logger.warning("⚠️ Ollama no está disponible. Algunas funciones pueden fallar.")
-    
-    def _check_ollama_status(self) -> bool:
-        """Verifica si Ollama está ejecutándose"""
-        try:
-            # Intentar una consulta simple
-            test_message = [HumanMessage(content="test")]
-            self.llm.invoke(test_message)
-            return True
-        except Exception:
-            return False
-    
-    def get_response(self,
-                    prompt_usuario: str,
-                    context_fragments: List[Dict] = None,
-                    model: str = None,
-                    temperature: float = 0.3,
-                    **kwargs) -> Dict[str, Any]:
-        """
-        Genera respuesta usando LangChain Ollama con métricas
-        """
-        start_time = time.time()
-        model_to_use = model or self.current_model
-        
-        try:
-            # Actualizar modelo si es necesario
-            if model_to_use != self.current_model:
-                self._change_model(model_to_use)
-            
-            # Actualizar configuración
-            self.llm.temperature = temperature
-            
-            # Construir mensajes
-            system_prompt = self._build_system_prompt()
-            user_prompt = self._build_user_prompt(prompt_usuario, context_fragments)
-            
-            messages = [
-                SystemMessage(content=system_prompt),
-                HumanMessage(content=user_prompt)
-            ]
-            
-            # Ejecutar con callback para métricas
-            callback = TokenCounterCallback()
-            response = self.llm.invoke(messages, callbacks=[callback])
-            
-            end_time = time.time()
-            
-            # Construir resultado
-            resultado = {
-                "respuesta": response.content.strip(),
-                "modelo": model_to_use,
-                "tiempo_respuesta": round(end_time - start_time, 2),
-                "tokens_estimados": callback.token_count,
-                "parametros": {
-                    "temperature": temperature,
-                    "base_url": self.base_url
-                },
-                "fragmentos_utilizados": len(context_fragments) if context_fragments else 0,
-                "exito": True,
-                "error": None,
-                "framework": "langchain"
-            }
-            
-            logger.info(f"✅ LangChain Ollama - Modelo: {model_to_use}, Tiempo: {resultado['tiempo_respuesta']}s")
-            return resultado
-            
-        except Exception as e:
-            error_msg = f"❌ Error LangChain Ollama: {str(e)}"
-            logger.error(error_msg)
-            
-            return {
-                "respuesta": f"⚠️ Error en modelo local: {str(e)}",
-                "modelo": model_to_use,
-                "tiempo_respuesta": round(time.time() - start_time, 2),
-                "tokens_estimados": 0,
-                "parametros": {"temperature": temperature},
-                "fragmentos_utilizados": 0,
-                "exito": False,
-                "error": str(e),
-                "framework": "langchain"
-            }
-    
-    def _build_system_prompt(self) -> str:
-        """Prompt del sistema para administración local"""
-        return """Eres un asistente especializado en administración local española usando LangChain y Ollama.
-
-INSTRUCCIONES IMPORTANTES:
-- Responde ÚNICAMENTE basándote en la información proporcionada
-- Sé preciso, claro y conciso
-- Si no tienes información suficiente, dilo claramente
-- No inventes datos o normativas
-- Menciona las fuentes cuando sea relevante
-
-FORMATO:
-- Respuesta directa y práctica
-- Máximo 3-4 párrafos
-- Si hay dudas, recomienda verificación oficial
-
-LIMITACIONES:
-- No hagas interpretaciones legales definitivas
-- No proporciones información que no esté en el contexto
-- Sugiere contacto con departamentos específicos cuando sea necesario"""
-
-    def _build_user_prompt(self, pregunta: str, fragmentos: List[Dict] = None) -> str:
-        """Construye prompt del usuario con contexto RAG"""
-        if not fragmentos:
-            return f"Pregunta: {pregunta}\n\nResponde basándote en conocimiento general sobre administración local española."
-        
-        # Construir contexto
-        contexto_partes = []
-        for i, frag in enumerate(fragmentos[:5]):  # Máximo 5 fragmentos
-            fuente = frag.get('fuente', 'desconocida')
-            texto = frag.get('texto', '')
-            contexto_partes.append(f"[Fuente {i+1} - {fuente}]: {texto}")
-        
-        contexto = "\n\n".join(contexto_partes)
-        
-        return f"""INFORMACIÓN DISPONIBLE:
-{contexto}
-
-PREGUNTA DEL USUARIO:
-{pregunta}
-
-INSTRUCCIONES:
-Responde basándote únicamente en la información proporcionada. Si la información es insuficiente, indícalo claramente."""
-
-    def _change_model(self, model_name: str) -> bool:
-        """Cambiar modelo dinámicamente"""
-        try:
-            self.llm = ChatOllama(
-                model=model_name,
-                base_url=self.base_url,
-                temperature=self.llm.temperature
-            )
-            self.current_model = model_name
-            logger.info(f"✅ Modelo cambiado a: {model_name}")
-            return True
-        except Exception as e:
-            logger.error(f"❌ Error cambiando modelo: {e}")
-            return False
-    
-    def test_model(self, model: str = None) -> Dict[str, Any]:
-        """Prueba un modelo específico"""
-        model_to_test = model or self.current_model
-        
-        try:
-            if model_to_test != self.current_model:
-                self._change_model(model_to_test)
-            
-            test_prompt = "¿Cuál es la capital de España? Responde brevemente."
-            resultado = self.get_response(test_prompt)
-            
-            return {
-                "modelo": model_to_test,
-                "disponible": resultado["exito"],
-                "tiempo_respuesta": resultado["tiempo_respuesta"],
-                "mensaje": "✅ Modelo funcionando correctamente" if resultado["exito"] else "❌ Error en el modelo",
-                "framework": "langchain"
-            }
-            
-        except Exception as e:
-            return {
-                "modelo": model_to_test,
-                "disponible": False,
-                "tiempo_respuesta": 0,
-                "mensaje": f"❌ Error: {str(e)}",
-                "framework": "langchain"
-            }
-    
-    def get_available_models(self) -> List[str]:
-        """Obtiene lista de modelos disponibles"""
-        try:
-            import subprocess
-            result = subprocess.run(["ollama", "list"], capture_output=True, text=True, timeout=10)
-            
-            if result.returncode == 0:
-                lines = result.stdout.strip().split('\n')[1:]  # Skip header
-                models = []
-                for line in lines:
-                    if line.strip():
-                        model_name = line.split()[0]
-                        models.append(model_name)
-                return models
-            return []
-        except Exception as e:
-            logger.error(f"Error obteniendo modelos: {e}")
-            return ["llama3.1:8b", "mistral:7b", "gemma:7b"]  # Fallback
-
-
-# Funciones de compatibilidad con el código existente
-def get_local_response(prompt_usuario: str, **kwargs) -> str:
-    """Función de compatibilidad que devuelve solo el texto"""
-    try:
-        service = LangChainOllamaService()
-        resultado = service.get_response(prompt_usuario, **kwargs)
-        return resultado["respuesta"]
-    except Exception as e:
-        logger.error(f"Error en get_local_response: {e}")
-        return f"⚠️ Error modelo local: {str(e)}"
-
-
-def get_detailed_local_response(prompt_usuario: str,
-                               context_fragments: List[Dict] = None,
-                               **kwargs) -> Dict[str, Any]:
-    """Función para obtener respuesta detallada con métricas LangChain"""
-    try:
-        service = LangChainOllamaService()
-        return service.get_response(prompt_usuario, context_fragments, **kwargs)
-    except Exception as e:
-        logger.error(f"Error en get_detailed_local_response: {e}")
-        return {
-            "respuesta": f"⚠️ Error: {str(e)}",
-            "exito": False,
-            "error": str(e),
-            "framework": "langchain"
-        }
-
-
-if __name__ == "__main__":
-    # Pruebas del servicio LangChain
-    print("🧪 Probando LangChain Ollama Service...")
-    
-    try:
-        service = LangChainOllamaService()
-        
-        # Verificar estado
-        if not service._check_ollama_status():
-            print("❌ Ollama no está ejecutándose. Inicia Ollama primero.")
-            exit(1)
-        
-        print(f"✅ Ollama disponible en {service.base_url}")
-        
-        # Obtener modelos disponibles
-        modelos = service.get_available_models()
-        print(f"📦 Modelos disponibles: {modelos}")
-        
-        # Test básico
-        if modelos:
-            model_to_test = modelos[0]
-            print(f"\n🧪 Probando modelo: {model_to_test}")
-            
-            test_result = service.test_model(model_to_test)
-            print(f"Resultado: {test_result}")
-            
-            if test_result["disponible"]:
-                # Test con contexto RAG simulado
-                fragmentos_test = [
-                    {"texto": "Madrid es la capital de España.", "fuente": "documentos"},
-                    {"texto": "Madrid tiene más de 3 millones de habitantes.", "fuente": "web"}
-                ]
-                
-                resultado = service.get_response(
-                    "¿Cuántos habitantes tiene la capital?",
-                    context_fragments=fragmentos_test,
-                    model=model_to_test
-                )
-                
-                print(f"\n📝 Test con RAG:")
-                print(f"Respuesta: {resultado['respuesta']}")
-                print(f"Tiempo: {resultado['tiempo_respuesta']}s")
-                print(f"Tokens estimados: {resultado['tokens_estimados']}")
-                print(f"Framework: {resultado['framework']}")
+        if response.status_code == 200:
+            result = response.json()
+            respuesta = result.get("response", "").strip()
+            logger.info(f"✅ Respuesta Ollama generada: {len(respuesta)} caracteres")
+            return respuesta
         else:
-            print("⚠️ No hay modelos disponibles. Descarga alguno con: ollama pull llama3.1")
+            raise Exception(f"Error HTTP {response.status_code}: {response.text}")
             
     except Exception as e:
-        print(f"❌ Error en las pruebas: {e}")
+        logger.error(f"❌ Error con Ollama: {e}")
+        raise
+
+def get_local_response_file(prompt):
+    """Genera respuesta usando modelo .gguf local"""
+    global _llm_file
+    
+    if _llm_file is None:
+        model_path = get_local_model_path()
+        
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"⚠️ Modelo local no encontrado en: {model_path}")
+        
+        logger.info(f"🔄 Cargando modelo local: {model_path}")
+        _llm_file = Llama(
+            model_path=model_path,
+            n_ctx=2048,
+            n_threads=6,
+            n_gpu_layers=0,
+            verbose=False
+        )
+        logger.info("✅ Modelo local cargado correctamente")
+
+    system_prompt = (
+        "Eres un asistente de IA local especializado en administración pública. "
+        "Responde de forma precisa y profesional basándote únicamente en la información proporcionada."
+    )
+    
+    prompt_formatted = f"<|system|>\n{system_prompt}</s>\n<|user|>\n{prompt}</s>\n<|assistant|>\n"
+    
+    logger.info("🔵 Generando respuesta con modelo local (.gguf)")
+    try:
+        output = _llm_file(
+            prompt_formatted, 
+            max_tokens=512, 
+            temperature=0.3, 
+            top_k=40, 
+            top_p=0.7, 
+            stop=["</s>"]
+        )
+        respuesta = output["choices"][0]["text"].strip()
+        logger.info(f"✅ Respuesta local generada: {len(respuesta)} caracteres")
+        return respuesta
+    except Exception as e:
+        logger.error(f"❌ Error generando respuesta local: {e}")
+        raise
+
+def get_local_response(prompt, model_type="auto", model_name="llama3.2"):
+    """
+    Función principal para obtener respuesta de modelos locales
+    
+    Args:
+        prompt (str): El prompt a procesar
+        model_type (str): "ollama", "file", o "auto"
+        model_name (str): Nombre del modelo (solo para Ollama)
+    
+    Returns:
+        str: Respuesta generada
+    """
+    logger.info(f"🚀 get_local_response llamada - Tipo: {model_type}, Modelo: {model_name}")
+    
+    if model_type == "auto":
+        # Priorizar Ollama si está disponible
+        if check_ollama_available():
+            model_type = "ollama"
+            logger.info("🔄 Auto-selección: usando Ollama")
+        else:
+            model_type = "file"
+            logger.info("🔄 Auto-selección: usando modelo .gguf")
+    
+    if model_type == "ollama":
+        return get_local_response_ollama(prompt, model_name)
+    elif model_type == "file":
+        return get_local_response_file(prompt)
+    else:
+        raise ValueError(f"Tipo de modelo no válido: {model_type}")
+
+# Funciones de utilidad para obtener información
+def get_available_local_models():
+    """Retorna diccionario con modelos locales disponibles"""
+    models = {
+        "ollama": [],
+        "files": []
+    }
+    
+    # Verificar modelos Ollama
+    if check_ollama_available():
+        models["ollama"] = get_ollama_models()
+    
+    # Verificar modelos .gguf
+    try:
+        model_path = get_local_model_path()
+        if os.path.exists(model_path):
+            models["files"] = [os.path.basename(model_path)]
+    except:
+        pass
+    
+    return models
+
+def get_model_status():
+    """Retorna el estado de disponibilidad de los modelos locales"""
+    status = {
+        "ollama_available": check_ollama_available(),
+        "ollama_models": get_ollama_models() if check_ollama_available() else [],
+        "file_model_available": False,
+        "file_model_path": None
+    }
+    
+    try:
+        model_path = get_local_model_path()
+        status["file_model_available"] = os.path.exists(model_path)
+        status["file_model_path"] = model_path
+    except:
+        pass
+    
+    return status

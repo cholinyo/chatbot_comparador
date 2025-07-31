@@ -1,51 +1,217 @@
-
 {% extends "base.html" %}
 {% block title %}🤖 Comparador de Modelos{% endblock %}
 {% block content %}
 <div class="container mt-4">
   <h2>🤖 Comparación de Chatbots</h2>
+  <p class="text-muted">Compare respuestas entre diferentes modelos de lenguaje</p>
+
+  <!-- Formulario de comparación -->
   <form method="post" action="/comparar">
-    <div class="mb-3">
-      <label for="pregunta" class="form-label">Introduce tu pregunta:</label>
-      <textarea class="form-control" id="pregunta" name="pregunta" rows="3" required>{{ pregunta or '' }}</textarea>
+    <div class="row mb-4">
+      <div class="col-12">
+        <label for="pregunta" class="form-label">Introduce tu pregunta:</label>
+        <textarea class="form-control" id="pregunta" name="pregunta" rows="3" required 
+                  placeholder="Ej: ¿Qué documentos necesito para una licencia de obra?">{{ pregunta or '' }}</textarea>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Comparar</button>
+
+    <!-- Selección de modelos -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="modelo_local" class="form-label">🖥️ Modelo Local:</label>
+        <select name="modelo_local" id="modelo_local" class="form-select">
+          <option value="none">No usar modelo local</option>
+          <option value="local" selected>🔄 Auto (Local)</option>
+          {% if modelos_disponibles.local.ollama %}
+            {% for modelo in modelos_disponibles.local.ollama %}
+              <option value="ollama:{{ modelo }}">🦙 Ollama: {{ modelo }}</option>
+            {% endfor %}
+          {% endif %}
+          {% if modelos_disponibles.local.files %}
+            {% for modelo in modelos_disponibles.local.files %}
+              <option value="file:{{ modelo }}">📁 Archivo: {{ modelo }}</option>
+            {% endfor %}
+          {% endif %}
+        </select>
+      </div>
+      
+      <div class="col-md-6">
+        <label for="modelo_openai" class="form-label">☁️ Modelo OpenAI:</label>
+        <select name="modelo_openai" id="modelo_openai" class="form-select">
+          <option value="none">No usar OpenAI</option>
+          {% if modelos_disponibles.openai.available %}
+            {% for modelo in modelos_disponibles.openai.models %}
+              <option value="openai:{{ modelo }}" {% if modelo == 'gpt-4' %}selected{% endif %}>
+                🤖 {{ modelo }}
+              </option>
+            {% endfor %}
+          {% else %}
+            <option value="none" disabled>OpenAI no configurado</option>
+          {% endif %}
+        </select>
+      </div>
+    </div>
+
+    <div class="text-center mb-4">
+      <button type="submit" class="btn btn-primary btn-lg">🔀 Comparar Modelos</button>
+    </div>
   </form>
 
-  {% if respuesta_openai %}
-  <div class="mt-4">
-    <h4>🔷 OpenAI</h4>
-    <div class="border p-3 bg-light rounded">
-      <pre style="white-space: pre-wrap;">{{ respuesta_openai }}</pre>
-      <p class="text-muted">⏱️ Tiempo OpenAI: {{ tiempo_openai }}s</p>
-    </div>
-    
-  </div>
-  {% endif %}
-
-  {% if respuesta_local %}
-  <div class="mt-4">
-    <h4>🔶 Modelo Local</h4>
-    <div class="border p-3 bg-light rounded">
-      <pre style="white-space: pre-wrap;">{{ respuesta_local }}</pre>
-      <p class="text-muted">⏱️ Tiempo Local: {{ tiempo_local }}s</p>
-    </div>
-  </div>
-  {% endif %}
-
-  {% if fragmentos %}
-  <div class="card mt-5">
-    <div class="card-header">📚 Fragmentos utilizados (RAG)</div>
-    <div class="card-body">
-      {% for frag in fragmentos %}
-      <div class="mb-3">
-        <strong>{{ frag.nombre }}</strong> — fragmento {{ frag.fragmento_id if frag.fragmento_id is defined else '?' }}<br>
-        <pre style="white-space: pre-wrap;">{{ frag.texto if frag.texto is defined else '(sin texto disponible)' }}</pre>
-        <hr>
+  <!-- Resultados de comparación -->
+  {% if resultado_local or resultado_openai %}
+  <div class="row">
+    <!-- Resultado Local -->
+    {% if resultado_local %}
+    <div class="col-md-6 mb-4">
+      <div class="card h-100 border-success">
+        <div class="card-header bg-success text-white">
+          <h4 class="mb-0">🖥️ Modelo Local</h4>
+          <small>{{ resultado_local.modelo }} - ⏱️ {{ resultado_local.tiempo|round(2) }}s</small>
+        </div>
+        <div class="card-body">
+          {% if error_local %}
+            <div class="alert alert-danger">
+              <strong>❌ Error:</strong> {{ error_local }}
+            </div>
+          {% else %}
+            <div class="response-content">{{ resultado_local.respuesta }}</div>
+          {% endif %}
+        </div>
       </div>
-      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Resultado OpenAI -->
+    {% if resultado_openai %}
+    <div class="col-md-6 mb-4">
+      <div class="card h-100 border-primary">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">☁️ OpenAI</h4>
+          <small>{{ resultado_openai.modelo }} - ⏱️ {{ resultado_openai.tiempo|round(2) }}s</small>
+        </div>
+        <div class="card-body">
+          {% if error_openai %}
+            <div class="alert alert-danger">
+              <strong>❌ Error:</strong> {{ error_openai }}
+            </div>
+          {% else %}
+            <div class="response-content">{{ resultado_openai.respuesta }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Análisis de comparación -->
+  {% if resultado_local and resultado_openai and not error_local and not error_openai %}
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">📊 Análisis Comparativo</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <strong>Velocidad:</strong><br>
+              {% if resultado_local.tiempo < resultado_openai.tiempo %}
+                <span class="text-success">🏆 Local más rápido</span>
+              {% else %}
+                <span class="text-primary">🏆 OpenAI más rápido</span>
+              {% endif %}
+            </div>
+            <div class="col-md-4">
+              <strong>Longitud respuesta:</strong><br>
+              Local: {{ resultado_local.respuesta|length }} caracteres<br>
+              OpenAI: {{ resultado_openai.respuesta|length }} caracteres
+            </div>
+            <div class="col-md-4">
+              <strong>Diferencia tiempo:</strong><br>
+              {{ (resultado_local.tiempo - resultado_openai.tiempo)|abs|round(2) }}s de diferencia
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endif %}
+
+  <!-- Fragmentos utilizados -->
+  {% if fragmentos %}
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">
+            📚 Fragmentos utilizados (RAG) - {{ fragmentos|length }}
+            <button class="btn btn-sm btn-outline-secondary float-end" type="button" 
+                    data-bs-toggle="collapse" data-bs-target="#fragmentos-detail">
+              Ver detalles
+            </button>
+          </h5>
+        </div>
+        <div id="fragmentos-detail" class="collapse">
+          <div class="card-body">
+            {% for frag in fragmentos %}
+            <div class="border-start border-3 border-secondary ps-3 mb-3">
+              <div class="row">
+                <div class="col-md-8">
+                  <strong>Fuente:</strong> 
+                  <span class="badge bg-secondary">{{ frag.fuente|default('desconocida') }}</span>
+                </div>
+                <div class="col-md-4 text-end">
+                  <small class="text-muted">Distancia: {{ frag.distancia|round(3) }}</small>
+                </div>
+              </div>
+              <div class="mt-2">
+                <small>{{ (frag.texto if frag.texto is defined else frag)|truncate(300) }}</small>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Información sobre la comparación -->
+  {% if not resultado_local and not resultado_openai %}
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="alert alert-info">
+        <h5>ℹ️ Cómo funciona la comparación</h5>
+        <ul class="mb-0">
+          <li><strong>RAG (Retrieval-Augmented Generation):</strong> Ambos modelos reciben el mismo contexto recuperado de documentos locales</li>
+          <li><strong>Privacidad:</strong> Los modelos locales procesan toda la información en tu servidor</li>
+          <li><strong>OpenAI:</strong> Solo se usa si seleccionas explícitamente un modelo OpenAI</li>
+          <li><strong>Comparación justa:</strong> Ambos modelos reciben exactamente el mismo prompt y contexto</li>
+        </ul>
+      </div>
     </div>
   </div>
   {% endif %}
 </div>
+
+<style>
+.response-content {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.border-start {
+  border-left-width: 4px !important;
+}
+</style>
 {% endblock %}

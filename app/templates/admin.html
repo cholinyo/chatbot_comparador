@@ -1,56 +1,323 @@
 {% extends "base.html" %}
-{% block title %}Administración{% endblock %}
+{% block title %}🛠️ Administración del Sistema{% endblock %}
 {% block content %}
 
-<h2>🛠️ Administración del sistema</h2>
-{% with messages = get_flashed_messages(with_categories=true) %}
-  {% if messages %}
-    {% for category, message in messages %}
-      <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; background-color:
-        {% if category == 'success' %}#e0ffe0
-        {% elif category == 'danger' %}#ffe0e0
-        {% else %}#f0f0f0{% endif %}; color: #333;">
-        {{ message }}
+<div class="container mt-4">
+  <h2>🛠️ Panel de Administración - Modelos de IA</h2>
+  <p class="text-muted">Configuración y gestión de modelos locales y externos</p>
+
+  <!-- Mensajes flash -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Estado del sistema -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">📊 Estado del Sistema</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>🖥️ Modelos Locales</h6>
+              <ul class="list-unstyled">
+                <li>
+                  <strong>Ollama:</strong>
+                  {% if system_status.local.ollama_available %}
+                    <span class="badge bg-success">✅ Disponible</span>
+                    <small class="text-muted">({{ system_status.local.ollama_models|length }} modelos)</small>
+                  {% else %}
+                    <span class="badge bg-warning">⚠️ No disponible</span>
+                  {% endif %}
+                </li>
+                <li>
+                  <strong>Archivo local:</strong>
+                  {% if system_status.local.file_model_available %}
+                    <span class="badge bg-success">✅ Disponible</span>
+                    <small class="text-muted">{{ system_status.local.file_model_path|basename }}</small>
+                  {% else %}
+                    <span class="badge bg-warning">⚠️ No encontrado</span>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>☁️ OpenAI</h6>
+              <ul class="list-unstyled">
+                <li>
+                  <strong>API Key:</strong>
+                  {% if system_status.openai.api_key_present %}
+                    <span class="badge bg-success">✅ Configurada</span>
+                  {% else %}
+                    <span class="badge bg-danger">❌ No configurada</span>
+                  {% endif %}
+                </li>
+                <li>
+                  <strong>Estado:</strong>
+                  {% if system_status.openai.configured %}
+                    <span class="badge bg-success">✅ Funcional</span>
+                  {% else %}
+                    <span class="badge bg-warning">⚠️ No disponible</span>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
+    </div>
+  </div>
 
-<form method="post">
-  <!-- 🔹 Modelo local -->
-  <h3>🧠 Modelos locales disponibles</h3>
-  <label for="modelo_local">Seleccionar modelo por defecto:</label><br>
-  <select name="modelo_local" id="modelo_local">
-    {% for modelo in modelos %}
-      <option value="{{ modelo }}" {% if modelo == modelo_actual %}selected{% endif %}>
-        {{ modelo }}
-      </option>
-    {% endfor %}
-  </select>
+  <!-- Formulario de configuración -->
+  <form method="post">
+    <input type="hidden" name="action" value="save_config">
+    
+    <!-- Configuración general -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">⚙️ Configuración General</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="default_model_type" class="form-label">Tipo de modelo por defecto:</label>
+                <select name="default_model_type" id="default_model_type" class="form-select">
+                  <option value="local" {% if config.default_model_type == 'local' %}selected{% endif %}>
+                    🖥️ Modelos Locales
+                  </option>
+                  <option value="openai" {% if config.default_model_type == 'openai' %}selected{% endif %}>
+                    ☁️ OpenAI
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="rag_k" class="form-label">Fragmentos RAG (k):</label>
+                <input type="number" name="rag_k" id="rag_k" class="form-control" 
+                       value="{{ config.rag_k or 5 }}" min="1" max="20">
+                <small class="form-text text-muted">Número de fragmentos a recuperar para contexto</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <br><br>
+    <!-- Configuración modelos locales -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card border-success">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">🖥️ Modelos Locales</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="modelo_local" class="form-label">Archivo modelo (.gguf):</label>
+                <select name="modelo_local" id="modelo_local" class="form-select">
+                  {% for file in local_files %}
+                    <option value="{{ file }}" {% if config.modelo_local == file %}selected{% endif %}>
+                      {{ file }}
+                    </option>
+                  {% else %}
+                    <option value="">No hay modelos .gguf disponibles</option>
+                  {% endfor %}
+                </select>
+                <small class="form-text text-muted">Modelos en carpeta /models</small>
+              </div>
+              <div class="col-md-6">
+                <label for="ollama_endpoint" class="form-label">Endpoint Ollama:</label>
+                <input type="url" name="ollama_endpoint" id="ollama_endpoint" class="form-control" 
+                       value="{{ config.ollama_config.endpoint if config.ollama_config else 'http://localhost:11434' }}"
+                       placeholder="http://localhost:11434">
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label for="ollama_default_model" class="form-label">Modelo Ollama por defecto:</label>
+                <input type="text" name="ollama_default_model" id="ollama_default_model" class="form-control" 
+                       value="{{ config.ollama_config.default_model if config.ollama_config else 'llama3.2' }}"
+                       placeholder="llama3.2">
+              </div>
+              <div class="col-md-6">
+                <div class="mt-4">
+                  {% if system_status.local.ollama_models %}
+                    <small class="text-success">
+                      <strong>Disponibles:</strong> {{ system_status.local.ollama_models|join(', ') }}
+                    </small>
+                  {% else %}
+                    <small class="text-warning">No hay modelos Ollama detectados</small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- 🔹 Modelo OpenAI -->
-  <h3>☁️ Modelo OpenAI</h3>
-  <label for="modelo_openai">Seleccionar modelo:</label>
-  <select name="modelo_openai" id="modelo_openai">
-    {% for modelo in modelos_openai %}
-      <option value="{{ modelo }}" {% if modelo == modelo_openai %}selected{% endif %}>{{ modelo }}</option>
-    {% endfor %}
-  </select>
-  
-  <br><br>
-  <button type="submit">Guardar configuración</button>
-</form>
-<hr>
-<h3>🧪 Verificación de acceso a OpenAI</h3>
-<form method="post">
-  <input type="hidden" name="probar_openai" value="1">
-  <button type="submit">Probar conexión con OpenAI</button>
-</form>
+    <!-- Configuración OpenAI -->
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="card border-primary">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">☁️ Configuración OpenAI</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="modelo_openai" class="form-label">Modelo OpenAI por defecto:</label>
+                <select name="modelo_openai" id="modelo_openai" class="form-select">
+                  <option value="gpt-3.5-turbo" {% if config.modelo_openai == 'gpt-3.5-turbo' %}selected{% endif %}>
+                    GPT-3.5 Turbo
+                  </option>
+                  <option value="gpt-4" {% if config.modelo_openai == 'gpt-4' %}selected{% endif %}>
+                    GPT-4
+                  </option>
+                  <option value="gpt-4-turbo" {% if config.modelo_openai == 'gpt-4-turbo' %}selected{% endif %}>
+                    GPT-4 Turbo
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="openai_temperature" class="form-label">Temperatura:</label>
+                <input type="number" name="openai_temperature" id="openai_temperature" 
+                       class="form-control" step="0.1" min="0" max="2"
+                       value="{{ config.openai_config.temperature if config.openai_config else 0.7 }}">
+                <small class="form-text text-muted">0 = determinista, 2 = muy creativo</small>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="test_openai_enabled" 
+                         id="test_openai_enabled" {% if config.test_openai_enabled %}checked{% endif %}>
+                  <label class="form-check-label" for="test_openai_enabled">
+                    Habilitar pruebas automáticas de OpenAI
+                  </label>
+                  <small class="form-text text-muted d-block">
+                    Solo marca esto si estás seguro de que quieres que las pruebas llamen a la API de OpenAI
+                  </small>
+                </div>
+              </div>
+            </div>
+            {% if not system_status.openai.api_key_present %}
+            <div class="alert alert-warning mt-3">
+              <strong>⚠️ API Key no configurada.</strong> 
+              Añade <code>OPENAI_API_KEY=sk-...</code> a tu archivo <code>.env</code> para usar OpenAI.
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
 
-{% if test_openai_resultado %}
-  <p><strong>{{ test_openai_resultado }}</strong></p>
-{% endif %}
+    <!-- Botones de acción -->
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-success btn-lg me-3">
+          💾 Guardar Configuración
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Pruebas del sistema -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0">🧪 Pruebas del Sistema</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <form method="post" class="d-inline">
+                <input type="hidden" name="action" value="test_models">
+                <button type="submit" class="btn btn-warning">
+                  🔬 Probar Modelos Locales
+                </button>
+              </form>
+              <small class="form-text text-muted d-block">
+                Envía una pregunta de prueba a los modelos locales disponibles
+              </small>
+            </div>
+            <div class="col-md-6">
+              <form method="post" class="d-inline">
+                <input type="hidden" name="action" value="test_openai">
+                <button type="submit" class="btn btn-primary" 
+                        {% if not system_status.openai.configured %}disabled{% endif %}>
+                  🌐 Probar Conexión OpenAI
+                </button>
+              </form>
+              <small class="form-text text-muted d-block">
+                Verifica que la API Key de OpenAI funciona correctamente
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información adicional -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-info">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">ℹ️ Información del Sistema</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h6>📂 Rutas importantes</h6>
+              <ul class="list-unstyled small">
+                <li><strong>Modelos:</strong> <code>/models</code></li>
+                <li><strong>Configuración:</strong> <code>{{ config_path }}</code></li>
+                <li><strong>Vectorstore:</strong> <code>/vectorstore</code></li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>🔧 Comandos útiles</h6>
+              <ul class="list-unstyled small">
+                <li><strong>Iniciar Ollama:</strong> <code>ollama serve</code></li>
+                <li><strong>Descargar modelo:</strong> <code>ollama pull llama3.2</code></li>
+                <li><strong>Ver modelos:</strong> <code>ollama list</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.card {
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.badge {
+  font-size: 0.8em;
+}
+
+small {
+  font-size: 0.85em;
+}
+</style>
 
 {% endblock %}

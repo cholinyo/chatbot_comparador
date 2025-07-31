@@ -1,5 +1,5 @@
 {
-  "modelo_local": "llama3.1:8b",
+  "modelo_local": "llama3-8b/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
   "modelo_openai": "gpt-4-turbo",
   "rag_k": 5,
   "document_folders": [
