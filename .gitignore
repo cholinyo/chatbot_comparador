@@ -1,61 +1,261 @@
-#Carpeta de modelos pesados
-models/
-# Bytecode y entorno virtual
+# ====================================
+# GITIGNORE PARA CHATBOT COMPARADOR TFM
+# ====================================
+
+# ====================================
+# PYTHON Y ENTORNOS VIRTUALES
+# ====================================
+# Bytecode
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
+*$py.class
+*.so
 
-# Entornos
-.venv/
+# Distribución / empaquetado
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Entornos virtuales (CRÍTICO)
 venv/
+venv311/
+venv312/
+env/
 ENV/
-.env
-.env.*
+env.bak/
+venv.bak/
+.venv/
+.env/
 venvp/
 
-# Archivos de configuración local
-.settings/
+# ====================================
+# CONFIGURACIÓN Y SECRETOS
+# ====================================
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Configuración local
+config.local.json
+settings.local.json
 *.local
 
-# Archivos del sistema
-.DS_Store
-Thumbs.db
+# Claves API y secretos
+*.key
+*.pem
+secrets/
+credentials/
 
-# Logs y bases de datos temporales
-*.log
-*.sqlite3
-*.db
-*.bak
+# ====================================
+# MODELOS DE IA (ARCHIVOS GRANDES)
+# ====================================
+# Modelos locales pesados
+models/
+*.gguf
+*.bin
+*.safetensors
+*.h5
+*.pkl.gz
+*.model
+*.pt
+*.pth
 
-# Directorios de ejecución
-.logs/
-logs/
+# Checkpoints
+checkpoints/
+*.ckpt
 
-# Vectorstore generado
-vectorstore/documents/
-vectorstore/web/
-vectorstore/apis/
-vectorstore/bbdd/
+# ====================================
+# VECTORSTORE Y DATOS PROCESADOS
+# ====================================
+# Índices FAISS y vectores
 vectorstore/
+*.faiss
+*.npy
+embeddings/
+*.pkl
+*.joblib
 
-# Otros archivos temporales
-*.tmp
-*.swp
+# Datos temporales
+data/temp/
+cache/
+.cache/
 
-# Selenium: perfiles temporales
-selenium_profile/
+# ====================================
+# LOGS Y BASES DE DATOS
+# ====================================
+# Logs
+*.log
+logs/
+.logs/
+app/services/logs/
 
-# Node.js si usas frontend
-node_modules/
-build/
-dist/
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3
+instance/
 
-# Jupyter / notebooks temporales
-.ipynb_checkpoints/
+# ====================================
+# ARCHIVOS DEL SISTEMA
+# ====================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
 
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ====================================
+# HERRAMIENTAS DE DESARROLLO
+# ====================================
 # IDEs
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.project
+.metadata
 *.sublime-project
 *.sublime-workspace
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+*.ipynb
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# ====================================
+# NAVEGADORES Y SELENIUM
+# ====================================
+# Selenium: perfiles temporales
+selenium_profile/
+geckodriver.log
+chromedriver.log
+*.crx
+
+# ====================================
+# ARCHIVOS TEMPORALES Y RESPALDOS
+# ====================================
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.backup
+temp/
+tmp/
+
+# Archivos de Office temporales
+~$*
+*.~*
+
+# ====================================
+# ESPECÍFICO DEL PROYECTO TFM
+# ====================================
+# Documentos de prueba (mantener estructura pero no contenido)
+test_documents/
+sample_data/
+
+# Outputs de scripts
+output/
+results/
+
+# Archivos de configuración de producción
+prod_settings.json
+production.env
+
+# ====================================
+# FRONTEND (si lo añades)
+# ====================================
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+build/
+dist/
+.next/
+out/
+
+# ====================================
+# DOCKER (si lo usas)
+# ====================================
+.dockerignore
+docker-compose.override.yml
+
+# ====================================
+# GIT Y CONTROL DE VERSIONES
+# ====================================
+# Git
+.git/
+.gitconfig
+
+# ====================================
+# ARCHIVOS ESPECÍFICOS A IGNORAR
+# ====================================
+# Archivos de configuración sensibles
+api_keys.txt
+tokens.json
+
+# Archivos de debug específicos del proyecto
+debug_output.txt
+test_results.json
+
+# ====================================
+# EXCEPTIONES (archivos que SÍ queremos)
+# ====================================
+# Ejemplos de configuración (sin datos reales)
+!.env.example
+!config.example.json
+!README.md
+!requirements.txt
+
+# Scripts útiles
+!scripts/*.py
+!scripts/*.bat
+!scripts/*.sh
+
+# Documentación
+!docs/
+!*.md
