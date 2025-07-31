@@ -246,6 +246,11 @@ debug_output.txt
 debug_*
 test_*
 
+# Scripts temporales  
+limpiar_git_*
+depurar_*
+diagnostico_*
+
 
 # ====================================
 # EXCEPTIONES (archivos que SÍ queremos)
